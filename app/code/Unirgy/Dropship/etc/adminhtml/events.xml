@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+  <event name="controller_action_predispatch_adminhtml_customer_edit">
+    <observer name="udropship" instance="Unirgy\Dropship\Observer\ControllerActionPredispatchAdminhtmlCustomerCarts"/>
+  </event>
+  <event name="controller_action_predispatch_adminhtml_customer_carts">
+    <observer name="udropship" instance="Unirgy\Dropship\Observer\ControllerActionPredispatchAdminhtmlCustomerCarts"/>
+  </event>
+  <event name="controller_action_layout_render_before_udropshipadmin_adminhtml_vendor_index">
+    <observer name="udropship" instance="Unirgy\Dropship\Observer\AdminhtmlVersion"/>
+  </event>
+  <event name="controller_action_layout_render_before_adminhtml_sales_order_shipment_view">
+    <observer name="udropship" instance="Unirgy\Dropship\Observer\AdminhtmlSalesOrderShipmentView"/>
+  </event>
+  <event name="controller_action_predispatch">
+    <observer name="udropship" instance="Unirgy\Dropship\Observer\AdminhtmlControllerActionPredispatch"/>
+  </event>
+  <event name="adminhtml_catalog_product_edit_element_types">
+    <observer name="udropship" instance="Unirgy\Dropship\Observer\AdminhtmlCatalogProductEditElementTypes"/>
+  </event>
+  <event name="core_block_abstract_to_html_before">
+    <observer name="udropship" instance="Unirgy\Dropship\Observer\CoreBlockAbstractToHtmlBefore"/>
+  </event>
+</config>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Indexer/etc/indexer.xsd">
+    <indexer id="udropship_vendor_product" view_id="udropship_vendor_product" class="\Unirgy\Dropship\Model\Indexer\VendorProductAssoc">
+        <title translate="true">Unirgy Vendor-Product Associations Indexer</title>
+        <description translate="true">Track vendors changes and update associations index</description>
+    </indexer>
+    <indexer id="udropship_product_vendor" view_id="udropship_product_vendor" class="\Unirgy\Dropship\Model\Indexer\ProductVendorAssoc">
+        <title translate="true">Unirgy Product-Vendor Associations Indexer</title>
+        <description translate="true">Track products changes and update associations index</description>
+    </indexer>
+</config>

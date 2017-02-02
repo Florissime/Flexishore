@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="\Unirgy\Dropship\Block\Adminhtml\SystemConfigFormField\DependSelect">
+        <arguments>
+            <argument name="dependsConfig" xsi:type="array">
+                <item name="udropship_vendor_is_restrict_shipment_status"  xsi:type="array">
+                    <item name="udropship_vendor_restrict_shipment_status" xsi:type="string">1</item>
+                </item>
+                <item name="udropship_customer_custom_html_address_format"  xsi:type="array">
+                    <item name="udropship_customer_html_address_format" xsi:type="string">1</item>
+                </item>
+                <item name="udropship_customer_custom_pdf_address_format"  xsi:type="array">
+                    <item name="udropship_customer_pdf_address_format" xsi:type="string">1</item>
+                </item>
+                <item name="carriers_udropship_free_shipping_allowed" xsi:type="array">
+                    <item name="carriers_udropship_free_method" xsi:type="string">1</item>
+                    <item name="carriers_udropship_freeweight_allowed" xsi:type="string">1</item>
+                    <item name="carriers_udropship_free_shipping_enable" xsi:type="string">1</item>
+                    <item name="carriers_udropship_free_shipping_subtotal" xsi:type="string">1</item>
+                </item>
+                <item name="carriers_udropship_free_shipping_enable"  xsi:type="array">
+                    <item name="carriers_udropship_free_shipping_subtotal" xsi:type="string">1</item>
+                </item>
+                <item name="udropship_label_fedex_fedex_payment_type"  xsi:type="array">
+                    <item name="udropship_label_fedex_fedex_thirdparty_account_number" xsi:type="string">THIRD_PARTY</item>
+                    <item name="udropship_label_fedex_fedex_thirdparty_name" xsi:type="string">THIRD_PARTY</item>
+                    <item name="udropship_label_fedex_fedex_thirdparty_company" xsi:type="string">THIRD_PARTY</item>
+                    <item name="udropship_label_fedex_fedex_thirdparty_phone" xsi:type="string">THIRD_PARTY</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

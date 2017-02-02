@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+  <menu>
+    <add id="Unirgy_Dropship::udropship" parent="Magento_Sales::sales" resource="Unirgy_Dropship::udropship" module="Unirgy_Dropship" title="Dropship" sortOrder="100"/>
+    <add id="Unirgy_Dropship::vendor" resource="Unirgy_Dropship::vendor" module="Unirgy_Dropship" title="Vendors" sortOrder="10" action="udropship/vendor" parent="Unirgy_Dropship::udropship" />
+    <add id="Unirgy_Dropship::shipping" resource="Unirgy_Dropship::shipping" module="Unirgy_Dropship" title="Shipping Methods" sortOrder="20" action="udropship/shipping" parent="Unirgy_Dropship::udropship" />
+    <add id="Unirgy_Dropship::label_batch" resource="Unirgy_Dropship::label_batch" module="Unirgy_Dropship" title="Label Batches" sortOrder="30" action="udropship/batch" parent="Unirgy_Dropship::udropship" />
+    <add id="Unirgy_Dropship::statement" resource="Unirgy_Dropship::statement" module="Unirgy_Dropship" title="Vendor Statements" sortOrder="35" action="udropship/vendor_statement" parent="Unirgy_Dropship::udropship" />
+    <add id="Unirgy_Dropship::report" resource="Unirgy_Dropship::report" module="Unirgy_Dropship" title="Dropship" sortOrder="100"  parent="Magento_Reports::report" />
+    <add id="Unirgy_Dropship::general" resource="Unirgy_Dropship::report_general" module="Unirgy_Dropship" title="GeneralDetails" sortOrder="10" action="udropship/report" parent="Unirgy_Dropship::report"/>
+    <add id="Unirgy_Dropship::item" resource="Unirgy_Dropship::report_item" module="Unirgy_Dropship" title="Item Details" sortOrder="20" action="udropship/report/item" parent="Unirgy_Dropship::report"/>
+  </menu>
+</config>

@@ -1,0 +1,273 @@
+<?php
+$dataGroup = $this->getDataGroup();
+?>
+<div class="admin__scope-old">
+<div id="<?php echo $this->getElementHtmlId()?>-container" class="suggest-expandable attribute-selector">
+    <div class="action-dropdown">
+        <a href="javascript:void(0)" class="action-toggle action-choose" data-mage-init='{"dropdown":{}}' data-toggle="dropdown">
+            <span style="font-weight: bold" id="<?php echo $this->getElementHtmlId()?>-name"><?php /* @escapeNotVerified */ echo $block->escapeHtml($this->getVendorName()); ?></span>
+        </a>
+        <div class="dropdown-menu">
+            <input data-role="<?php echo $this->getElementHtmlId()?>"
+                   data-group="<?php echo $dataGroup; ?>"
+                   class="search" type="text"
+                   placeholder="<?php /* @noEscape */ echo __('start typing to search attribute'); ?>" />
+        </div>
+        <input type="hidden" name="<?php echo $this->getElementName()?>" id="<?php echo $this->getElementHtmlId()?>" value="<?php echo $this->getElementValue()?>" />
+    </div>
+
+    <script data-template-for="<?php echo $this->getElementHtmlId()?>-<?php echo $dataGroup; ?>" type="text/x-magento-template">
+        <ul data-mage-init='{"menu":[]}'>
+            <% if (data.items.length) { %>
+            <% _.each(data.items, function(value){ %>
+            <li <%= data.optionData(value) %>><a href="#"><%- value.label %></a></li>
+            <% }); %>
+            <% } else { %><span class="mage-suggest-no-records"><%- data.noRecordsText %></span><% } %>
+        </ul>
+    </script>
+
+    <script>
+        require(["jquery","mage/mage","mage/backend/suggest"], function($) {
+            var $suggest = $('[data-role="<?php echo $this->getElementHtmlId()?>"][data-group="<?php echo $dataGroup; ?>"]');
+
+            $suggest.mage('suggest', <?php /* @escapeNotVerified */ echo $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($block->getSelectorOptions())?>)
+                .on('suggestselect', function (e, ui) {
+                    if (ui && ui.item && ui.item.id) {
+                        $('#<?php echo $this->getElementHtmlId()?>').val(ui.item.id);
+                        $('#<?php echo $this->getElementHtmlId()?>-name').html(ui.item.label);
+                    }
+                });
+        });
+    </script>
+</div>
+</div>
+<style>
+.admin__scope-old .attribute-selector .mage-suggest-dropdown > ul {
+    position: relative;
+    max-height: 200px;
+    overflow: auto;
+    z-index: 1;
+}
+.admin__scope-old .mage-suggest {
+    text-align: left;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ada89e;
+    border-radius: 2px;
+}
+.admin__scope-old .mage-suggest:after {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    bottom: 0;
+    width: 22px;
+    text-align: center;
+    font-family: 'MUI-Icons';
+    font-style: normal;
+    speak: none;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    content: '\e01f';
+    font-size: 18px;
+    color: #b2b2b2;
+}
+.admin__scope-old .mage-suggest input[type="search"],
+.admin__scope-old .mage-suggest input.search {
+    width: 100%;
+    border: none;
+    background: none;
+    padding-right: 30px;
+}
+.admin__scope-old .mage-suggest.category-select input[type="search"],
+.admin__scope-old .mage-suggest.category-select input.search {
+    height: 26px;
+}
+.admin__scope-old .search-global-field .mage-suggest {
+    position: static;
+    display: block;
+    vertical-align: baseline;
+    width: auto;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+}
+.admin__scope-old .search-global-field .mage-suggest:after {
+    display: none;
+}
+.admin__scope-old .mage-suggest-dropdown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    margin: 1px -1px 0 -1px;
+    border: 1px solid #cac2b5;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 990;
+}
+.admin__scope-old .mage-suggest-dropdown ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.admin__scope-old .mage-suggest-dropdown li {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 0;
+}
+.admin__scope-old .mage-suggest-dropdown li a {
+    display: block;
+}
+.admin__scope-old .mage-suggest-dropdown li a.ui-state-focus {
+    background: #f5f5f5;
+}
+.admin__scope-old .mage-suggest-dropdown li a,
+.admin__scope-old .mage-suggest-dropdown .jstree li a:hover,
+.admin__scope-old .mage-suggest-dropdown .jstree .jstree-hovered,
+.admin__scope-old .mage-suggest-dropdown .jstree .jstree-clicked {
+    padding: 6px 12px 5px;
+    text-decoration: none;
+    color: #333;
+    height: inherit !important;
+}
+.admin__scope-old .mage-suggest-dropdown .jstree li a:hover,
+.admin__scope-old .mage-suggest-dropdown .jstree .jstree-hovered,
+.admin__scope-old .mage-suggest-dropdown .jstree .jstree-clicked {
+    border: none;
+}
+.admin__scope-old .mage-suggest-dropdown .jstree li {
+    border-bottom: 0;
+}
+.admin__scope-old .mage-suggest-dropdown .jstree li a {
+    display: inline-block;
+}
+.admin__scope-old .mage-suggest-dropdown .jstree .mage-suggest-selected > a {
+    color: #000;
+    background: #F1FFEB;
+}
+.admin__scope-old .field-category_ids .mage-suggest-dropdown,
+.admin__scope-old .field-new_category_parent .mage-suggest-dropdown {
+    max-height: 200px;
+    overflow: auto;
+}
+.admin__scope-old .mage-suggest-dropdown .jstree .mage-suggest-selected > a:hover,
+.admin__scope-old .mage-suggest-dropdown .jstree .mage-suggest-selected > .jstree-hovered,
+.admin__scope-old .mage-suggest-dropdown .jstree .mage-suggest-selected > .jstree-clicked,
+.admin__scope-old .mage-suggest-dropdown .jstree .mage-suggest-selected.mage-suggest-not-active > .jstree-hovered,
+.admin__scope-old .mage-suggest-dropdown .jstree .mage-suggest-selected.mage-suggest-not-active > .jstree-clicked {
+    background: #E5FFD9;
+}
+.admin__scope-old .mage-suggest-dropdown .jstree .mage-suggest-not-active > a {
+    color: #D4D4D4;
+}
+.admin__scope-old .mage-suggest-dropdown .jstree .mage-suggest-not-active > a:hover,
+.admin__scope-old .mage-suggest-dropdown .jstree .mage-suggest-not-active > .jstree-hovered,
+.admin__scope-old .mage-suggest-dropdown .jstree .mage-suggest-not-active > .jstree-clicked {
+    background: #F5F5F5;
+}
+.admin__scope-old .mage-suggest-dropdown .category-path {
+    font-size: 11px;
+    margin-left: 10px;
+    color: #9ba8b5;
+}
+.admin__scope-old .suggest-expandable .action-dropdown .action-toggle {
+    display: inline-block;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: #676056;
+    font-size: 12px;
+    padding: 5px 4px;
+    filter: none;
+}
+.admin__scope-old .suggest-expandable .action-dropdown .action-toggle span {
+    display: inline;
+}
+.admin__scope-old .suggest-expandable .action-dropdown .action-toggle:before {
+    display: inline-block;
+    float: right;
+    margin-left: 4px;
+    font-size: 13px;
+    color: #b2b0ad;
+}
+.admin__scope-old .suggest-expandable .action-dropdown .action-toggle:hover:before {
+    color: #7e7e7e;
+}
+.admin__scope-old .suggest-expandable .dropdown-menu {
+    margin: 1px 0 0;
+    left: 0;
+    right: auto;
+    width: 245px;
+    z-index: 4;
+}
+.admin__scope-old .suggest-expandable .mage-suggest {
+    border: none;
+    border-radius: 3px 3px 0 0;
+}
+.admin__scope-old .suggest-expandable .mage-suggest:after {
+    top: 10px;
+    right: 8px;
+}
+.admin__scope-old .suggest-expandable .mage-suggest-inner .title {
+    margin: 0;
+    padding: 0 10px 4px;
+    text-transform: uppercase;
+    color: #a6a098;
+    font-size: 12px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.admin__scope-old .suggest-expandable .mage-suggest-inner > input[type="search"],
+.admin__scope-old .suggest-expandable .mage-suggest-inner > input.search {
+    position: relative;
+    margin: 6px 5px 5px;
+    padding-right: 20px;
+    border: 1px solid #ada89e;
+    width: 236px;
+    z-index: 1;
+}
+.admin__scope-old .suggest-expandable .mage-suggest-inner > input.ui-autocomplete-loading,
+.admin__scope-old .suggest-expandable .mage-suggest-inner > input.mage-suggest-state-loading {
+    background: #ffffff url("<?php echo $this->getViewFileUrl('Unirgy_Dropship::images/ajax-loader-small.gif')?>") no-repeat 190px 50%;
+}
+.admin__scope-old .suggest-expandable .mage-suggest-dropdown {
+    margin-top: 0;
+    border-top: 0;
+    border-radius: 0 0 3px 3px;
+    max-height: 300px;
+    overflow: auto;
+    width: 100%;
+    float: left;
+}
+.admin__scope-old .suggest-expandable .mage-suggest-dropdown ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.admin__scope-old .suggest-expandable .action-show-all:hover,
+.admin__scope-old .suggest-expandable .action-show-all:active,
+.admin__scope-old .suggest-expandable .action-show-all:focus,
+.admin__scope-old .suggest-expandable .action-show-all[disabled] {
+    border-top: 1px solid #e5e5e5;
+    display: block;
+    width: 100%;
+    padding: 8px 10px 10px;
+    text-align: left;
+    font: 12px/1.333 Arial, Verdana, sans-serif;
+    color: #676056;
+}
+.admin__scope-old .product-actions .suggest-expandable {
+    max-width: 500px;
+    float: left;
+    margin-top: 1px;
+}
+.admin__scope-old .page-actions.fixed #product-template-suggest-container {
+    display: none;
+}
+</style>

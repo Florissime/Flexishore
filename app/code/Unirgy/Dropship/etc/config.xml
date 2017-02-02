@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <Unirgy_Dropship>
+            <usimpleup>
+                <remote>http://download.unirgy.com/simple/client_api/version/</remote>
+                <changelog>http://unirgy.com/support/portal/announcements</changelog>
+            </usimpleup>
+        </Unirgy_Dropship>
+        <udropship>
+            <admin>
+                <vendor_comments_receiver>general</vendor_comments_receiver>
+                <vendor_comments_subject>A comment from {{vendor_name}} regarding Order # {{order_id}}
+                </vendor_comments_subject>
+                <vendor_comments_template>Dear Administrator,
+
+                    A dropship vendor has just submitted a comment regarding an order shipment.
+
+                    Vendor Name: {{vendor_name}}
+                    Order ID: {{order_id}}
+                    Shipment ID: {{shipment_id}}
+
+                    Vendor URL: {{vendor_url}}
+                    Order URL: {{order_url}}
+                    Shipment URL: {{shipment_url}}
+
+                    Comment: {{comment}}
+                </vendor_comments_template>
+                <interface_theme></interface_theme>
+                <notifications>1</notifications>
+                <show_order_view_vendor_rates>0</show_order_view_vendor_rates>
+                <letterhead_logo_ratio>2x1</letterhead_logo_ratio>
+            </admin>
+            <vendor>
+                <strict_change_order_status_after_po>1</strict_change_order_status_after_po>
+                <autocomplete_htmlselect>0</autocomplete_htmlselect>
+                <vendor_sku_attribute>sku</vendor_sku_attribute>
+                <attach_packingslip>0</attach_packingslip>
+                <hide_packingslip_amount>useconfig</hide_packingslip_amount>
+                <attach_shippinglabel>0</attach_shippinglabel>
+                <local_vendor/>
+                <auto_shipment_complete>0</auto_shipment_complete>
+                <unique_email>1</unique_email>
+                <email_local_vendor>0</email_local_vendor>
+                <vendor_email_template>udropship_vendor_vendor_email_template</vendor_email_template>
+                <shipment_comment_vendor_email_template>udropship_vendor_shipment_comment_vendor_email_template
+                </shipment_comment_vendor_email_template>
+                <notify_lowstock_email_template>udropship_vendor_notify_lowstock_email_template
+                </notify_lowstock_email_template>
+                <vendor_password_template>udropship_vendor_vendor_password_template</vendor_password_template>
+                <vendor_email_identity>general</vendor_email_identity>
+                <interface_theme></interface_theme>
+                <make_available_to_dropship>processing</make_available_to_dropship>
+                <ready_on_packingslip>1</ready_on_packingslip>
+                <tax_by_vendor>0</tax_by_vendor>
+                <default_shipment_status>0</default_shipment_status>
+                <master_password backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <manual_shipment_status>1</manual_shipment_status>
+                <preferences_allowed_tags>
+                    &lt;p&gt;&lt;b&gt;&lt;i&gt;&lt;em&gt;&lt;strong&gt;&lt;br&gt;</preferences_allowed_tags>
+                <reassign_available_shipping>all</reassign_available_shipping>
+                <is_restrict_shipment_status>0</is_restrict_shipment_status>
+                <hide_packingslip_amount>0</hide_packingslip_amount>
+                <label_carrier_allow_all>0</label_carrier_allow_all>
+                <label_method_allow_all>0</label_method_allow_all>
+            </vendor>
+            <statement>
+                <statement_usage>payout</statement_usage>
+                <email_template>udropship_statement_email_template</email_template>
+                <email_identity>general</email_identity>
+                <adjustment_trigger>ADJUSTMENT</adjustment_trigger>
+                <statement_po_type>shipment</statement_po_type>
+                <statement_shipment_status>1</statement_shipment_status>
+                <statement_shipping_in_payout>include</statement_shipping_in_payout>
+                <statement_tax_in_payout>include</statement_tax_in_payout>
+                <statement_subtotal_base>cost</statement_subtotal_base>
+                <apply_commission_on_tax>0</apply_commission_on_tax>
+                <apply_commission_on_shipping>0</apply_commission_on_shipping>
+                <enable_refunds>0</enable_refunds>
+            </statement>
+            <customer>
+                <vendor_enable_disable_action>noaction</vendor_enable_disable_action>
+                <vendor_delete_action>noaction</vendor_delete_action>
+                <tracking_email_template>udropship_customer_tracking_email_template</tracking_email_template>
+                <tracking_email_template_guest>udropship_customer_tracking_email_template_guest
+                </tracking_email_template_guest>
+                <estimate_error_action>fail</estimate_error_action>
+                <repeat_poll_tracking>12</repeat_poll_tracking>
+                <allow_shipping_extra_charge>0</allow_shipping_extra_charge>
+            </customer>
+            <stock>
+                <availability>always_assigned</availability>
+                <skip_bundle_limit>0</skip_bundle_limit>
+                <split_bundle_by_vendors>0</split_bundle_by_vendors>
+            </stock>
+            <error_notifications>
+                <enabled>0</enabled>
+                <sender>general</sender>
+                <receiver>general</receiver>
+                <label_request_failed_subject>Label Request Failed On Order # {{order_id}}
+                </label_request_failed_subject>
+                <label_request_failed_template>Dear Administrator,
+
+                    Label Request Failed On Order
+
+                    Vendor Name: {{vendor_name}}
+                    Order ID: {{order_id}}
+                    Shipment ID: {{shipment_id}}
+
+                    Vendor URL: {{vendor_url}}
+                    Order URL: {{order_url}}
+                    Shipment URL: {{shipment_url}}
+
+                    Error: {{error}}
+                </label_request_failed_template>
+                <poll_tracking_failed_subject>Poll Tracking Failed Notification</poll_tracking_failed_subject>
+                <poll_tracking_failed_template>Dear Administrator,
+
+                    Poll Tracking Failed Notification
+
+                    Order IDs:
+                    {{order_ids}}
+
+                    Shipment IDs:
+                    {{shipment_ids}}
+
+                    Tracking IDs:
+                    {{tracking_ids}}
+
+                    Error: {{error}}
+                </poll_tracking_failed_template>
+                <poll_tracking_limit_exceeded_subject>Poll Tracking Limit Exceeded Notification
+                </poll_tracking_limit_exceeded_subject>
+                <poll_tracking_limit_exceeded_template>Dear Administrator,
+
+                    Poll Tracking Limit Exceeded
+
+                    Order IDs:
+                    {{order_ids}}
+
+                    Shipment IDs:
+                    {{shipment_ids}}
+
+                    Tracking IDs:
+                    {{tracking_ids}}
+
+                    Limit: {{limit}} days
+                </poll_tracking_limit_exceeded_template>
+            </error_notifications>
+        </udropship>
+        <carriers>
+            <udropship>
+                <active>0</active>
+                <force_active>1</force_active>
+                <model>Unirgy\Dropship\Model\Carrier</model>
+                <title>Drop Shipping</title>
+                <handling_type>F</handling_type>
+                <free_method>ground</free_method>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this
+                    shipping method, please contact us.
+                </specificerrmsg>
+                <min_package_weight>0.07</min_package_weight>
+            </udropship>
+        </carriers>
+        <udropship_label>
+            <general>
+                <use_global>0</use_global>
+            </general>
+            <label>
+                <dimension_units>IN</dimension_units>
+                <default_pkg_length>1</default_pkg_length>
+                <default_pkg_width>1</default_pkg_width>
+                <default_pkg_height>1</default_pkg_height>
+            </label>
+            <pdf>
+                <pdf_page_size>letter</pdf_page_size>
+                <pdf_page_width>8.5</pdf_page_width>
+                <pdf_page_height>11</pdf_page_height>
+                <pdf_label_left>.5</pdf_label_left>
+                <pdf_label_top>.5</pdf_label_top>
+            </pdf>
+            <epl>
+                <epl_doctab>0</epl_doctab>
+            </epl>
+            <fedex>
+                <fedex_test_mode>1</fedex_test_mode>
+                <fedex_pdf_label_width>4</fedex_pdf_label_width>
+                <fedex_pdf_label_height>6</fedex_pdf_label_height>
+                <fedex_payment_type>SENDER</fedex_payment_type>
+            </fedex>
+            <endicia>
+                <endicia_api_url>https://elstestserver.endicia.com/LabelService/EwsLabelService.asmx</endicia_api_url>
+                <endicia_pdf_label_width>4</endicia_pdf_label_width>
+                <endicia_pdf_label_height>6</endicia_pdf_label_height>
+                <endicia_stealth>1</endicia_stealth>
+            </endicia>
+            <ups>
+                <ups_api_url>https://wwwcie.ups.com/ups.app/xml/</ups_api_url>
+                <ups_pdf_label_width>4</ups_pdf_label_width>
+                <ups_pdf_label_height>7</ups_pdf_label_height>
+            </ups>
+        </udropship_label>
+    </default>
+</config>

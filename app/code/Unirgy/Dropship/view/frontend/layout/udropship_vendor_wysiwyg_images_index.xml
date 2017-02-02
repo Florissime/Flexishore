@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <body>
+    <remove name="footer"/>
+    <remove name="head"/>
+    <reference name="left">
+      <block class="Unirgy\Dropship\Block\Vendor\Wysiwyg\Images\Content" template="Unirgy_Dropship::unirgy/dropship/vendor/wysiwyg/browser/js.phtml" name="wysiwyg_images.js"/>
+      <block class="Unirgy\Dropship\Block\Vendor\Wysiwyg\Images\Tree" template="Unirgy_Dropship::unirgy/dropship/vendor/wysiwyg/browser/tree.phtml" name="wysiwyg_images.tree"/>
+    </reference>
+    <referenceContainer name="udropship.content">
+      <block class="Unirgy\Dropship\Block\Vendor\Wysiwyg\Images\Content" template="Unirgy_Dropship::unirgy/dropship/vendor/wysiwyg/browser/content.phtml" name="wysiwyg_images.content">
+        <block class="Unirgy\Dropship\Block\Vendor\Wysiwyg\Images\Content\Uploader" template="Unirgy_Dropship::unirgy/dropship/vendor/wysiwyg/browser/content/uploader.phtml" name="wysiwyg_images.uploader"/>
+        <block class="Unirgy\Dropship\Block\Vendor\Wysiwyg\Images\Content\Newfolder" template="Unirgy_Dropship::unirgy/dropship/vendor/wysiwyg/browser/content/newfolder.phtml" name="wysiwyg_images.newfolder"/>
+      </block>
+    </referenceContainer>
+  </body>
+</page>

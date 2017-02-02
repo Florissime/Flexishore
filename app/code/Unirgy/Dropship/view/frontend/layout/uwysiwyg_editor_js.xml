@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <head>
+    <js class="Unirgy_Dropship::mage/adminhtml/events.js"/>
+    <js class="Unirgy_Dropship::mage/adminhtml/tools.js"/>
+    <action method="addItem">
+      <type>js</type>
+      <name>extjs/ext-tree.js</name>
+    </action>
+    <action method="addItem">
+      <type>js</type>
+      <name>extjs/ext-tree-checkbox.js</name>
+    </action>
+    <action method="addItem">
+      <type>js_css</type>
+      <name>extjs/resources/css/ext-all.css</name>
+    </action>
+    <action method="addItem">
+      <type>js_css</type>
+      <name>extjs/resources/css/ytheme-magento.css</name>
+    </action>
+    <action method="addItem">
+      <type>js</type>
+      <name>mage/adminhtml/wysiwyg/tiny_mce/setup.js</name>
+    </action>
+    <js class="Unirgy_Dropship::mage/adminhtml/variables.js"/>
+    <js class="Unirgy_Dropship::unirgy/media/browser.js"/>
+    <js class="Unirgy_Dropship::prototype/window.js"/>
+    <action method="addItem">
+      <type>js_css</type>
+      <name>prototype/windows/themes/default.css</name>
+    </action>
+    <action method="addItem">
+      <type>js_css</type>
+      <name>prototype/windows/themes/magento.css</name>
+    </action>
+    <css src="Unirgy_Dropship::lib/prototype/windows/themes/magento.css"/>
+  </head>
+  <update handle="_udropship_uploader_js"/>
+</page>

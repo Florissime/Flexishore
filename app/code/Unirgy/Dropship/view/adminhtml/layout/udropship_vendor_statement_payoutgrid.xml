@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <update handle="formkey"/>
+    <container name="root">
+        <block class="Magento\Backend\Block\Widget\Grid\Container" name="udropship.vendor.productgrid.container" template="Magento_Backend::widget/grid/container/empty.phtml">
+            <block class="Unirgy\Dropship\Block\Adminhtml\Vendor\Statement\Edit\Tab\Payouts" name="udropship.vendor.statement.payoutgrid" as="grid" />
+        </block>
+    </container>
+</layout>

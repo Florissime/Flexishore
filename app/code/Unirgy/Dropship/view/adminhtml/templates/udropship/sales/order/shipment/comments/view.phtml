@@ -1,0 +1,105 @@
+<?php
+/**
+ * Unirgy LLC
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.unirgy.com/LICENSE-M1.txt
+ *
+ * @category   Unirgy
+ * @package    \Unirgy\Dropship
+ * @copyright  Copyright (c) 2015-2016 Unirgy LLC (http://www.unirgy.com)
+ * @license    http:///www.unirgy.com/LICENSE-M1.txt
+ */
+?>
+<?php
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+if ($_entity = $this->getEntity()): ?>
+<div id="comments_block">
+    <span class="field-row">
+        <label class="normal" for="comment_status"><?php echo __('Status') ?></label><br/>
+        <select name="comment[status]" class="select" id="comment_status">
+        <?php foreach (\Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Model\Source')->setPath('shipment_statuses')->toOptionHash() as $_code=>$_label): ?>
+            <option value="<?php echo $_code ?>"<?php if($_code==$this->getEntity()->getUdropshipStatus()): ?> selected="selected"<?php endif; ?>><?php echo $_label ?></option>
+        <?php endforeach; ?>
+        </select>
+        <script type="text/javascript">
+        $('comment_status').origValue = $('comment_status').value
+        </script>
+    </span>
+    <span class="field-row">
+        <label class="normal" for="comment_comment"><?php echo __('Comment Text') ?></label>
+        <textarea name="comment[comment]" rows="3" cols="5" style="height:6em; width:99%;" id="comment_comment"></textarea>
+    </span>
+    <div class="f-left">
+        <input name="comment[is_vendor_notified]" type="checkbox" id="vendor_comment_notify" value="1" /><label class="normal" for="vendor_comment_notify"> <?php echo __('Notify Vendor by Email') ?></label><br />
+        <input name="comment[is_visible_to_vendor]" type="checkbox" id="comment_visible" value="1" /><label class="normal" for="comment_visible"> <?php echo __('Visible to Vendor') ?></label><br />
+        <?php if ($this->canSendCommentEmail()): ?>
+        <input name="comment[is_customer_notified]" type="checkbox" id="customer_comment_notify" value="1" /> <label class="normal" for="customer_comment_notify"><?php echo __('Notify Customer') ?></label>
+        <?php endif; ?>
+    </div>
+    <div class="f-right">
+        <?php echo $this->getChildHtml('submit_button') ?>
+    </div>
+    <div class="clear"></div>
+    <ul class="note-list">
+    <?php foreach ($_entity->getCommentsCollection(true) as $_comment): ?>
+        <li>
+            <strong><?php echo $_hlp->formatDate($_comment->getCreatedAtDate(), \IntlDateFormatter::MEDIUM, true) ?></strong>
+            <span class="separator">|</span><strong><?php echo $_comment->getUdropshipStatus() ?></strong><br/>
+            <small><?php echo __('Vendor') ?>
+            <strong class="subdue">
+                <?php if ($_comment->getIsVendorNotified()): ?>
+                <?php echo __('Notified') ?>
+                <img src="<?php echo $this->getViewFileUrl('images/ico_success.gif') ?>" width="16" height="16" alt="" />
+                <?php else: ?>
+                <?php echo __('Not Notified') ?>
+                <?php endif; ?>
+            </strong></small>
+            <span class="separator">|</span>
+            <small><?php echo __('Customer') ?>
+            <strong class="subdue">
+                <?php if ($_comment->getIsCustomerNotified()): ?>
+                <?php echo __('Notified') ?>
+                <img src="<?php echo $this->getViewFileUrl('images/ico_success.gif') ?>" width="16" height="16" alt="" />
+                <?php else: ?>
+                <?php echo __('Not Notified') ?>
+                <?php endif; ?>
+            </strong></small>
+            <br/>
+            <?php echo $this->escapeHtml($_comment->getComment(), array('b','br','strong','i','u')) ?>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+<script type="text/javascript">
+function submitComment() {
+    if (validateShipmentStatusSubmit()) {
+        submitAndReloadArea($('comments_block').parentNode, '<?php echo $this->getUrl('udropship/shipment/addComment', array('shipment_id'=>$_entity->getId())) ?>')
+    }
+}
+
+function validateShipmentStatusSubmit()
+{
+    if (<?php echo (int)\Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data')->isUdpoActive()?> == 0) return true;
+    if ($('comment_status').value == $('comment_status').origValue) return true
+    switch ($('comment_status').value) {
+        case '<?php echo \Unirgy\Dropship\Model\Source::SHIPMENT_STATUS_CANCELED ?>':
+            return confirm('<?php echo __('This will cancel shipment (if possible).') ?>');
+        case '<?php echo \Unirgy\Dropship\Model\Source::SHIPMENT_STATUS_SHIPPED ?>':
+            return confirm('<?php echo __('This will mark shipment as shipped (and if possible change PO status as well).') ?>');
+        case '<?php echo \Unirgy\Dropship\Model\Source::SHIPMENT_STATUS_DELIVERED ?>':
+            return confirm('<?php echo __('This will mark shipment as delivered (and if possible change PO status as well).') ?>');
+        default:
+            return true;
+    }
+}
+
+if ($('submit_comment_button')) {
+    $('submit_comment_button').observe('click', submitComment);
+}
+</script>
+</div>
+<?php endif; ?>

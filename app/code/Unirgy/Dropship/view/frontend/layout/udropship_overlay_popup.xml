@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <body>
+    <block class="Magento\Backend\Block\Page" template="Unirgy_Dropship::unirgy/dropship/overlay_popup.phtml" name="root">
+      <block class="Magento\Framework\Block\Text\ListText" as="left" name="left"/>
+      <block class="Magento\Framework\Block\Text\ListText" as="content" name="content"/>
+      <block class="Magento\Framework\Block\Messages" as="messages" name="messages"/>
+      <block class="Magento\Framework\Block\Text\ListText" as="js" name="js"/>
+      <block class="Magento\Framework\Block\Text\ListText" as="before_body_end" name="before_body_end"/>
+    </block>
+  </body>
+</page>

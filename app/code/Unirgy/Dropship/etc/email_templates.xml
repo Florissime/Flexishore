@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="udropship_vendor_vendor_email_template" label="Dropship Vendor Notification"
+              file="udropship_vendor.html" type="html" area="frontend" module="Unirgy_Dropship"/>
+    <template id="udropship_vendor_shipment_comment_vendor_email_template" label="Shipment Comment Vendor Notification"
+              file="udropship_vendor_shipment_comment.html" type="html" area="frontend" module="Unirgy_Dropship"/>
+    <template id="udropship_vendor_vendor_password_template" label="Dropship Vendor Password Reminder"
+              file="udropship_password.html" type="html" area="frontend" module="Unirgy_Dropship"/>
+    <template id="udropship_statement_email_template" label="Statement Email Template" file="udropship_statement.html"
+              type="html" area="frontend" module="Unirgy_Dropship"/>
+    <template id="udropship_customer_tracking_email_template" label="Customer Tracking ID Notification"
+              file="sales/shipment_new.html" type="html" area="frontend" module="Unirgy_Dropship"/>
+    <template id="udropship_customer_tracking_email_template_guest" label="Customer Tracking ID Notification for Guests"
+              file="sales/shipment_new_guest.html" type="html" area="frontend" module="Unirgy_Dropship"/>
+    <template id="udropship_vendor_notify_lowstock_email_template" label="Low stock vendor notification template"
+              file="udropship_vendor_notify_lowstock.html" type="html" area="frontend" module="Unirgy_Dropship"/>
+</config>

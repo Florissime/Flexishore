@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <!--container name="listing_top">
+        <bookmark name="bookmarks">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="current" xsi:type="array">
+                        <item name="positions" xsi:type="array">
+                            <item name="udropship_vendor" xsi:type="number">910</item>
+                            <item name="actions" xsi:type="number">1000</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </bookmark>
+    </container-->
+
+    <columns name="product_columns" class="Magento\Catalog\Ui\Component\Listing\Columns">
+        <column name="udropship_vendor">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">\Unirgy\Dropship\Ui\Component\Listing\Column\Vendor\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Vendor</item>
+                    <item name="sortOrder" xsi:type="number">80</item>
+                    <item name="add_field" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>

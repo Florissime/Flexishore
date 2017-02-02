@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="udropship_po_email_renderers"/>
+    <body>
+        <block class="Magento\Sales\Block\Order\Email\Shipment\Items"
+               template="Unirgy_Dropship::unirgy/dropship/email/po/items.phtml" name="items">
+            <block class="Magento\Framework\View\Element\RendererList" name="udropship.po.renderers"
+                   as="renderer.list"/>
+        </block>
+    </body>
+</page>

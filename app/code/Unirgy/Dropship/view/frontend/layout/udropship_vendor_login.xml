@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="udropship.content">
+            <block class="Magento\Framework\View\Element\Template"
+                   template="Unirgy_Dropship::unirgy/dropship/vendor/loginwrapper.phtml" name="login-wrapper" cacheable="false">
+                <block class="Magento\Framework\View\Element\Template"
+                       template="Unirgy_Dropship::unirgy/dropship/vendor/login.phtml" name="login">
+                    <block class="Magento\Framework\View\Element\Html\Links" as="login_links" name="login_links">
+                        <block class="Magento\Framework\View\Element\Html\Link" name="forgot.password.link">
+                            <arguments>
+                                <argument name="label" xsi:type="string" translate="true">Forgot Password</argument>
+                                <argument name="path" xsi:type="string">udropship/vendor/password</argument>
+                            </arguments>
+                        </block>
+                    </block>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+    <update handle="udropship_vendor"/>
+</page>

@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Unirgy\Dropship\Model\Session\Storage" type="Magento\Framework\Session\Storage">
+        <arguments>
+            <argument name="namespace" xsi:type="string">udropship</argument>
+        </arguments>
+    </virtualType>
+    <type name="Unirgy\Dropship\Model\Session">
+        <arguments>
+            <argument name="storage" xsi:type="object">Unirgy\Dropship\Model\Session\Storage</argument>
+        </arguments>
+    </type>
+    <type name="Unirgy\Dropship\Controller\Vendor\ExistingLabelBatch">
+        <arguments>
+            <argument name="session" xsi:type="object">Unirgy\Dropship\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Unirgy\Dropship\Controller\Vendor\ShipmentPost">
+        <arguments>
+            <argument name="session" xsi:type="object">Unirgy\Dropship\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Unirgy\Dropship\Controller\Vendor\ProductSave">
+        <arguments>
+            <argument name="session" xsi:type="object">Unirgy\Dropship\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="UdropshipShippingGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Unirgy\Dropship\Model\ResourceModel\Shipping\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">UdropshipShippingFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="UdropshipShippingFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Catalog\Model\Product\Action">
+        <plugin name="reindexProductVendorAssoc" type="Unirgy\Dropship\Plugin\CatalogProductAction" />
+    </type>
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="splitOrderToPos" type="Unirgy\Dropship\Plugin\SalesOrderSave" />
+    </type>
+    <type name="Magento\Framework\Api\DataObjectHelper">
+        <plugin name="forcedUdropshipDataCopy" type="Unirgy\Dropship\Plugin\DataObjectHelper" />
+    </type>
+    <type name="Magento\Framework\App\Http">
+        <plugin name="initConfigRewrite" type="Unirgy\Dropship\Plugin\AppHttp" />
+    </type>
+    <type name="Magento\Framework\App\Cron">
+        <plugin name="initConfigRewrite" type="Unirgy\Dropship\Plugin\AppCron" />
+    </type>
+    <type name="Magento\Indexer\App\Indexer">
+        <plugin name="initConfigRewrite" type="Unirgy\Dropship\Plugin\AppIndexer" />
+    </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <plugin name="initConfigRewrite" type="Unirgy\Dropship\Plugin\AppCli" />
+    </type>
+    <type name="Magento\Sales\Model\Order\Shipment">
+        <plugin name="fixGetComments" type="Unirgy\Dropship\Plugin\OrderShipment" />
+    </type>
+    <type name="\Magento\Framework\App\Config">
+        <plugin name="modifiedGetConfigValue" type="Unirgy\Dropship\Plugin\Config" />
+    </type>
+    <type name="\Magento\Framework\App\Config\ScopeConfigInterface">
+        <plugin name="modifiedGetConfigValue" type="Unirgy\Dropship\Plugin\Config" />
+    </type>
+
+    <virtualType name="ShipmentGridAggregator" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="base_discount_amount" xsi:type="string">sales_shipment.base_discount_amount</item>
+                <item name="udropship_payout_status" xsi:type="string">sales_shipment.udropship_payout_status</item>
+                <item name="statement_id" xsi:type="string">sales_shipment.statement_id</item>
+                <item name="statement_date" xsi:type="string">sales_shipment.statement_date</item>
+                <item name="udropship_vendor" xsi:type="string">sales_shipment.udropship_vendor</item>
+                <item name="udropship_status" xsi:type="string">sales_shipment.udropship_status</item>
+                <item name="base_shipping_amount" xsi:type="string">sales_shipment.base_shipping_amount</item>
+                <item name="shipping_amount" xsi:type="string">sales_shipment.shipping_amount</item>
+                <item name="udropship_method" xsi:type="string">sales_shipment.udropship_method</item>
+                <item name="udropship_method_description" xsi:type="string">sales_shipment.udropship_method_description</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\Url\SecurityInfo">
+        <arguments>
+            <argument name="secureUrlList" xsi:type="array">
+                <item name="udropship_vendor" xsi:type="string">/udropship/vendor/</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

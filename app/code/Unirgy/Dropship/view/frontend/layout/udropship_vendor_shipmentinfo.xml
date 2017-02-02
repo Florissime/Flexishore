@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="sales_order_shipment_renderers"/>
+    <body>
+        <block class="Unirgy\Dropship\Block\Vendor\Shipment\Info"               template="Unirgy_Dropship::unirgy/dropship/vendor/shipment/info.phtml" name="info" cacheable="false">
+            <block class="Magento\Framework\View\Element\RendererList" name="sales.order.shipment.renderers" as="renderer.list"/>
+        </block>
+    </body>
+</page>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:DataObject/etc/fieldset.xsd">
+    <scope id="global">
+        <fieldset id="sales_convert_quote_address">
+            <field name="udropship_shipping_details">
+                <aspect name="to_order"/>
+            </field>
+        </fieldset>
+        <fieldset id="sales_convert_order">
+            <field name="udropship_shipping_details">
+                <aspect name="to_quote"/>
+            </field>
+        </fieldset>
+        <fieldset id="quote_convert_item">
+            <field name="udropship_vendor">
+                <aspect name="to_order_item"/>
+            </field>
+        </fieldset>
+    </scope>
+</config>

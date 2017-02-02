@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Unirgy\Dropship\Block\Adminhtml\Shipping\Edit" name="udropship_shipping_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Unirgy\Dropship\Block\Adminhtml\Shipping\Edit\Tabs" name="udropship_shipping_edit_tabs">
+                <block class="Unirgy\Dropship\Block\Adminhtml\Shipping\Edit\Tab\Main" name="udropship_shipping_edit_tab_main"/>
+                <block class="Unirgy\Dropship\Block\Adminhtml\Shipping\Edit\Tab\Methods" name="udropship_shipping_edit_tab_methods"/>
+                <block class="Unirgy\Dropship\Block\Adminhtml\Shipping\Edit\Tab\Titles" name="udropship_shipping_edit_tab_titles"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">main_section</argument>
+                    <argument name="block" xsi:type="string">udropship_shipping_edit_tab_main</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">methods_section</argument>
+                    <argument name="block" xsi:type="string">udropship_shipping_edit_tab_methods</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">titles_section</argument>
+                    <argument name="block" xsi:type="string">udropship_shipping_edit_tab_titles</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

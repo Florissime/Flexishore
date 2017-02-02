@@ -1,0 +1,20 @@
+<?php
+$jsBaseUrl = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data')->getVendorPortalJsBaseUrl();
+?>
+
+<script type="text/javascript" src="<?php echo $jsBaseUrl?>
+require(["jquery", "prototype"], function(jQuery) {
+unirgy/media/flex.js">
+});
+</script>
+<script type="text/javascript" src="<?php echo $jsBaseUrl?>
+require(["jquery", "prototype"], function(jQuery) {
+unirgy/media/flexuploader.js">
+});
+</script>
+<script type="text/javascript" src="<?php echo $jsBaseUrl?>
+require(["jquery", "prototype"], function(jQuery) {
+unirgy/media/FABridge.js">
+});
+</script>
+<?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Backend\Helper\Media\Js')->getTranslatorScript() ?>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+  <group id="default">
+    <job name="udropship_collect_tracking" instance="Unirgy\Dropship\Cron\CollectTracking" method="execute">
+      <schedule>* * * * *</schedule>
+    </job>
+    <job name="udropship_vendor_notify_lowstock" instance="Unirgy\Dropship\Cron\VendorNotifyLowstock" method="execute">
+      <schedule>*/5 * * * *</schedule>
+    </job>
+    <job name="udropship_vendor_clean_lowstock" instance="Unirgy\Dropship\Cron\VendorCleanLowstock" method="execute">
+      <schedule>*/5 * * * *</schedule>
+    </job>
+  </group>
+</config>

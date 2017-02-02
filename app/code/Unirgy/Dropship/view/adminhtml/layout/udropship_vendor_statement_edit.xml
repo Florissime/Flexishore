@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Unirgy\Dropship\Block\Adminhtml\Vendor\Statement\Edit" name="udropship_vendor_statement_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Unirgy\Dropship\Block\Adminhtml\Vendor\Statement\Edit\Tabs" name="udropship_vendor_statement_edit_tabs">
+            </block>
+        </referenceContainer>
+    </body>
+</page>

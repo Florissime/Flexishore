@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <body>
+    <referenceContainer name="udropship.content">
+      <block class="Magento\Framework\View\Element\Template" template="Unirgy_Dropship::unirgy/dropship/vendor/dashboard.phtml" name="dashboard" cacheable="false">
+        <block class="Unirgy\Dropship\Block\Vendor\Shipment\Pager" name="shipment.grid.toolbar"/>
+        <block class="Unirgy\Dropship\Block\Vendor\Shipment\Grid" template="Unirgy_Dropship::unirgy/dropship/vendor/shipment/grid.phtml" as="shipments" name="shipment.grid" cacheable="false"/>
+      </block>
+    </referenceContainer>
+  </body>
+  <update handle="udropship_vendor"/>
+</page>

@@ -1,0 +1,28 @@
+{
+    "name": "Unirgy/Dropship",
+    "description": "",
+    "require": {
+        "php": "~5.5.0|~5.6.0"
+    },
+    "type": "magento2-module",
+    "version": "3.0.0",
+    "license": [
+        "Proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Unirgy\\Dropship\\": ""
+        }
+    },
+    "extra": {
+        "map": [
+            [
+                "*",
+                "Unirgy/Dropship"
+            ]
+        ]
+    }
+}

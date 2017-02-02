@@ -1,0 +1,29 @@
+<?php $hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data') ?>
+<?php if (\Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\App\Config\ScopeConfigInterface')->isSetFlag('udropship/admin/show_order_view_vendor_rates') && \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\Registry')->registry('current_order')): ?>
+<?php $vendorRates = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\ProtectedCode')->getOrderVendorRates(\Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\Registry')->registry('current_order')); ?>
+<?php if (!empty($vendorRates) && is_array($vendorRates)): ?>
+<dl id="udropship_orderview_vendor_rates" style="display: none">
+    <?php foreach ($vendorRates as $vId => $vRate): ?>
+    <dt><?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data')->getVendor($vId)->getVendorName() ?></dt>
+    <dd><strong><?php echo @$vRate['carrier_title'].' - '.@$vRate['method_title'] ?></strong> <?php echo $hlp->displayPrices(\Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\Registry')->registry('current_order'), @$vRate['price'], false, false, ' ')?></dd>
+    <?php endforeach ?>
+</dl>
+<script type="text/javascript">
+require(["jquery","prototype","domReady!"], function(jQuery) {
+var udropship_orderview_vendor_rates_js = function() {
+    var infoTab = $('sales_order_view_tabs_order_info_content')
+    var smBoxHead, smBoxContent
+    if (infoTab && (smBoxHead = infoTab.select('.head-shipping-method'))
+        && smBoxHead.length>0
+        && (smBoxContent = smBoxHead[0].up(1).select('fieldset'))
+        && smBoxContent.length>0
+    ) {
+        smBoxContent[0].insert({bottom: $('udropship_orderview_vendor_rates')})
+        $('udropship_orderview_vendor_rates').show()
+    }
+}
+udropship_orderview_vendor_rates_js();
+});
+</script>
+<?php endif ?>
+<?php endif ?>
