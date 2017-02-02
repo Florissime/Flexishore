@@ -1,0 +1,51 @@
+//
+//  Override Bootstrap styles
+//
+
+
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+
+
+/* Remove side padding from grid containers */
+.container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Set box sizing of all Bootstrap grid units */
+[class*="col-"] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/**
+ * Rows in Bootstrap grid are outdented (with negative margin). It's so that
+ * content within grid columns is lined up with non-grid content.
+ * But sometimes (e.g. on CMS pages) we may need a row with no outdent 
+ * so that edges of grid columns are lined up with non-grid content.
+ * We can force this behavior with additional class.
+ */
+.row.no-outdent {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/**
+ * Remove gutter (gaps between column content created via side padding)
+ * from selected grid units.
+ */
+.no-gutter {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+
+} // end: media-common
