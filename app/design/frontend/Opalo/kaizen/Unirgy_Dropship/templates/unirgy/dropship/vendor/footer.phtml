@@ -1,0 +1,7 @@
+<?php
+  $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+  $customerSession = $objectManager->get('Magento\Customer\Model\Session');
+  if($customerSession->isLoggedIn()): ?>
+  </div> <!--/.site-content-->
+</div> <!--/.site-main-->
+<?php endif?>

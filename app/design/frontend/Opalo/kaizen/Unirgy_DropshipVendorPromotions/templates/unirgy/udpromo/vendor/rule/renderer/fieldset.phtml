@@ -1,0 +1,51 @@
+<?php
+$elements = $this->getElement()->getElements()->getIterator();
+$wideElementsTop = $this->getElement()->getWideColumnTop();
+$wideElementsBottom = $this->getElement()->getWideColumnBottom();
+$lcElements = $this->getElement()->getLeftColumn();
+$rcElements = $this->getElement()->getRightColumn();
+$formAfter = $this->getElement()->getData('udpromo_form_after');
+?>
+<div class="panel">
+  <div class="panel-heading"><?php echo $this->getElement()->getLegend() ?></div>
+  <div class="panel-body">
+    <?php if (!empty($wideElementsTop)): ?>
+      <?php foreach($wideElementsTop as $wideElement): ?>
+        <div class="form-group" id="<?php echo $wideElement.'-container'?>" <?php if ($this->isHidden($wideElement)) echo 'style="display: none;"' ?>>
+          <?php echo $this->getChildElementHtml($wideElement); ?>
+        </div>
+      <?php endforeach ?>
+    <?php endif ?>
+    
+    <div class="row">
+      <div class="col-sm-6">
+        <?php if (!empty($lcElements)): ?>
+          <?php foreach($lcElements as $lcElement): ?>
+            <div class="form-group" id="<?php echo $lcElement.'-container'?>">
+              <?php echo $this->getChildElementHtml($lcElement); ?>
+            </div>
+          <?php endforeach ?>
+        <?php endif ?>
+      </div>
+      <div class="col-sm-6">
+        <?php if (!empty($lcElements)): ?>
+          <?php foreach($rcElements as $rcElement): ?>
+            <div class="form-group" id="<?php echo $lcElement.'-container'?>">
+              <?php echo $this->getChildElementHtml($rcElement); ?>
+            </div>
+          <?php endforeach ?>
+        <?php endif ?>
+      </div>
+    </div> <!--/.row-->
+    
+    <?php if (!empty($wideElementsBottom)): ?>
+      <?php foreach($wideElementsBottom as $wideElement): ?>
+        <div class="form-group" id="<?php echo $wideElement.'-container'?>" <?php if ($this->isHidden($wideElement)) echo 'style="display: none;"' ?>>
+          <?php echo $this->getChildElementHtml($wideElement); ?>
+        </div>
+      <?php endforeach ?>
+    <?php endif ?>
+  </div>
+</div>
+
+<?php echo $formAfter ? $formAfter->toHtml() : '' ?>

@@ -1,0 +1,17 @@
+<?php
+$elements = $this->getElement()->getElements()->getIterator();
+$topElements = $this->getElement()->getTopColumn();
+$bottomElements = $this->getElement()->getBottomColumn();
+$lcElements = $this->getElement()->getLeftColumn();
+$rcElements = $this->getElement()->getRightColumn();
+?>
+<?php if (!empty($topElements)): ?>
+<div class="fieldset">
+  <div class="fieldset-heading"><?php echo $this->getElement()->getLegend() ?></div>
+    <?php foreach($topElements as $wideElement): ?>
+      <div class="form-group" id="<?php echo $wideElement.'-container'?>">
+        <?php echo $this->getChildElementHtml($wideElement); ?>
+      </div>
+    <?php endforeach ?>
+</div>
+<?php endif ?>

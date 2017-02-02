@@ -1,0 +1,136 @@
+<?php
+/** @var \Unirgy\Dropship\Helper\Data $_hlp */
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+$_session = $_hlp->session();
+$_isUdpo = $_hlp->isUdpoActive();
+$_isUdreport = $_hlp->isModuleActive('Unirgy_DropshipVendorReport');
+$_dashboardUrl = $_isUdpo ? $this->getUrl('udpo/vendor') : $this->getUrl('udropship/vendor');
+$_active = $this->getActivePage();
+$_isUrmaActive = $_hlp->isModuleActive('Unirgy_Rma')
+    && $_session->isLoggedIn();
+$_isUstockPoActive = $_hlp->isModuleActive('ustockpo')
+     && $_session->isLoggedIn() && $_session->getVendor()->getDistributorId();
+$_isTierShip = $_session->getVendor()->getAllowTiershipModify();
+$_r = new \Magento\Framework\DataObject();
+$_v = $_hlp->session()->getVendor();
+
+?>
+
+<?php if ($_session->isLoggedIn()): ?>
+  <div class="site-header">
+      <div class="site-logo">
+      <span class="logo"><img src="<?php echo ($_v->getFileUrl('logo'))? $_v->getFileUrl('logo'):$this->getViewFileUrl('images/logo.png')?>" alt="<?php echo __('Vendor Admin')?>" /></span>
+      
+<?php
+?>
+
+        <span id="sidebar-mobile" class="icon-menu visible-xs"></span>
+        <span id="sidebar-anchor" class="icon-dots-three-vertical hidden-xs"></span>
+      </div>
+      <nav class="site-nav">
+        <ul id="site-nav" class="nav nav-stacked hide-sm">
+  <?php if ($_session->isLoggedIn()): ?>
+          <li class="nav-orders <?php if ($_active=='dashboard'): ?>active<?php endif ?>"><a href="<?php echo $_dashboardUrl?>"><span class="icon"></span><span class="title"><?php echo __('Orders')?></span></a></li>
+  <?php if ($_isUrmaActive): ?>
+      <li class="nav-returns<?php if ($_active=='urmas'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('urma/vendor/') ?>"><span class="icon"></span><span class="title"><?php echo __('Returns')?></span></a></li>
+  <?php endif ?>
+  <?php if ($_isUstockPoActive): ?>
+          <li class="nav-stock-pos<?php if ($_active=='ustockpos'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('ustockpo/vendor/') ?>"><span class="icon"></span><span class="title"><?php echo __('Stock POs')?></span></a></li>
+  <?php endif ?>
+  <?php if ($_isUstockPoActive): ?>
+          <li class="nav-pending-stock-po<?php if ($_active=='pending_ustockpo'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('ustockpo/vendor/pendingUstockpo') ?>"><span class="icon"></span><span class="title"><?php echo __('Pending Stock PO')?></span></a></li>
+  <?php endif ?>
+  <?php if ($_isTierShip): ?>
+      <li class="nav-shipping-rates<?php if ($_active=='tiership_v2_rates'): ?> active<?php endif ?>"><a href="<?php echo $_hlp->getObj('Unirgy\DropshipTierShipping\Helper\Data')->getVendorEditUrl()?>"><span class="icon"></span><span class="title"><?php echo __('Shipping Rates')?></span></a></li>
+  <?php endif ?>
+<?php if (0&&$_hlp->isModuleActive('Unirgy_DropshipTierCommission')): ?>
+      <li class="nav-commission-percents<?php if ($_active=='tiercom_rates'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udtiercom/vendor/rates')?>"><span class="icon"></span><span class="title"><?php echo __('Commission Percents')?></span></a></li>
+  <?php endif ?>
+<?php if (false && $_session->getVendor()->getLabelType()): ?>
+          <li class="nav-label-batches<?php if ($_active=='batches'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udropship/vendor/batches')?>"><span class="icon"></span><span class="title"><?php echo __('Label Batches')?></span></a></li>
+  <?php endif ?>
+        <?php if ($_hlp->isModuleActive('Unirgy_DropshipBatch')): ?>
+          <li class="nav-import-stock<?php if ($_active=='importstock'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udbatch/vendor_batch/importStock') ?>" ><span class="icon"></span><span class="title"><?php echo __('Import Stock')?></span></a></li>
+          <li class="nav-import-tracking<?php if ($_active=='importorders'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udbatch/vendor_batch/importOrders') ?>" ><span class="icon"></span><span class="title"><?php echo __('Import Tracking')?></span></a></li>
+          <?php endif ?>
+        <?php if ($_hlp->isModuleActive('Unirgy_DropshipMulti')): ?>
+          <li class="nav-stock<?php if ($_active=='stockprice'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udmulti/vendor_product')?>"><span class="icon"></span><span class="title"><?php echo __('Stock And Price')?></span></a></li>
+  <?php else: ?>
+          <li class="nav-stock<?php if ($_active=='stockprice'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udropship/vendor/product')?>"><span class="icon"></span><span class="title"><?php echo __('Stock')?></span></a></li>
+  <?php endif ?>
+<?php if ($_hlp->isModuleActive('Unirgy_DropshipVendorProduct')
+    && $_session->isLoggedIn()): ?>
+          <li class="nav-product-manager<?php if ($_active=='udprod'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udprod/vendor/products')?>"><span class="icon"></span><span class="title"><?php echo __('Product Manager')?></span></a></li>
+  <?php endif ?>
+<?php if ($_hlp->isModuleActive('Unirgy_DropshipSellYours')): ?>
+      <li class="nav-select-sell<?php if ($_active=='udsell'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udsell/index/sellSearch')?>"><span class="icon"></span><span class="title"><?php echo __('Select &amp; Sell')?></span></a></li>
+  <?php endif ?>
+<?php if ($_isUdreport): ?>
+      <li class="nav-shipments-report<?php if ($_active=='udrshipment'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udreport/vendor/shipment')?>"><span class="icon"></span><span class="title"><?php echo __('Shipments Report')?></span></a></li>
+    <?php if ($_isUdpo): ?>
+      <li class="nav-advanced-po-report<?php if ($_active=='udrudpo'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udreport/vendor/udpo')?>"><span class="icon"></span><span class="title"><?php echo __('Advanced PO Report')?></span></a></li>
+      <?php endif ?>
+  <?php endif ?>
+<?php if ($_hlp->isModuleActive('Unirgy_DropshipManualLabel')): ?>
+      <li class="nav-manual-labels<?php if ($_active=='umanlabels'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('umanlabel/vendor')?>"><span class="icon"></span><span class="title"><?php echo __('Manual Labels')?></span></a></li>
+  <?php endif ?>
+<?php if ($_hlp->isModuleActive('Unirgy_DropshipVendorAskQuestion')):?>
+  <li class="nav-customer-actions<?php if ($_active=='udqa'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udqa/vendor/questions')?>"><span class="icon"></span><span class="title"><?php echo __('Customer Questions')?></span></a></li>
+  <?php endif ?>
+  <?php if ($_hlp->isModuleActive('Unirgy_DropshipVendorPromotions')): ?>
+  <li class="nav-promotions<?php if ($_active=='udpromo'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udpromo/vendor/rules')?>"><span class="icon"></span><span class="title"><?php echo __('Promotions')?></span></a></li>
+  <?php endif ?>
+  <li class="nav-settings<?php if ($_active=='preferences'): ?> active<?php endif ?>"><a href="<?php echo $this->getUrl('udropship/vendor/preferences')?>"><span class="icon"></span><span class="title"><?php echo __('Settings')?></span></a></li>
+<?php if ($_hlp->isModuleActive('Unirgy_DropshipMicrosite')
+    && $_session->isLoggedIn()
+    && $_session->getVendor()->getShowProductsMenuItem()): ?>
+          <li class="nav-system-view"><a href="<?php echo $_hlp->getObj('Unirgy\DropshipMicrosite\Helper\Data')->getManageProductsUrl() ?>" onclick="this.target='VendorAdmin'"><span class="icon"></span><span class="title"><?php echo __('System View')?></span></a></li>
+  <?php endif ?>
+          <?php endif ?>
+        </ul>
+      </nav>
+  </div>
+
+  <div class="site-main">
+    <div class="util-list">
+      <ul>
+        <li>
+          <big class="icon-user"></big> <?php echo $this->escapeHtml($_session->getVendor()->getVendorName()) ?> <a href="<?php echo $this->getUrl('udropship/vendor/logout')?>" class="icon-log-out" title="<?php echo __('Log out')?>"></a></li>
+      </ul>
+    </div>
+    <div class="site-content">
+    <script>
+      require(["jquery"], function($) {
+          if (localStorage.getItem("kaizenSidebarAnchored") === null || localStorage.getItem("kaizenSidebarAnchored") == "notAnchored") {
+              $('.site-wrapper').removeClass("sidebar-anchored");
+          } else {
+              $('.site-wrapper').addClass("sidebar-anchored");
+          }
+          
+          $('#sidebar-anchor').click(function() {
+              if (localStorage.getItem("kaizenSidebarAnchored") === null || localStorage.getItem("kaizenSidebarAnchored") == "notAnchored") {
+                  localStorage.setItem("kaizenSidebarAnchored", "anchored");
+                  $('.site-wrapper').addClass("sidebar-anchored");
+              } else {
+                  localStorage.setItem("kaizenSidebarAnchored", "notAnchored");
+                  $('.site-wrapper').removeClass("sidebar-anchored");
+              }
+          });
+      });
+    </script>
+<?php endif ?>
+
+
+<?php
+$formKey = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\Data\Form\FormKey');
+?>
+<script type="text/javascript">
+var BLANK_URL = '<?php echo $this->getJsUrl() ?>blank.html';
+var BLANK_IMG = '<?php echo $this->getJsUrl() ?>spacer.gif';
+var BASE_URL = '<?php echo $this->getUrl('*') ?>';
+var SKIN_URL = '<?php echo $this->getSkinUrl() ?>';
+var FORM_KEY = '<?php echo $formKey->getFormKey() ?>';
+window.setLocation = function (url){
+    window.location.href = url;
+}
+</script>

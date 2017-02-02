@@ -1,0 +1,39 @@
+<?php
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+?>
+
+<?php echo $this->getLayout()->getMessagesBlock()->toHtml();?>
+  
+<form enctype="multipart/form-data" action="<?php echo $this->getUrl('udbatch/vendor_batch/importOrdersPost') ?>" method="POST">
+  <div class="page-title">
+    <h1><?php echo __('Import Tracking')?></h1>
+    <div class="actions">
+      <input type="submit" value="import" style="display:none" />
+      <button class="btn btn-primary form-button" name="submit_action" type="submit" id="filter-search" value="import"><?php echo __('Import') ?></button>
+    </div>
+  </div>
+                  
+  <div class="panel">
+      <div class="panel-heading"><?php echo __('Import Settings')?></div>
+      <div class="panel-body">
+          <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label" for="import_orders_upload"><?php echo __('Import File') ?></label><br/>
+                    <input id="import_orders_upload" name="import_orders_upload" title="<?php echo __('Import Orders File') ?>" type="file" class="form-control input-text"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="import_orders_textarea"><?php echo __('Import Content') ?></label><br/>
+                    <textarea id="import_orders_textarea" name="import_orders_textarea" title="<?php echo __('Import Orders Content') ?>" class="form-control" type="file"></textarea>
+                </div>
+              </div> <!-/.col-->
+              <div class="col-sm-6">
+                  <div class="form-group">
+                      <label class="control-label" for="batch_notes"><?php echo __('Notes') ?></label><br/>
+                      <textarea id="batch_notes" name="batch_notes" title="<?php echo __('Notes') ?>" type="file" class="form-control"></textarea>
+                  </div>
+                </div> <!-/.col-->
+            </div> <!-/.row-->
+        </div> <!-/.panel-body-->
+    </div> <!-/.panel-->
+</form>

@@ -1,0 +1,68 @@
+<?php $r = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\App\RequestInterface'); ?>
+<?php if (!$r->getParam('q') && !$this->getRequest()->getParam('c')): ?>
+<?php
+    $cHlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Catalog');
+    $_topCategories = $cHlp->getSortedCategoryChildren($cHlp->getStoreRootCategory(), 'name', true)
+        ->addAttributeToFilter('include_in_menu', 1);
+    $tcCnt = count($_topCategories);
+    $tcRowCnt = ceil($tcCnt/3);
+    $tcRowCnt = $tcRowCnt>1 ? $tcRowCnt : 1;
+    $sess = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Model\Session');
+    $searchUrlKey = $sess->getData('udsell_search_type') ? 'mysellSearch' : 'sellSearch';
+?>
+
+<div class="page-title">
+  <h1><?php echo __('Sell Yours')?></h1>
+  <div class="actions">
+  <?php if ($sess->getData('udsell_search_type')): ?>
+      <button class="btn form-button" onclick="setLocation('<?php echo $this->getUrl('*/*/sellSearch', ['_current'=>true])?>')"><?php echo __('Switch To Sell Yours')?></button>
+  <?php else: ?>
+      <button class="btn form-button" onclick="setLocation('<?php echo $this->getUrl('*/*/mysellSearch', ['_current'=>true])?>')"><?php echo __('Switch To My Sell List')?></button>
+  <?php endif?>
+  </div>
+</div>
+<div class="panel">
+  <div class="batch-actions">
+    <form id="udsell-search-form" action="<?php echo $this->getUrl('udsell/index/'.$searchUrlKey) ?>" method="get" class="form-inline">
+			<div class="form-group">
+			  <label><?php echo __('Find a product:')?></label>
+				<input type="text" name='q' value='<?php echo $r->getParam('q') ?>' class="form-control input-text required-entry"/>
+        <button class="btn btn-primary form-button" onclick="udsellSearchForm.submit()"><?php echo __('Search')?></button>		
+			</div>
+			<div class="tertiary">
+			  <?php echo __("Didn't find what you're looking for?")?> <a href="<?php echo $this->getUrl('udprod/vendor/products/') ?>" class="create-new"> <strong><?php echo __("Create your product")?></strong></a>
+      </div>
+		</form>
+  </div>
+  <div class="panel-body">
+
+    <script type="text/javascript">
+    //<![CDATA[
+      require(["jquery", "prototype", 'varien/form'], function(jQuery) {
+        var udsellSearchForm = new VarienForm('udsell-search-form', true);
+      });
+    //]]>
+    </script>
+
+		<div class="browse-categories">
+		  <h3><?php echo __("<span>Or,</span> Browse by Category")?></h3>
+		  <div class="row">
+        <?php $idx=0; foreach ($_topCategories as $topCat): $idx++;?>
+  			<div class="col-sm-4 <?php if ($topCat->getId()==$r->getParam('c')) echo 'active' ?>">
+  			  <a class="item" href="<?php echo $this->getUrl('udsell/index/'.$searchUrlKey, array('c'=>$topCat->getId())) ?>"><?php echo htmlspecialchars($topCat->getName())?></a>
+        </div>
+        <?php if ($idx%3==0 && $idx!=count($_topCategories)):?>
+          </div>
+          <div class="row">
+        <?php endif ?>
+        <?php if ($idx==count($_topCategories)):?>
+          </div>
+        <?php endif ?>
+        <?php endforeach ?>
+		</div>
+	</div> <!--/.panel-body-->
+</div> <!--/.panel-->
+
+<?php else: ?>
+    <?php echo $this->getChildHtml('search_result_list'); ?>
+<?php endif ?>

@@ -1,0 +1,68 @@
+<?php if (\Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('udropship/microsite/allow_quick_register', \Magento\Store\Model\ScopeInterface::SCOPE_STORE)): ?>
+
+<?php
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipMicrosite\Helper\Data');
+$_session = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Model\Session');
+$_carriers = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipMicrosite\Model\Source')->setPath('registration_carriers')->toOptionHash();
+$_data = $_session->getRegistrationFormData(true);
+$_isQuickRegister = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('udropship/microsite/allow_quick_register', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+$_qrRequiredSel = $_isQuickRegister ? '' : ' validate-select';
+$_qrRequired = $_isQuickRegister ? '' : ' <span class="required">*</span>';
+$_qrRequired2 = $_isQuickRegister ? '' : ' required-entry';
+$_r = new \Magento\Framework\DataObject();
+if ($_data) {
+    foreach ($_data as $_k=>$_v) {
+        if (!is_array($_v)) {
+            $_r->setData($_k, htmlspecialchars($_v));
+        }
+    }
+}
+if (!$_r->getCarrierCode()) {
+    $_r->setCarrierCode($this->getDefPreferedCarrier());
+}
+?>
+<div class="panel login-panel">
+	<div class="panel-heading">
+    <img src="<?php echo $this->getViewFileUrl('images/logo_register.png')?>" class="logo"/>
+		<?php echo __('Register Vendor Account') ?>
+	</div>
+  <p class="required-field-notice"><?php echo __('<em>*</em> Indicated Required Fields') ?></p>
+  <div class="panel-body">
+    <form action="<?php echo $this->getUrl('umicrosite/vendor/registerPost', ['quick'=>1])?>" method="post" id="login-register-form">
+      <div class="form-group">
+          <label class="control-label" for="vendor_name"><?php echo __('Business Name') ?> <span class="required">*</span></label>
+          <input name="vendor_name" value="<?php echo $_r->getVendorName()?>" title="<?php echo __('Business Name') ?>" id="vendor_name" type="text" class="input-text form-control required-entry" />
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="telephone"><?php echo __('Phone Number') ?> <span class="required">*</span></label>
+        <input name="telephone" value="<?php echo $_r->getTelephone()?>" title="<?php echo __('Phone Number') ?>" id="telephone" type="text" class="input-text form-control required-entry" />
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="email"><?php echo __('Email Address') ?> <span class="required">*</span></label>
+        <input name="email" value="<?php echo $_r->getEmail()?>" title="<?php echo __('Email Address') ?>" id="email" type="text" class="input-text form-control required-entry validate-email" />
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="password"><?php echo __('Password') ?> <span class="required">*</span></label>
+        <input name="password" type="password" class="input-text form-control required-entry validate-password" id="password" />
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="password_confirm"><?php echo __('Confirm Password') ?> <span class="required">*</span></label>
+        <input name="password_confirm" type="password" class="input-text form-control required-entry validate-cpassword" id="password_confirm" />
+      </div>
+      <div class="buttons-set">
+        <button class="btn btn-primary btn-block" type="submit" name="send"><?php echo __('Quick Register') ?></button>
+        <a href="<?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipMicrosite\Helper\Data')->getVendorRegisterUrl()?>" class="btn btn-link btn-block"><?php echo __('Setup Wizard') ?></a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+require(["jquery", "prototype", "varien/form"], function(jQuery) {
+
+    var dataForm = new VarienForm('login-register-form', true);
+
+});
+</script>
+    
+<?php endif?>

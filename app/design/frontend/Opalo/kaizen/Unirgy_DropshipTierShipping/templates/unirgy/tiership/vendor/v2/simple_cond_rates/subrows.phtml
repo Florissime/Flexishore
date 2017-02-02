@@ -1,0 +1,42 @@
+<?php
+$_tsHlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipTierShipping\Helper\Data');
+$_yesnoOpts = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Model\Source')->setPath('yesno')->toOptionHash();
+$store = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Store\Model\StoreManagerInterface')->getDefaultStoreView();
+?>
+
+    <input id="<?php echo $this->getFieldName()?>" type="hidden" />
+    <table class="data-table" id="<?php echo $this->suffixId('cfgTable')?>">
+        <col width="200" />
+        <col width="100" />
+        <col width="50" />
+        <col width="50" />
+        <thead>
+        <tr class="headings">
+            <th><?php echo __('If Condition Up To') ?></th>
+            <th><?php echo __('Price') ?> [<?php echo $store->getBaseCurrencyCode() ?>]</th>
+            <th><?php echo __('Sort Order') ?></th>
+            <th><?php echo __('Action') ?></th>
+        </tr>
+        <tr id="<?php echo $this->suffixId('rowTpl')?>" style="display:none">
+            <td>
+                <input type="text" class="input-text" name="<?php echo $this->getFieldName()?>[$ROW][condition_to]" value="$CONDITION_TO" />
+            </td>
+            <td>
+                <input type="text" class="input-text" name="<?php echo $this->getFieldName()?>[$ROW][price]" value="$PRICE" />
+            </td>
+            <td>
+                <input type="text" class="input-text" name="<?php echo $this->getFieldName()?>[$ROW][sort_order]" value="$SORT_ORDER" />
+            </td>
+            <td><button type="button" class="btn-remove btn-link"><span class="icon-cross"></span></button></td>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th colspan="4">
+              <button type="button" class="btn scalable add" id="<?php echo $this->suffixId('addBtn')?>"><span class="icon-plus"></span> <?php echo __('Add Condition') ?></button>
+            </th>
+        </tr>
+        </tfoot>
+        <tbody>
+        </tbody>
+    </table>

@@ -1,0 +1,46 @@
+<?php
+/**
+ * @category    design
+ * @package     monster_default
+ * @copyright   Copyright (c) 2011 Monster Market. (http://www.monstermarket.com)
+ */
+/**
+ * Product view template
+ *
+ * @see \Magento\Catalog\Block\Product\View
+ * @see \Magento\Review\Block\Product\View
+ */
+?>
+<?php
+    $_helper = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Catalog\Helper\Output');
+    $_product = $this->getProduct();
+    $_pId = $_product->getId();
+    if ($_product) {
+	    $_v = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data')->getVendor($_product);
+	} else {
+	    $_v = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipMicrosite\Helper\Data')->getCurrentVendor();
+	}
+	
+?>
+<div class="page-sell-view">
+  <div id="messages_product_view">
+    <?php echo $this->getLayout()->getMessagesBlock()->toHtml(); ?>
+  </div>
+  <div class="no-display">
+    <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+    <input type="hidden" name="related_product" id="related-products-field" value="" />
+  </div>
+<?php
+  $producImageUrl = $block->getUrl('pub/media/catalog').'product'.$_product->getImage();
+?>  
+        <?php // Product Image ?>
+          
+<img class="img-responsive header-product-img" src="<?php echo $producImageUrl; ?>" alt="<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>"/>
+
+<div class="page-title product-name">
+  <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?> <span class="sub">(#<?php echo $_product->getSku(); ?>)</span></h1>
+  <div class="actions">
+    <button onclick="jQuery('#udsell-sell-<?php echo $_pId?>').submit();" type="submit" title="<?php echo __('Submit') ?>" class="btn btn-primary form-button"><?php echo __('Submit') ?></button>
+  </div>
+</div>
+<?php echo $this->getChildHtml('product.sell') ?>

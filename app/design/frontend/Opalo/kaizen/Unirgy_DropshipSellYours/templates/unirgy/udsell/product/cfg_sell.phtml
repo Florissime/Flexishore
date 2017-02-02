@@ -1,0 +1,315 @@
+<?php
+    /** @var \Unirgy\Dropship\Helper\Data $_hlp */
+    $_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+    $_syHlp = $_hlp->getObj('Unirgy\DropshipSellYours\Helper\Data');
+    $lHlp = $_hlp->getObj('Unirgy\DropshipVendorProduct\Helper\Data');
+    $_hlp = $_hlp->getObj('Unirgy\Dropship\Helper\Data');
+    $_helper = $_hlp->getObj('Magento\Catalog\Helper\Output');
+    $_product = $this->getParentBlock()->getProduct();
+    $_isMultiPrice = $_hlp->getObj('Unirgy\Dropship\Helper\Data')->isModuleActive('Unirgy_DropshipMultiPrice');
+    $_isVendorProductShipping = $_hlp->getObj('Unirgy\DropshipMulti\Helper\Data')->isVendorProductShipping();
+    $_mvData = new \Magento\Framework\DataObject($_hlp->getObj('Magento\Framework\Registry')->registry('sell_yours_data_'.$_product->getId()));
+    $_pId = $_product->getId();
+    $stateOptions = $_hlp->getObj('Unirgy\DropshipMultiPrice\Model\Source')->setPath('vendor_product_state')->toOptionHash();
+    $cfgAttrs = $_hlp->getObj('Unirgy\DropshipVendorProduct\Helper\Data')->getConfigurableAttributes($_product, !$_product->getId());
+?>
+
+<form id="udsell-sell-<?php echo $_pId?>" method="post" action="<?php echo $this->getUrl('udsell/index/sellPost', ['id'=>$_product->getId()])?>">
+<div class="panel" id="udsell-sell-options">
+	<div class="panel-heading"><?php echo __('Add Product Options') ?></div>
+  <div class="panel-body">
+    <input type="hidden" id="remove_ids" name="remove_ids" value="" />
+  	<div id="udsell_product_cfg_sell" class="row-options-container">
+  		<div class="row-option" style="display:none" id="udsell_product_cfg_sell_row_template">
+  	    <div class="form-add">
+          <div class="well-title">
+            <?php echo __('Option')?> <span class="count">$ROW</span>
+            <input type="hidden" name="simple_id" class="simple_id" value="$SIMPLE_ID" />
+            <button type="button" class="pull-right btn btn-link icon-cross btn-remove" title="<?php echo __('Remove') ?>"></button>
+          </div>
+          <div class="well">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+          	      <label class="control-label"><?php echo __('Options') ?> <span class="required">*</span></label>
+                  <?php foreach ($cfgAttrs as $cfgAttr):
+                        $cfgAttrHtmlId = $this->prepareIdSuffix($this->getQcForm()->addSuffixToName($cfgAttr->getAttributeCode(), 'udsell_cfgsell[$ROW]'));
+                    ?>
+                    <select id="attribute$ROW-<?php echo $_product->getId()?>-<?php echo $cfgAttr->getAttributeId() ?>" name="udsell_cfgsell[$ROW][<?php echo $cfgAttr->getAttributeCode() ?>]" class="form-control validate-select super-attribute-select-$ROW-<?php echo $_product->getId()?>">
+	                    <option alt="<?php echo $cfgAttrHtmlId?>" value=""><?php echo $this->escapeHtml(__('- Select '.$this->escapeHtml($cfgAttr->getFrontend()->getLabel()).' -')) ?></option>
+                    </select><br/>
+                <?php endforeach ?>
+                </div> <!--/.form-group-->
+              </div>
+              <div class="col-sm-6">
+                <?php foreach ($this->getQcForm()->getElements() as $qcFieldset):
+                    $qcFieldsetCnt = $qcFieldset->getElements()->count();
+                ?>
+                  <?php if (!empty($qcFieldsetCnt)): ?>
+                    <?php foreach ($qcFieldset->getElements() as $lcElement):
+                        if ($lcElement->getRequired()) $lcElement->addClass('required-entry1'); ?>
+              	     <div class="form-group">
+                       <?php echo trim($lcElement->getLabelHtml()) ?><br />
+            	         <?php echo str_replace('<option ', '<option alt="'.$lcElement->getId().'"', $lcElement->getElementHtml()) ?>
+              	     </div>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
+                  <?php endforeach ?>
+                </div>
+              </div> <!--/.row-->
+            </div>
+          </div>
+        </div>
+  		</div>
+    	<button type="button" class="btn btn-primary form-button" id="udsell_product_cfg_sell_add"><span><?php echo __('+ Add Another Option') ?></span></button>
+  	</div> <!--/.panel-body-->
+  </div> <!--/.panel-->
+
+<?php
+$syForm = $this->getSyForm();
+$fieldSets = $syForm->getElements();
+foreach ($fieldSets as $fieldSet):
+$elements = $fieldSet->getElements()->getIterator();
+$topElements = $fieldSet->getTopColumn();
+$bottomElements = $fieldSet->getBottomColumn();
+$lcElements = $fieldSet->getLeftColumn();
+$rcElements = $fieldSet->getRightColumn();
+?>
+<div class="panel">
+	<div class="panel-heading"><?php echo $fieldSet->getLegend() ?></div>
+	<div class="panel-body">
+    <?php if (!empty($topElements)): ?>
+      <?php foreach($topElements as $wideElement): ?>
+        <div class="form-group" id="<?php echo $wideElement.'-container'?>" <?php if ($this->isHidden($wideElement)) echo 'style="display: none;"' ?>>
+        <?php echo $this->getChildElement($wideElement)->getLabelHtml(); ?>
+        <?php echo $this->getChildElement($wideElement)->getElementHtml() ?>
+        </div>
+      <?php endforeach ?>
+    <?php endif ?>
+    <div class="row">
+      <div class="col-sm-6">
+        <?php if (!empty($lcElements)): ?>
+        <?php foreach($lcElements as $lcElement): ?>
+        <div class="form-group" id="<?php echo $lcElement.'-container'?>">
+          <?php echo $this->getChildElement($lcElement)->getLabelHtml(); ?> <br />
+          <?php echo $this->getChildElement($lcElement)->getElementHtml() ?>
+        </div>
+        <?php endforeach ?>
+        <?php endif ?>
+      </div>
+      <div class="col-sm-6">
+        <?php if (!empty($lcElements)): ?>
+          <?php foreach($rcElements as $rcElement): ?>
+          <div class="form-group" id="<?php echo $lcElement.'-container'?>">
+            <?php echo $this->getChildElement($rcElement)->getLabelHtml(); ?> <br />
+            <?php echo $this->getChildElement($rcElement)->getElementHtml() ?>
+          </div>
+          <?php endforeach ?>
+        <?php endif ?>
+      </div>
+    </div>
+    
+    <?php if (!empty($bottomElements)): ?>
+      <?php foreach($bottomElements as $wideElement): ?>
+        <div class="form-group" id="<?php echo $wideElement.'-container'?>" class="wide" <?php if ($this->isHidden($wideElement)) echo 'style="display: none;"' ?>>
+        <?php echo $this->getChildElement($wideElement)->getLabelHtml(); ?> <br />
+        <?php echo $this->getChildElement($wideElement)->getElementHtml() ?>
+        </div>
+      <?php endforeach ?>
+    <?php endif ?>
+<?php endforeach ?>
+
+</form>
+<script type="text/javascript">
+//<![CDATA[
+  require(["jquery", "prototype", 'varien/form'], function(jQuery) {
+    var dataForm = new VarienForm('udsell-sell-<?php echo $_pId?>', true);
+  });
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+
+require(["jquery", 'configurable', "prototype"], function(jQuery, configurable) {
+(function ()
+{
+    var lastRowNum = 1;
+    var section = $('udsell_product_cfg_sell');
+
+    function addRow(inData)
+    {
+        var rowHtml = $('udsell_product_cfg_sell_row_template').innerHTML
+        inData = inData || {}
+        var udmInData = inData.udmulti || {}
+        inData = $H(inData)
+        inData.unset('udmulti');
+        inData = inData.toObject();
+
+        var data = {
+            <?php foreach ($_hlp->getObj('Unirgy\DropshipVendorProduct\Helper\Data')->getQuickCreateAllowedAttributes() as $qcaAttr): ?>
+            <?php echo $qcaAttr ?>: '',
+            <?php endforeach ?>
+            <?php foreach ($cfgAttrs as $cfgAttr): ?>
+            <?php echo $cfgAttr->getAttributeCode() ?>: '',
+            <?php endforeach ?>
+            simple_id: ''
+        }
+        udmData= {
+            vendor_sku: '',
+            vendor_cost: '',
+            <?php if ($_hlp->getObj('Unirgy\DropshipMulti\Helper\Data')->isVendorProductShipping()): ?>
+            shipping_price: '',
+            <?php endif ?>
+            freeshipping: 0,
+            stock_qty: '',
+            priority: 9999,
+            <?php if ($_isMultiPrice): ?>
+                special_from_date: '',
+                special_to_date: '',
+                special_price: '',
+                vendor_price: '',
+                vendor_title: '',
+                state_descr: '',
+                state: 'new',
+            <?php endif ?>
+            status: <?php echo (int)$_hlp->getObj('Unirgy\DropshipMulti\Helper\Data')->getDefaultMvStatus()?>
+        }
+        Object.extend(udmData, udmInData);
+        Object.extend(data, inData);
+        udmData.row = data.row = lastRowNum++;
+
+        var numericVars, forcedNumericVars, selectFields
+
+        numericVars = [];
+        forcedNumericVars = [];
+        selectFields = $H({});
+
+        <?php foreach ($cfgAttrs as $cfgAttr): ?>
+        numericVars.push('<?php echo $cfgAttr->getAttributeCode() ?>');
+        forcedNumericVars.push('<?php echo $cfgAttr->getAttributeCode() ?>');
+        selectFields.set('<?php echo $cfgAttr->getAttributeCode() ?>', 0);
+        <?php endforeach ?>
+
+        rowHtml = processData(rowHtml, data, numericVars, forcedNumericVars, selectFields)
+
+        numericVars = <?php echo \Zend_Json::encode($_hlp->getObj('Unirgy\DropshipVendorProduct\Helper\Data')->getMvNumericAttributes())?>;
+        forcedNumericVars = <?php echo \Zend_Json::encode($_hlp->getObj('Unirgy\DropshipVendorProduct\Helper\Data')->getMvForcedNumericAttributes())?>;
+        selectFields = $H(<?php echo \Zend_Json::encode($_hlp->getObj('Unirgy\DropshipVendorProduct\Helper\Data')->getMvSelectAttributes())?>);
+
+        rowHtml = processData(rowHtml, udmData, numericVars, forcedNumericVars, selectFields, 'udmulti')
+
+        rowHtml = rowHtml.gsub('required-entry1', 'required-entry');
+        section.insert(rowHtml)
+        //var trs = tbody.childElements()
+        var tr = section.childElements().last();
+        tr.addClassName(lastRowNum%2 ? 'odd' : 'even')
+        var del = $(tr).select('button');
+        if (del && del.length>0) {
+            del = del[0];
+            $(del).observe('click', function(e) {
+                e.stop();
+                var simple_id = $F(del.up('.form-add').down('.simple_id'));
+                if (simple_id) {
+                    var remove_ids = $F('remove_ids').split(',')
+                    remove_ids.push(simple_id);
+                    $('remove_ids').value = remove_ids.join();
+                }
+                $(del.up('.form-add')).remove();
+            })
+        }
+        var spConfig<?php echo $_product->getId()?>, unirgyConfig<?php echo $_product->getId()?> = <?php echo $this->getJsonConfig() ?>;
+        jQuery('#udsell-sell-<?php echo $_pId?>').configurable({
+            spConfig: unirgyConfig<?php echo $_product->getId()?>
+        });
+        <?php foreach ($cfgAttrs as $cfgAttr): ?>
+            if (data['<?php echo $cfgAttr->getAttributeCode() ?>']) {
+                jQuery('#attribute'+data.row+'-<?php echo $_product->getId()?>-<?php echo $cfgAttr->getAttributeId() ?>').value=data['<?php echo $cfgAttr->getAttributeCode() ?>'];
+            }
+        <?php endforeach ?>
+    }
+    function processData(rowHtml, data, numericVars, forcedNumericVars, selectFields, htmlSuffix)
+    {
+        var isIE = (/msie [1-8]\./i).test(navigator.userAgent);
+        var keys = $H(data).keys().sortBy(function(s){return (''+s).length}).reverse();
+        for (j=0; j<keys.length; j++) {
+            var i=keys[j];
+            value = data[i] || ''
+            if (-1 != numericVars.indexOf(i) && data[i]
+                || -1 != forcedNumericVars.indexOf(i)
+            ) {
+                value *= 1;
+                data[i] = value;
+            }
+            if (i!=='row' && isIE) value = '"'+value+'"'
+            var __i=i;
+            if (htmlSuffix) {
+                __i = addSuffixToName(__i, htmlSuffix);
+            }
+            __i = __i.gsub(/[^a-zA-Z0-9$]/, '_').toUpperCase()
+            rowHtml = rowHtml.replace(new RegExp('\\$'+__i, 'g'), value)
+        }
+        var regExTpl = [
+            new Template('<option (([^>]*(alt="?#{key}"?|value="?#{value}"?(?=[\\s>]))){2})'),
+            new Template('<option $1 selected="selected"'),
+            new Template('<input (([^>]*(id="?#{key}"?|value="?#{value}"?(?=[\\s>])|type="?checkbox"?)){3})'),
+            new Template('<input $1 checked="checked"')
+        ];
+        selectFields.each(function(pair){
+            var varsForEval, value=data[pair.key], key=pair.key;
+            if (htmlSuffix) {
+                key = addSuffixToName(key, htmlSuffix);
+            }
+            key = addSuffixToName(key, 'udsell_cfgsell['+data.row+']');
+            key = key.gsub(/[^a-zA-Z0-9$]/, '_');
+            for (var rxIdx=0; rxIdx<regExTpl.length; rxIdx+=2) {
+                varsForEval = [];
+                if (value) {
+                    if (!Object.isArray(value)) {
+                        value = String.interpret(value).split(',');
+                    }
+                    value.each(function(val){
+                        varsForEval.push({key: key, value: val});
+                    })
+                } else {
+                    varsForEval.push({key: key, value: value});
+                }
+                for (var vfeIdx=0; vfeIdx<varsForEval.length; vfeIdx++) {
+                    var varForEval = varsForEval[vfeIdx];
+                    var rxFind = regExTpl[rxIdx].evaluate(varForEval);
+                    var rxReplace = regExTpl[rxIdx+1].evaluate(varForEval);
+                    rowHtml = rowHtml.replace(new RegExp(rxFind, 'i'), rxReplace);
+                }
+            }
+        });
+        return rowHtml;
+    }
+    function addSuffixToName(name, suffix) {
+        if (!name) {
+            return suffix;
+        }
+        var vars = name.split('[');
+        newName = suffix;
+        vars.each(function(value, index){
+            newName = newName+'['+value;
+            if (index==0) {
+                newName = newName + ']';
+            }
+        })
+        return newName;
+    }
+
+    $('udsell_product_cfg_sell_add').observe('click', function(e) { e.stop(); addRow() })
+
+<?php if(($cfgMvData = $_mvData->getData('udsell_cfgsell')) && is_array($cfgMvData)): ?>
+<?php foreach ($cfgMvData as $_mvd): if (isset($_mvd['udmulti']) && is_array($_mvd['udmulti'])): ?>
+    addRow(<?php echo \Zend_Json::encode($_mvd) ?>);
+<?php endif; endforeach; ?>
+<?php else: ?>
+    addRow({}, {});
+<?php endif ?>
+})()
+});
+
+//]]>
+</script>

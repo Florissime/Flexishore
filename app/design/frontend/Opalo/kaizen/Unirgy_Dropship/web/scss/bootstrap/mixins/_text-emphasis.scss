@@ -1,0 +1,14 @@
+// Typography
+
+// [converter] $parent hack
+@mixin text-emphasis-variant($parent, $color) {
+  #{$parent} {
+    margin-top:.25em;
+    color: $color;
+    font-size:.9em;
+  }
+  a#{$parent}:hover,
+  a#{$parent}:focus {
+    color: darken($color, 10%);
+  }
+}

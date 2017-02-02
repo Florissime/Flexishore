@@ -1,0 +1,81 @@
+<?php
+    $_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipSellYours\Helper\Data');
+    $_udHlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+    $_helper = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Catalog\Helper\Output');
+    $_product = $this->getParentBlock()->getProduct();
+    $_pId = $_product->getId();
+?>
+
+<p class="required-field-notice"><?php echo __('<em>*</em> Indicates required fields') ?></p>
+<form id="udsell-sell-<?php echo $_pId?>" method="post" action="<?php echo $this->getSellPostUrl()?>">
+
+<?php
+$syForm = $this->getSyForm();
+$fieldSets = $syForm->getElements();
+foreach ($fieldSets as $fieldSet):
+$elements = $fieldSet->getElements()->getIterator();
+$topElements = $fieldSet->getTopColumn();
+$bottomElements = $fieldSet->getBottomColumn();
+$lcElements = $fieldSet->getLeftColumn();
+$rcElements = $fieldSet->getRightColumn();
+?>
+<div class="panel">
+  <?php if(!empty($fieldSet->getLegend())): ?>
+    <div class="panel-heading"><?php echo $fieldSet->getLegend() ?></div>
+  <?php endif ?>
+  <div class="panel-body">
+    <?php if (!empty($topElements)): ?>
+      <?php foreach($topElements as $wideElement): ?>
+        <div class="form-group" id="<?php echo $wideElement.'-container'?>" class="wide" <?php if ($this->isHidden($wideElement)) echo 'style="display: none;"' ?>>
+          <?php echo $this->getChildElement($wideElement)->getLabelHtml(); ?>
+          <?php echo $this->getChildElement($wideElement)->getElementHtml() ?>
+        </div>
+        <?php endforeach ?>
+    <?php endif ?>
+    
+    <div class="row">
+      <div class="col-sm-6">
+      <?php if (!empty($lcElements)): ?>
+        <?php foreach($lcElements as $lcElement): ?>
+          <div class="form-group" id="<?php echo $lcElement.'-container'?>">
+            <?php echo $this->getChildElement($lcElement)->getLabelHtml(); ?>
+            <?php echo $this->getChildElement($lcElement)->getElementHtml() ?>
+          </div>
+        <?php endforeach ?>
+      <?php endif ?>
+      </div>
+      <div class="col-sm-6">
+      <?php if (!empty($lcElements)): ?>
+        <?php foreach($rcElements as $rcElement): ?>
+          <div class="form-group" id="<?php echo $lcElement.'-container'?>">
+            <?php echo $this->getChildElement($rcElement)->getLabelHtml(); ?>
+            <?php echo $this->getChildElement($rcElement)->getElementHtml() ?>
+          </div>
+        <?php endforeach ?>
+      <?php endif ?>
+      </div>
+    </div>
+    <?php if (!empty($bottomElements)): ?>
+      <?php foreach($bottomElements as $wideElement): ?>
+      <div class="form-group" id="<?php echo $wideElement.'-container'?>" class="wide" <?php if ($this->isHidden($wideElement)) echo 'style="display: none;"' ?>>
+        <?php echo $this->getChildElement($wideElement)->getLabelHtml(); ?>
+        <?php echo $this->getChildElement($wideElement)->getElementHtml() ?>
+      </div>
+      <?php endforeach ?>
+    <?php endif ?>
+    
+<?php endforeach ?>
+    <div class="buttons-set">
+      <button type="submit" title="<?php echo __('Submit') ?>" class="btn btn-primary button"><span><?php echo __('Submit') ?></span></button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script type="text/javascript">
+//<![CDATA[
+  require(["jquery", "prototype", 'varien/form'], function(jQuery) {
+    var dataForm = new VarienForm('udsell-sell-<?php echo $_pId?>', true);
+  });
+//]]>
+</script>

@@ -1,0 +1,54 @@
+
+<?php
+$_session = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Model\Session');
+$_vendor = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\Registry')->registry('reset_vendor');
+?>
+
+  <div class="panel login-panel">
+    <div class="panel-heading">
+      <img src="<?php echo $this->getViewFileUrl('images/logo.png')?>" class="logo"/>
+      <?php echo __('Vendor Log in') ?>
+    </div>
+    <?php echo $this->getChildHtml('global_notices') ?>
+    <?php echo $this->getChildHtml('global_messages') ?>
+    <form action="#" method="post" id="login-form">
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="email" class="control-label"><?php echo __('Username / Email Address') ?> <span class="required">*</span></label>
+          <input name="login[username]" value="<?php echo $this->escapeHtml($_session->getUsername()) ?>" title="<?php echo __('Email Address') ?>" id="email" type="text" class="form-control input-text required-entry" />
+        </div>
+        <div class="form-group">
+          <a class="helper-link" href="<?php echo $this->getUrl('udropship/vendor/password/')?>" title="Forgot Password"><?php echo __('Forgot Password?') ?></a>
+          <label for="pass" class="control-label">
+            <?php echo __('Password') ?> <span class="required">*</span>
+          </label>
+          <input name="login[password]" type="password" class="form-control input-text required-entry vaidate-password" id="pass" />
+        </div>
+        <div class="buttons-set">
+            <button class="btn btn-primary btn-block" type="submit" name="send">
+              <?php echo __('Login') ?>
+            </button>
+            <?php echo $this->getChildHtml('login_links') ?>
+        </div>
+      </div>
+    </form>
+  </div>
+
+<?php if (!$this->getRequest()->getParam('ajax')): ?>
+<script type="text/javascript">
+require(["jquery", "prototype", "varien/form"], function(jQuery) {
+
+    var dataForm = new VarienForm('login-form', true);
+
+});
+</script>
+<?php endif ?>
+<?php if ($_session->getUsername()): ?>
+<script type="text/javascript">
+require(["jquery", "prototype"], function(jQuery) {
+
+$('pass').focus();
+
+});
+</script>
+<?php endif ?>

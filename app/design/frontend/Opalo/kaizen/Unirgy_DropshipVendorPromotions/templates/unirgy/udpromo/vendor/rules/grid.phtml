@@ -1,0 +1,130 @@
+<?php
+/** @var \Unirgy\Dropship\Helper\Data $_hlp */
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+$_src = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipVendorPromotions\Model\Source');
+?>
+
+<div class="page-title">
+  <h1><?php echo __('My Promotions')?></h1>
+  <a id="filter-orders-toggle" href="javascript:void(0);" class="btn btn-link popover-toggle"><span class="icon-funnel"></span> <?php echo __('Filter Promotions')?></a>    
+  <div class="actions">
+    <form method="get" action="<?php echo $this->getUrl('udpromo/vendor/ruleNew')?>" id="udpromo-edit-form">
+      <button class="btn btn-primary form-button" type="submit"><?php echo __('Add New Promotion') ?></button>
+    </form>
+  </div>
+</div>
+
+<div id="filter-form" class="hidden">
+  <form method="get" id="udpromo-filter-form">
+    <div class="filter-form">
+      <div class="popover-main">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label" for="filter_rule_name"><?php echo __('Name') ?></label>
+                <input id="filter_rule_name" name="filter_rule_name" title="<?php echo __('Name') ?>" type="text" class="form-control input-text" value="<?php echo $this->getRequest()->getParam('filter_rule_name') ?>" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="filter_coupon_code"><?php echo __('Coupon Code') ?></label>
+                <input id="filter_coupon_code" name="filter_coupon_code" title="<?php echo __('Coupon Code') ?>" type="text" class="form-control input-text" value="<?php echo $this->getRequest()->getParam('filter_coupon_code') ?>" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label" for="filter_rule_date_from"><?php echo __('Date Start') ?></label>
+                <div class="input-range">
+                  <input id="filter_rule_date_from" name="filter_rule_date_from" title="<?php echo __('From Date Start') ?>" type="text" class="form-control udvalidate-from_date input-text date-selector" value="<?php echo $this->getRequest()->getParam('filter_rule_date_from') ?>" /> -
+                  <input id="filter_rule_date_to" name="filter_rule_date_to" title="<?php echo __('To Date Start') ?>" type="text" class="form-control udvalidate-from_date input-text date-selector" value="<?php echo $this->getRequest()->getParam('filter_rule_date_to') ?>" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="filter_rule_expire_from"><?php echo __('Date Expire') ?></label>
+                <div class="input-range">
+                  <input id="filter_rule_expire_from" name="filter_rule_expire_from" title="<?php echo __('From Date Expire') ?>" type="text" class="form-control udvalidate-from_date input-text date-selector" value="<?php echo $this->getRequest()->getParam('filter_rule_expire_from') ?>" /> -
+                  <input id="filter_rule_expire_to" name="filter_rule_expire_to" title="<?php echo __('To Date Expire') ?>" type="text" class="form-control udvalidate-from_date input-text date-selector" value="<?php echo $this->getRequest()->getParam('filter_rule_expire_to') ?>" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="filter_rule_status"><?php echo __('Status') ?></label>
+                <select id="filter_rule_status" name="filter_rule_status" title="<?php echo __('Status') ?>" >
+                    <?php $_status = (string)$this->getRequest()->getParam('filter_replied') ?>
+                    <option value="" <?php echo $_status===''?'selected="selected"':'' ?>><?php echo __('Any') ?></option>
+                    <option value="1" <?php echo $_status==='1'?'selected="selected"':'' ?>><?php echo __('Active') ?></option>
+                    <option value="0" <?php echo $_status==='0'?'selected="selected"':'' ?>><?php echo __('Inactive') ?></option>
+                </select>
+            </div>
+          </div>
+        </div> <!--/.row-->
+      </div>
+      <div class="buttons-set">
+          <input type="submit" value="search" style="display:none" />
+  
+          <input type="hidden" name="limit" value="<?php echo $this->getRequest()->getParam('limit')?>"/>
+          <input type="hidden" name="p" value="<?php echo $this->getRequest()->getParam('p')?>"/>
+          <button class="btn form-button" name="reset_filter" type="button" onclick="setLocation('<?php echo $this->getUrl('*/*/*')?>')" id="filter-search" value="search"><?php echo __('Reset Filter') ?></button>
+          <button class="btn btn-primary form-button" name="submit_action" type="submit" id="filter-search" value="search"><?php echo __('Search') ?></button>
+  
+      </div>
+    </div> <!--/.filter-form-->
+  </form>
+</div>
+  
+<div class="panel">
+  <?php echo $this->getChildHtml('toolbar') ?>
+  <table class="data-table" id="rules-table">
+      <col width="" />
+      <col width="" />
+      <col width="" />
+      <col width="" />
+      <col width="" />
+      <thead>
+          <tr>
+              <th><?php echo __('Name')?></th>
+              <th><?php echo __('Coupon')?></th>
+              <th><?php echo __('Date Start')?></th>
+              <th><?php echo __('Date Expire')?></th>
+              <th><?php echo __('Status')?></th>
+          </tr>
+      </thead>
+    <tbody>
+<?php foreach ($this->getRulesCollection() as $_p): $_id = $_p->getId();
+    $_ruleDate = $_p->getData('from_date') ? $_hlp->dateInternalToLocale($_p->getData('from_date'), null, false, false) : '';
+    $_expireDate = $_p->getData('to_date') ? $_hlp->dateInternalToLocale($_p->getData('to_date'), null, false, false) : '';
+?>
+        <tr>
+            <td><a href="<?php echo $this->getUrl('udpromo/vendor/ruleEdit', ['id'=>$_id])?>"><?php echo $this->escapeHtml($_p->getData('name')); ?></a></td>
+            <td><?php echo $this->escapeHtml($_p->getData('code')); ?></td>
+            <td><?php echo $_ruleDate; ?></td>
+            <td><?php echo $_expireDate; ?></td>
+            <td><?php echo $_src->setPath('statuses')->getOptionLabel($_p->getIsActive())?></td>
+        </tr>
+<?php endforeach ?>
+    </tbody>
+</table>
+<?php echo $this->getChildHtml('toolbar') ?>
+
+<script type="text/javascript">
+  require(["jquery","kaizenLocal"], function(jQuery) {
+    filterToggle(
+      '<?php echo __('Filter Promotions')?>',
+      jQuery('#filter-orders-toggle'), 
+      jQuery('#filter-form')
+    );
+  });  
+</script> 
+  
+<script type="text/x-magento-init">
+{
+    "#filter_rule_date_from, #filter_rule_date_to, #filter_rule_expire_from, #filter_rule_expire_to": <?php echo json_encode(
+        [
+            'calendar' => [
+                'dateFormat' => $_hlp->getDateFormat(),
+                'showsTime' => false,
+                'timeFormat' => '',
+                'buttonText' => 'Select Date',
+            ],
+        ]
+    ); ?>
+}
+</script>
+

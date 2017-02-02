@@ -1,0 +1,59 @@
+<?php
+$_element = $this->getElement();
+$elements = $this->getElement()->getElements()->getIterator();
+$wideElementsTop = $this->getElement()->getWideColumnTop();
+$wideElementsBottom = $this->getElement()->getWideColumnBottom();
+$lcElements = $this->getElement()->getLeftColumn();
+$rcElements = $this->getElement()->getRightColumn();
+?>
+<div class="panel">
+  <div class="panel-heading"><?php echo $this->getElement()->getLegend() ?></div>
+  <div class="panel-body">
+    <?php if (!empty($wideElementsTop)): ?>
+    <ul class="rule-tree" id="coupons_fieldset">
+      <?php foreach($wideElementsTop as $wideElement): ?>
+      <li id="<?php echo $wideElement.'-container'?>" class="wide" <?php if ($this->isHidden($wideElement)) echo 'style="display: none;"' ?>>
+      <?php echo $this->getChildElementHtml($wideElement); ?>
+      </li>
+      <?php endforeach ?>
+    </ul>
+    <?php endif ?>
+    <div class="row">
+      <div class="col-sm-6">
+        <?php if (!empty($lcElements)): ?>
+        <?php foreach($lcElements as $lcElement): ?>
+          <div class="form-group" id="<?php echo $lcElement.'-container'?>">
+          <?php echo $this->getChildElementHtml($lcElement); ?>
+          </div>
+        <?php endforeach ?>
+        <?php endif ?>
+      </div>
+      <div class="col-sm-6">
+        <?php if (!empty($lcElements)): ?>
+          <?php foreach($rcElements as $rcElement): ?>
+          <div class="form-group" id="<?php echo $lcElement.'-container'?>">
+          <?php echo $this->getChildElementHtml($rcElement); ?>
+          </div>
+          <?php endforeach ?>
+        <?php endif ?>
+      </div>
+    </div>
+
+    <?php if (!empty($wideElementsBottom)): ?>
+    <?php foreach($wideElementsBottom as $wideElement): ?>
+    <div class="form-group" id="<?php echo $wideElement.'-container'?>" class="wide" <?php if ($this->isHidden($wideElement)) echo 'style="display: none;"' ?>>
+    <?php echo $this->getChildElementHtml($wideElement); ?>
+    </div>
+    <?php endforeach ?>
+    <?php endif ?>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+require(["Unirgy_DropshipVendorPromotions/rules", "prototype"], function(VarienRulesForm) {
+
+    var <?php echo $_element->getHtmlId() ?> = new VarienRulesForm('<?php echo $_element->getHtmlId() ?>', '<?php echo $this->getNewChildUrl() ?>');
+
+});
+</script>

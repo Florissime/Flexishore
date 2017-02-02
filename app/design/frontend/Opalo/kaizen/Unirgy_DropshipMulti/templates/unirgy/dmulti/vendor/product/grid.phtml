@@ -1,0 +1,104 @@
+<?php
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+?>
+<div class="page-title">
+  <h1><?php echo __('Multi Price')?></h1>
+  <a id="filter-orders-toggle" href="javascript:void(0);" class="btn btn-link popover-toggle"><span class="icon-funnel"></span> <?php echo __('Filter Stock')?></a>
+  <div class="actions">
+    <button class="btn btn-primary form-button" onclick="jQuery('#vendor-stock-form').submit()" type="submit"><?php echo __('Update Information') ?></button>
+  </div>
+</div>
+<div id="filter-form" class="hidden">
+  <form method="get">
+    <div class="filter-form">
+      <div class="popover-main">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="filter-sku"><?php echo __('System SKU') ?></label><br/>
+              <input id="filter-sku" name="filter_sku" title="<?php echo __('System SKU') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_sku') ?>" />
+            </div>
+            <div class="form-group">
+                  <label for="filter-name"><?php echo __('Product Name') ?></label><br/>
+                  <input id="filter-name" name="filter_name" title="<?php echo __('Product Name') ?>" type="text" class="input-text form-control"kaizen value="<?php echo $this->getRequest()->getParam('filter_name') ?>" />
+            </div>
+          </div> <!--/.col-->
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="filter-vendor_sku"><?php echo __('Vendor SKU') ?></label><br/>
+              <input id="filter-vendor_sku" name="filter_vendor_sku" title="<?php echo __('Vendor SKU') ?>" type="text" class="input-text form-control"kaizen value="<?php echo $this->getRequest()->getParam('filter_vendor_sku') ?>" />
+            </div>
+            <div class="form-group">
+              <label for="filter-vendor_cost-from"><?php echo __('Vendor Price') ?></label>
+              <div class="input-range">
+                  <input id="filter-vendor_cost-from" name="filter_vendor_cost_from" title="<?php echo __('From Vendor Price') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_vendor_cost_from') ?>" /> -
+                  <input id="filter-vendor_cost-to" name="filter_vendor_cost_to" title="<?php echo __('To Vendor Price') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_vendor_cost_to') ?>" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="filter-stock_qty-from"><?php echo __('Stock Qty') ?></label>
+              <div class="input-range">
+                  <input id="filter-stock_qty-from" name="filter_stock_qty_from" title="<?php echo __('From Stock Qty') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_stock_qty_from') ?>" /> -
+                  <input id="filter-stock_qty-to" name="filter_stock_qty_to" title="<?php echo __('To Stock Qty') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_stock_qty_to') ?>" />
+              </div>
+            </div> <!--/.col-->
+          </div>  <!--/.row-->
+        </div> <!--/.popover-main-->
+      </div>
+      <div class="buttons-set">
+        <input type="submit" value="search" style="display:none" />
+
+        <input type="hidden" name="limit" value="<?php echo $this->getRequest()->getParam('limit')?>"/>
+        <input type="hidden" name="p" value="<?php echo $this->getRequest()->getParam('p')?>"/>
+
+        <button class="btn btn-primary form-button" name="submit_action" type="submit" id="filter-search" value="search"><?php echo __('Search') ?></button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="panel">
+  <form id="vendor-stock-form" method="post" action="<?php echo $this->getUrl('udmulti/vendor_product/save') ?>">
+    <?php echo $this->getChildHtml('toolbar') ?>
+    <?php $_count=0;?>
+    <table class="data-table">
+        <col width="" />
+        <col width="" />
+        <col width="100" />
+        <col width="80" />
+        <col width="70" />
+        <thead>
+            <tr>
+                <th><?php echo __('System SKU')?></th>
+                <th><?php echo __('Product Name')?></th>
+                <th><?php echo __('Vendor SKU')?></th>
+                <th><?php echo __('Vendor Price')?></th>
+                <th><?php echo __('Stock Qty')?></th>
+            </tr>
+        </thead>
+        <tbody>
+    <?php foreach ($this->getProductCollection() as $_p): ?>
+            <tr>
+                <td><?php echo $this->escapeHtml($_p->getSku()) ?></td>
+                <td><?php echo $this->escapeHtml($_p->getName()) ?></td>
+                <td><input type="text" class="input-text form-control" name="vp[<?php echo $_p->getVendorProductId() ?>][vendor_sku]" value="<?php echo $this->escapeHtml($_p->getVendorSku()) ?>" style="width:90px"/></td>
+                <td><input type="text" class="input-text form-control" name="vp[<?php echo $_p->getVendorProductId() ?>][vendor_cost]" value="<?php echo is_null($_p->getVendorCost()) ? '' : $_p->getVendorCost()*1 ?>" style="width:70px"/></td>
+                <td><input type="text" class="input-text form-control" name="vp[<?php echo $_p->getVendorProductId() ?>][stock_qty]" value="<?php echo is_null($_p->getStockQty()) ? '' : $_p->getStockQty()*1 ?>" style="width:60px"/></td>
+
+            </tr>
+    <?php endforeach ?>
+        </tbody>
+    </table>
+    <?php echo $this->getChildHtml('toolbar') ?>
+  </form>
+</div>
+
+<script type="text/javascript">
+  require(["jquery","kaizenLocal"], function(jQuery) {
+    filterToggle(
+      '<?php echo __('Filter Multi Price')?>',
+      jQuery('#filter-orders-toggle'), 
+      jQuery('#filter-form')
+    );
+  });  
+</script> 

@@ -1,0 +1,14 @@
+// Alerts
+
+@mixin alert-variant($background, $border, $text-color) {
+  background-color: $background !important; // due to uprod.css overriding this
+  border-color: $border;
+  color: $text-color !important; // due to uprod.css overriding this
+
+  hr {
+    border-top-color: darken($border, 5%);
+  }
+  .alert-link {
+    color: darken($text-color, 10%);
+  }
+}

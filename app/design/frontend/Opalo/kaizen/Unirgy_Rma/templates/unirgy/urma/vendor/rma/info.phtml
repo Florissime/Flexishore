@@ -1,0 +1,172 @@
+<?php
+/** @var \Unirgy\Dropship\Helper\Data $_hlp */
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+$_rmaHlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Rma\Helper\Data');
+$_session = $_hlp->session();
+$_vendor = $_session->getVendor();
+$_highlight = $_session->getHighlight(true);
+
+$_rma = $this->getRma();
+$_id = $_rma->getId();
+
+$_order = $_rma->getOrder();
+$_address = $_order->getShippingAddress() ? $_order->getShippingAddress() : $_order->getBillingAddress();
+
+$_items = $_rma->getAllItems();
+
+$_tracking = $_rma->getTracksCollection();
+$_comments = $_rma->getVendorCommentsCollection();
+
+$_statuses = $_rmaHlp->getVendorRmaStatuses();
+$_statusId = $_rma->getRmaStatus();
+
+$_udVendor = $_rma->getVendor();
+
+?>
+<?php if ($this->getRequest()->isPost()): ?>
+    <span id="status-update-<?php echo $_id ?>" style="display:none"><?php echo $_rma->getRmaStatusName() ?></span>
+<?php endif ?>
+<form id="urma-form-<?php echo $_id?>" method="post" action="<?php echo $this->getUrl('udropship/vendor/urmaPost', array('id'=>$_id))?>">
+
+    <div class="row shipment-items">
+        <div class="col-sm-6">
+            <div class="block">
+              <div class="row">
+                  <div class="col-sm-6">
+                      <div class="block-title"><?php echo __('Shipping Address')?></div>
+                      <div class="block-content">
+                        <?php echo $_hlp->formatCustomerAddress($_address, 'html', $_vendor) ?>
+                      </div>
+                  </div>
+                  <?php if (count($_tracking)): ?>
+                  <div class="col-sm-6 <?php if (!empty($_highlight['tracking'])): ?>highlight<?php endif ?>">      
+                    <div class="block-title"><?php echo __('Tracking IDs') ?></div>                    
+                    <div class="block-content">
+                      <ul class="tracking-numbers">
+                      <?php $_prevTmtId = null; foreach ($_tracking as $_t): $_tId = $_t->getId(); $_tmtId = $_t->getMasterTrackingId(); $_pckCnt = $_t->getPackageCount(); $_tbId = $_t->getBatchId() ?>
+                          <?php if ($_tmtId!=$_prevTmtId && !is_null($_tmtId) && $_pckCnt>1): ?>
+                          <li id="old_tracking_id-<?php echo $_tId?>" <?php if (!empty($_highlight['tracking_'.$_tId])): ?>class="highlight"<?php endif ?> >
+                               <!--<a class="toggle" href="#" onclick="return false"><span></span></a>-->
+                               <nobr>
+                              <?php echo $this->escapeHtml($_tmtId) ?>
+                              <a class="delete" href="#" onclick="deleteTrack(<?php echo $_id ?>, <?php echo $_tId ?>); return false" title="<?php echo __('Delete tracking number') ?>"><span></span></a>
+                              </nobr>
+                          </li>
+                          <?php $_prevTmtId = $_tmtId; continue; endif ?>
+  
+                          <li <?php if (!is_null($_tmtId) && $_pckCnt>1): ?>style="padding-left: 10px"<?php endif ?> id="old_tracking_id-<?php echo $_tId?>" <?php if (!empty($_highlight['tracking_'.$_tId])): ?>class="highlight"<?php endif ?> >
+                              <!--<a class="toggle" href="#" onclick="return false"><span></span></a>-->
+                              <?php echo $this->escapeHtml($_t->getNumber()) ?>
+                              <?php if (is_null($_tmtId) || $_pckCnt==1): ?>
+                              <a class="delete" href="#" onclick="deleteTrack(<?php echo $_id ?>, <?php echo $_tId ?>); return false" title="<?php echo __('Delete tracking number')?>"><span></span></a>
+                              <?php endif ?>
+                          </li>
+                          <?php $_prevTmtId = $_tmtId ?>
+                      <?php endforeach ?>
+                      </ul>
+                    </div>
+                  </div>
+                  <?php endif ?>
+                </div> <!--/.row-->
+            </div> <!--/.block-->
+            <div class="block-title">
+                <?php echo __('RMA Items') ?>
+            </div>
+            <div class="block-content">
+              <table class="data-table" id="order-items-<?php echo $_id ?>">
+                  <col />
+                  <col width="25%" />
+                  <col width="1" />
+                  <thead>
+                      <tr>
+                          <th><?php echo __('Product Name') ?></th>
+                          <th><?php echo __('SKU') ?></th>
+                          <th><?php echo __('Condition') ?></th>
+                          <th class="a-center"><span class="nobr"><?php echo __('Qty') ?></span></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  <?php foreach ($_items as $_item): ?>
+                      <?php if ($_item->getOrderItem()->getParentItem()) continue; ?>
+                      <?php echo $this->getItemHtml($_item) ?>
+                  <?php endforeach; ?>
+                  </tbody>
+              </table>
+            </div> <!--/.block-content-->
+        </div> <!--/.col-->
+        <div class="col-sm-6">
+            <div class="block">
+                <div class="block-content">
+                  <?php echo $this->getLayout()->getMessagesBlock()->toHtml(); ?>
+
+                    <div class="form-group" id="carrier-1-<?php echo $_id?>">
+                        <label class="control-label" for="carrier-<?php echo $_id?>"><?php echo __('Carrier') ?></label>
+                        <select id="carrier-<?php echo $_id?>" name="carrier" class="form-control select" onchange="selectCarrier(this, 'carrier_title-<?php echo $_id?>')">
+                            <?php foreach ($this->getCarriers() as $_code=>$_name): ?>
+                            <option value="<?php echo $_code ?>"><?php echo $_name ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group" id="carrier_title-1-<?php echo $_id?>">
+                        <label class="control-label" for="carrier_title-<?php echo $_id?>"><?php echo __('Carrier Title') ?></label>
+                        <input id="carrier_title-<?php echo $_id?>" name="carrier_title" value="" title="<?php echo __('Carrier Title') ?>" type="text" class="form-control input-text" class="form-control select"  />
+                    </div>
+                    <div class="form-group" id="tracking_id-1-<?php echo $_id?>">
+                        <label class="control-label" for="tracking_id-<?php echo $_id?>"><?php echo __('Add Tracking ID') ?></label>
+                        <input id="tracking_id-<?php echo $_id?>" name="tracking_id" value="" title="<?php echo __('Add Tracking ID') ?>" type="text" class="form-control input-text" class="form-control select"  />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="comment-<?php echo $_id?>"><?php echo __('Add Comment') ?></label>
+                        <textarea id="comment-<?php echo $_id?>" name="comment" class="form-control textarea" title="<?php echo __('Add Comment') ?>" ></textarea>
+                        <div class="checkbox">
+                          <input name="is_customer_notified" type="checkbox" id="customer_comment_notify-<?php echo $_id?>" value="1" onclick="syncRmaCheckboxes(this, 'comment_visible-<?php echo $_id?>')" />
+                          <label class="control-label" for="customer_comment_notify-<?php echo $_id?>"><?php echo __('Notify Customer By Email') ?></label>
+                        </div>
+                        <div class="checkbox">
+                          <input name="is_visible_on_front" type="checkbox" id="comment_visible-<?php echo $_id?>" value="1" />
+                          <label  class="control-label" for="comment_visible-<?php echo $_id?>"> <?php echo __('Visible to Customer') ?></label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="tracking_id-2-<?php echo $_id?>">
+                        <label class="control-label" for="change_status-<?php echo $_id?>"><?php echo __('Change Status') ?></label>
+                        <select id="change_status-<?php echo $_id?>" name="status" title="<?php echo __('Change Status') ?>" class="form-control select" onchange="selectRmaStatus(this, 'resolution-notes-<?php echo $_id?>', <?php echo 1*$_rma->isAllowedResolutionNotes()?>)"/>
+                            <option value=""><?php echo __('* Automatic') ?></option>
+                        <?php foreach ($_statuses as $_k=>$_v): ?>
+                            <option value="<?php echo $_k ?>"><?php echo $_v ?></option>
+                        <?php endforeach ?>
+                        </select>
+                    </div>
+                    <div class="form-group" style="<?php if (!$_rma->isAllowedResolutionNotes()) echo 'display: none'?>">
+                        <label class="control-label" for="resolution-notes-<?php echo $_id?>"><?php echo __('Resolution Notes') ?></label>
+                        <textarea <?php if (!$_rma->isAllowedResolutionNotes()) echo 'disabled="disabled"'?> id="resolution-notes-<?php echo $_id?>" name="resolution_notes" class="form-control textarea" title="<?php echo __('Resolution Notes') ?>" ><?php echo $this->escapeHtml($_rma->getResolutionNotes()) ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary form-button" type="button" id="addcomment-<?php echo $_id ?>"><span><?php echo __('Add RMA Comment') ?></span></button>
+                        <span class="shipment-info-loader" style="display:none" id="submit-loader-<?php echo $_id ?>"><?php echo __('Please wait, submitting...')?></span>
+                    </div>
+                </div> <!--/.block-content-->
+            </div> <!--/.block-->
+
+            <?php if (count($_comments)): ?>
+              <div class="block block-comments-history">
+                <div class="block-title"><?php echo __('Comments history') ?></div>
+                <div class="block-content">
+                  <table cellspacing="0" class="data-table" <?php if (!empty($_highlight['comment'])): ?>class="highlight"<?php endif ?>><tbody>
+                      <?php foreach ($_comments as $_c): ?>
+                      <tr <?php if (!empty($_highlight['comment_'.$_c->getId()])): ?>class="highlight"<?php endif ?> >
+                          <td>
+                              <nobr><strong><?php echo $_hlp->formatDate($_c->getCreatedAt(), \IntlDateFormatter::SHORT, true) ?></strong></nobr><br/>
+                              <nobr><strong><?php echo $_c->getUdropshipStatus()?></strong></nobr><br>
+                          </td>
+                          <td>
+                              <?php echo nl2br($this->escapeHtml($_c->getComment())) ?>
+                          </td>
+                      </tr>
+                      <?php endforeach ?>
+                  </tbody></table>
+                </div>
+              </div>
+            <?php endif ?>
+        </div> <!--/.col-->
+    </div> <!--/.shipment-items-->
+</form>

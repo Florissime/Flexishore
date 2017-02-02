@@ -1,0 +1,59 @@
+
+
+<?php
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+$_prHlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipVendorAskQuestion\Helper\Data');
+$_session = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Model\Session');
+$_vendor = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Model\Session')->getVendor();
+$_question = $this->getQuestion();
+?>
+
+<form action="<?php echo $this->getUrl('udqa/vendor/questionPost', ['_current'=>true])?>" method="post" id="question-edit-form">
+
+  <?php echo $this->getLayout()->getMessagesBlock()->toHtml(); ?>
+  <div class="page-title">
+    <h1><?php echo __('Reply question #%1 <span class="sub">from %2</span>', $_question->getId(), $_question->getData('customer_name')) ?></h1>
+    <div class="actions">
+      <span class="question-edit-form-loader" style="display:none" id="question-edit-form-loader"><?php echo __('Please wait, submitting...')?></span>
+      <a class="btn btn-link" href="<?php echo $this->getUrl('udqa/vendor/questions')?>">&laquo; <?php echo __('Return to questions list')?></a>
+      <button class="btn btn-primary form-button" type="button" onclick="udqaEditFormSubmit(this, false)" name="send"><span><?php echo __('Save') ?></span></button>
+      <?php if ($_question->getIsCustomerNotified()): ?>
+      <button class="btn btn-primary form-button" type="button" onclick="udqaEditFormSubmit(this, true)" name="send"><span><?php echo __('Save And Email') ?></span></button>
+      <?php endif ?>
+    </div>
+  </div>
+  
+  <p class="required-field-notice"><?php echo __('<em>*</em> Indicated Required Fields') ?></p>
+  <input type="hidden" name="id" value="<?php echo $_question->getId() ?>" />
+  <input id="udqa-send_email" type="hidden" name="send_email" value="" />
+  <?php foreach ($this->getForm()->getElements() as $element) {
+      echo $element->toHtml();
+  } ?>
+  
+</form>
+
+<script type="text/javascript">
+require(["jquery", "prototype", 'varien/form'], function(jQuery) {
+
+var udqaEditForm = new VarienForm('question-edit-form', true);
+window.udqaEditFormSubmit = function (elem, sendEmail) {
+    if (sendEmail) {
+        $('udqa-send_email').value=1;
+    } else {
+        $('udqa-send_email').value=0;
+    }
+    $(elem).up().select('button').invoke('hide');
+    $('question-edit-form-loader').show();
+    var res = false;
+    if (udqaEditForm.validator && udqaEditForm.validator.validate()) {
+        res = true;
+        udqaEditForm.form.submit();
+    } else {
+        $(elem).up().select('button').invoke('show');
+        $('question-edit-form-loader').hide();
+    }
+    return res;
+}
+
+});
+</script>

@@ -1,0 +1,56 @@
+<?php
+$form = $this->getElement()->getForm();
+$topElements = $this->getElement()->getTopColumn();
+$bottomElements = $this->getElement()->getBottomColumn();
+$lcElements = $this->getElement()->getLeftColumn();
+$rcElements = $this->getElement()->getRightColumn();
+$lcElements = $this->getElement()->getLeftColumn();
+$rcElements = $this->getElement()->getRightColumn();
+?>
+<div class="fieldset udmspro-register-fieldset" alt="<?php echo $this->getElement()->getLegend()?>">
+  <div class="fieldset-heading"><?php echo $this->getElement()->getLegend()?></div>
+
+<?php if (!empty($topElements)): ?>
+  <?php foreach($topElements as $topElement): ?>
+  <div class="form-group" id="<?php echo $topElement.'-container'?>">
+    <?php echo $this->getChildElementJs($topElement); ?>
+    <?php echo $this->getChildElementHtml($topElement); ?>
+  </div>  
+  <?php endforeach ?>
+<?php endif ?>
+
+  <div class="row">
+    <?php if (!empty($lcElements)): ?>
+      <div class="col-sm-6">
+        <?php foreach($lcElements as $lcElement): ?>
+          <div class="form-group" id="<?php echo $lcElement.'-container'?>">
+            <?php echo $this->getChildElementJs($lcElement); ?>
+            <?php echo $this->getChildElementHtml($lcElement); ?>
+          </div>
+        <?php endforeach ?>
+      </div>
+    <?php endif ?>
+    
+    <?php if (!empty($rcElements)): ?>
+      <div class="col-sm-6">
+        <?php foreach($rcElements as $rcElement): ?>
+          <div class="form-group" id="<?php echo $rcElement.'-container'?>">
+            <?php echo $this->getChildElementJs($rcElement); ?>
+            <?php echo $this->getChildElementHtml($rcElement); ?>
+          </div>
+         <?php endforeach ?>
+      </div>
+    <?php endif ?>
+  
+  </div> <!--/.row -->
+
+<?php if (!empty($bottomElements)): ?>
+  <?php foreach($bottomElements as $bottomElement): ?>
+    <div class="form-group" id="<?php echo $bottomElement.'-container'?>">
+      <?php echo $this->getChildElementJs($bottomElement); ?>
+      <?php echo $this->getChildElementHtml($bottomElement); ?>
+    </div>
+  <?php endforeach ?>
+<?php endif ?>
+
+</div> <!--/.fieldset -->

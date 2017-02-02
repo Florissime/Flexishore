@@ -1,0 +1,40 @@
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!DOCTYPE html>
+<html lang="<?php echo $this->getLang() ?>">
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <?php echo $this->getChildHtml('head') ?>
+</head>
+<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<div id="fb-root"></div>
+<script>
+require(["jquery", "prototype"], function(jQuery) {
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=304969846236681";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+});
+</script>
+
+	<?php echo $this->getChildHtml('after_body_start') ?>
+	
+<div class="site-wrapper">
+    <?php echo $this->getChildHtml('header') ?>
+    <?php echo $this->getChildHtml('breadcrumbs') ?>
+    <?php echo $this->getChildHtml('global_notices') ?>
+    <?php echo $this->getChildHtml('global_messages') ?>
+    <?php echo $this->getChildHtml('content') ?>
+    <?php echo $this->getChildHtml('footer') ?>
+    <?php echo $this->getChildHtml('before_body_end') ?>
+</div>
+
+<?php echo $this->getAbsoluteFooter() ?>
+</body>
+</html>

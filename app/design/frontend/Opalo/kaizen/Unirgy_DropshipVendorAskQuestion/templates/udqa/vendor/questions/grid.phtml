@@ -1,0 +1,170 @@
+<?php
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+$_prHlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipVendorProduct\Helper\Data');
+$_prSrc = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipVendorProduct\Model\Source');
+?>
+
+
+<div class="page-title">
+  <h1><?php echo __('My Questions')?></h1>
+  <a id="filter-orders-toggle" href="javascript:void(0);" class="btn btn-link popover-toggle"><span class="icon-funnel"></span> <?php echo __('Filter Questions')?></a>
+</div>
+<div id="filter-form" class="hidden">
+  <form method="get">
+    <div class="filter-form">
+      <div class="popover-main">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label" for="filter-order_id-from"><?php echo __('Order ID') ?></label>
+                <div class="input-range">
+                  <input id="filter-order_id-from" name="filter_order_id_from" title="<?php echo __('From Order ID') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_order_id_from') ?>" /> -
+                  <input id="filter-order_id-to" name="filter_order_id_to" title="<?php echo __('To Order ID') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_order_id_to') ?>" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="filter-product-sku"><?php echo __('Product SKU') ?></label>
+                <input id="filter-product-sku" name="filter_product_sku" title="<?php echo __('SKU') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_product_sku') ?>" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="filter-product-name"><?php echo __('Product Name') ?></label>
+                <input id="filter-product-name" name="filter_product_name" title="<?php echo __('Product Name') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_product_name') ?>" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="filter-visibility"><?php echo __('Question Visibility') ?></label>
+                <select class="form-control" id="filter-visibility" name="filter_visibility" title="<?php echo __('Question Visibility') ?>" >
+                    <?php $_status = (string)$this->getRequest()->getParam('filter_visibility') ?>
+                    <option value="" <?php echo $_status===''?'selected="selected"':'' ?>><?php echo __('Any') ?></option>
+                    <option value="1" <?php echo $_status==='1'?'selected="selected"':'' ?>><?php echo __('Public') ?></option>
+                    <option value="2" <?php echo $_status==='2'?'selected="selected"':'' ?>><?php echo __('Private') ?></option>
+                </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="control-label" for="filter-customer_name"><?php echo __('Customer Name') ?></label>
+              <input id="filter-customer_name" name="filter_customer_name" title="<?php echo __('Customer Name') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_customer_name') ?>" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="filter-question_date-from"><?php echo __('Question Date') ?></label>
+              <div class="input-range">
+                <input id="filter-question_date-from" name="filter_question_date_from" title="<?php echo __('From Question Date') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_question_date_from') ?>" /> -
+                <input id="filter-question_date-to" name="filter_question_date_to" title="<?php echo __('To Question Date') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_question_date_to') ?>" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="filter-question"><?php echo __('Question') ?></label>
+              <input id="filter-question" name="filter_question" title="<?php echo __('Question') ?>" type="text" class="input-text form-control" value="<?php echo $this->getRequest()->getParam('filter_question') ?>" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="filter-replied"><?php echo __('Is Replied') ?></label>
+              <select id="filter-replied" class="form-control" name="filter_replied" title="<?php echo __('Is Replied') ?>" >
+                  <?php $_status = (string)$this->getRequest()->getParam('filter_replied') ?>
+                  <option value="" <?php echo $_status===''?'selected="selected"':'' ?>><?php echo __('Any') ?></option>
+                  <option value="1" <?php echo $_status==='1'?'selected="selected"':'' ?>><?php echo __('Yes') ?></option>
+                  <option value="0" <?php echo $_status==='0'?'selected="selected"':'' ?>><?php echo __('No') ?></option>
+              </select>
+            </div>
+          </div> 
+        </div>
+      </div>
+      <div class="buttons-set">
+            <input type="submit" value="search" style="display:none" />
+
+            <input type="hidden" name="limit" value="<?php echo $this->getRequest()->getParam('limit')?>"/>
+            <input type="hidden" name="p" value="<?php echo $this->getRequest()->getParam('p')?>"/>
+
+            <button class="btn form-button" name="reset_filter" type="button" onclick="setLocation('<?php echo $this->getUrl('*/*/*')?>')" id="filter-search" value="search"><span><?php echo __('Reset Filter') ?></span></button>
+            <button class="btn btn-primary form-button" name="submit_action" type="submit" id="filter-search" value="search"><span><?php echo __('Search') ?></span></button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="panel">
+  <?php echo $this->getChildHtml('toolbar') ?>
+  <table class="data-table" id="questions-table">
+      <col width="" />
+      <col width="" />
+      <col width="" />
+      <col width="" />
+      <col width="" />
+      <col width="" />
+      <thead>
+          <tr>
+              <th><?php echo __('Details')?></th>
+              <th><?php echo __('Is Replied')?></th>
+              <th><?php echo __('Customer Name')?></th>
+              <th><?php echo __('Question')?></th>
+              <th><?php echo __('Answer')?></th>
+          </tr>
+      </thead>
+      <tbody>
+  <?php foreach ($this->getQuestionsCollection() as $_p): $_id = $_p->getId(); ?>
+          <tr>
+              <td>
+                  <h5><?php echo __('QUESTION DATE')?></h5>
+                  <span class="nobr"><?php echo $this->formatDate($_p->getQuestionDate()) ?></span>
+                  <?php if (!$_p->isEmptyAnswerDate()): ?>
+                  <h5><?php echo __('ANSWER DATE')?></h5>
+                  <?php echo $this->formatDate($_p->getAnswerDate()); ?>
+                  <?php endif ?>
+                  <?php if ($_p->getShipmentId()): ?>
+                  <h5><?php echo __('SHIPMENT')?></h5>
+                  <a href="<?php echo $this->getShipmentUrl($_p)?>"><?php echo __('#%1 for order #%2', $_p->getShipmentIncrementId(), $_p->getOrderIncrementId())?></a>
+                  <?php endif ?>
+                  <?php if ($_p->getProductId()): ?>
+                  <h5><?php echo __('PRODUCT')?></h5>
+                  <a href="<?php echo $this->getProductUrl($_p)?>">SKU: <?php echo $_p->getProductSku().' : '.$_p->getProductName()?></a>
+                  <?php endif ?>
+                  <h5><?php echo __('VISIBILITY')?></h5>
+                  <?php if ($_p->getVisibility()==1):?>
+                  <?php echo __('Public') ?>
+                  <?php else: ?>
+                  <?php echo __('Private') ?>
+                  <?php endif ?>
+              </td>
+              <td>
+                  <?php if ($_p->getIsReplied()==1):?>
+                  <?php echo __('Yes') ?>
+                  <?php else: ?>
+                  <?php echo __('No') ?>
+                  <?php endif ?>
+              </td>
+              <td><a href="<?php echo $this->getUrl('udqa/vendor/questionEdit', ['id'=>$_id])?>"><?php echo $this->escapeHtml($_p->getData('customer_name')); ?></a></td>
+              <td><?php echo $this->escapeHtml($_p->getData('question_text')); ?></td>
+              <td><?php echo $this->escapeHtml($_p->getData('answer_text')); ?></td>
+          </tr>
+  <?php endforeach ?>
+      </tbody>
+  </table>
+  <?php echo $this->getChildHtml('toolbar') ?>
+</div>
+  
+<script type="text/javascript">
+require(["jquery","kaizenLocal"], function(jQuery) {
+  filterToggle(
+    '<?php echo __('Filter Questions')?>',
+    jQuery('#filter-orders-toggle'), 
+    jQuery('#filter-form')
+  );
+});
+</script>
+
+
+
+<script type="text/x-magento-init">
+
+{
+    "#filter-question_date-from, #filter-question_date-to": <?php echo json_encode(
+        [
+            'calendar' => [
+                'dateFormat' => $_hlp->getDateFormat(),
+                'showsTime' => false,
+                'timeFormat' => '',
+                'buttonText' => 'Select Date',
+            ],
+        ]
+    ); ?>
+}
+</script>

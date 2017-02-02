@@ -1,0 +1,37 @@
+<?php
+$memberships = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipVendorMembership\Model\MembershipFactory')->create()->getCollection();
+$oneMembership = count($memberships) <= 1;
+?>
+<?php if (empty($memberships)): ?>
+    <dt>
+        <?php echo __('No Membership') ?>
+    </dt>
+<?php else:
+    foreach ($memberships as $membership):
+        if (!$membership['allow_registration']) continue;
+        $isAuto = in_array($membership['billing_type'], ['paypal']);
+        $_id = $membership->getId();
+        if ($isAuto) {
+        $_product = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Catalog\Model\ProductFactory')->create()->loadByAttribute('sku', $membership->getMembershipSku());
+        if (!$_product || !$_product->getId()) continue;
+        $prodBlock = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\View\Layout')->createBlock('catalog/product_price', 'membership.product.price.'.$_id)->setProduct($_product);
+        }
+        ?>
+        <dt>
+          <div class="radio">
+            <?php if(!$oneMembership): ?>
+                <input id="udmember_membership_<?php echo $_id ?>" value="<?php echo $_id ?>" type="radio" name="udmember[membership]" title="<?php echo $this->escapeHtml($membership->getMembershipTitle()) ?>" class="validate-one-required-by-name radio" />
+            <?php else: ?>
+                <input id="udmember_membership_<?php echo $_id ?>" value="<?php echo $_id ?>" type="radio" name="udmember[membership]" checked="checked" class="radio hidden" /></span>
+                <?php $oneMembership = $_id; ?>
+            <?php endif; ?>
+            <label for="udmember_membership_<?php echo $_id ?>"><?php echo $this->escapeHtml($membership->getMembershipTitle()) ?> <?php if ($isAuto): ?><?php echo $prodBlock->getPriceHtml($_product); ?><?php endif?></label>
+            </div>
+        </dt>
+    <?php endforeach;
+endif;
+?>
+
+<style>
+#_membership_options-container .price-box {display: inline}
+</style>

@@ -1,0 +1,20 @@
+<?php
+$isCfg = $this->getElement()->getId() == 'configurable';
+$elements = $this->getElement()->getElements()->getIterator();
+$topElements = $this->getElement()->getTopColumn();
+$bottomElements = $this->getElement()->getBottomColumn();
+$lcElements = $this->getElement()->getLeftColumn();
+$rcElements = $this->getElement()->getRightColumn();
+?>
+<div class="panel">
+  <div class="panel-heading"><?php echo $this->getElement()->getLegend() ?></div>
+  <div class="panel-body">
+    <?php if (!empty($topElements)): ?>
+      <?php foreach($topElements as $wideElement): ?>
+        <div class="form-group" id="<?php echo $wideElement.'-container'?>">
+          <?php echo $this->getChildElementHtml($wideElement); ?>
+        </div>
+      <?php endforeach ?>
+    <?php endif ?>
+  </div>
+</div>

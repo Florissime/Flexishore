@@ -1,0 +1,17 @@
+{
+    "name": "Opalo/kaizen",
+    "description": "N/A",
+    "require": {
+        "php": "~5.6.0|7.0.2|~7.0.6",
+    },
+    "type": "magento2-theme",
+    "version": "1.0.4",
+    "license": [
+        "Proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ]
+    }
+}

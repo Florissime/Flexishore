@@ -1,0 +1,616 @@
+<?php
+/** @var \Unirgy\Dropship\Helper\Data $_hlp */
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+/** @var \Unirgy\DropshipPo\Helper\Data $_poHlp */
+$_poHlp = $_hlp->getObj('Unirgy\DropshipPo\Helper\Data');
+/** @var \Unirgy\Dropship\Model\Session $_session */
+$_session = $_hlp->getObj('Unirgy\Dropship\Model\Session');
+$_vendor = $_session->getVendor();
+$_highlight = $_session->getHighlight(true);
+
+$vFieldsXml = $_hlp->getScopeConfig('global/udropship/vendor/fields', 'default');
+
+$_po = $this->getPo();
+$_id = $_po->getId();
+
+$_order = $_po->getOrder();
+$_address = $_order->getShippingAddress() ? $_order->getShippingAddress() : $_order->getBillingAddress();
+
+$shipping = $_hlp->getShippingMethods();
+$vShipping = $_vendor->getShippingMethods();
+
+$poShippingMethod = $_po->getUdropshipMethod();
+if (null == $poShippingMethod) {
+    $poShippingMethod = $_order->getShippingMethod();
+}
+
+$uMethod = explode('_', $_order->getShippingMethod(), 2);
+if ($uMethod[0]=='udsplit') {
+    $udMethod = $_hlp->mapSystemToUdropshipMethod(
+        $poShippingMethod,
+        $_vendor
+    );
+    $uMethodCode = $udMethod->getShippingCode();
+} else {
+    $uMethodCode = !empty($uMethod[1]) ? $uMethod[1] : '';
+}
+
+$method = explode('_', $poShippingMethod, 2);
+$carrierCode = !empty($method[0]) ? $method[0] : $_vendor->getCarrierCode();
+
+$curShipping = $shipping->getItemByColumnValue('shipping_code', $uMethodCode);
+$methodCode  = !empty($method[1]) ? $method[1] : '';
+
+$labelCarrierAllowAll = $_hlp->getScopeConfig('udropship/vendor/label_carrier_allow_all', $_order->getStoreId());
+$labelMethodAllowAll = $_hlp->getScopeConfig('udropship/vendor/label_method_allow_all', $_order->getStoreId());
+
+if ($curShipping && $labelMethodAllowAll) {
+    $curShipping->useProfile($_vendor);
+    $_carriers = [$carrierCode=>0];
+    if ($labelCarrierAllowAll) {
+        $_carriers = array_merge($_carriers, $curShipping->getAllSystemMethods());
+    }
+    $availableMethods = [];
+    foreach ($_carriers as $_carrierCode=>$_dummy) {
+        $_availableMethods = $_hlp->getCarrierMethods($_carrierCode, true);
+        $carrierTitle = $_hlp->getScopeConfig("carriers/$_carrierCode/title", $_order->getStoreId());
+        foreach ($_availableMethods as $mCode => $mLabel) {
+            $_amDesc = $carrierTitle.' - '.$mLabel;
+            $_amCode = $_carrierCode.'_'.$mCode;
+            $availableMethods[$_amCode] = $_amDesc;
+        }
+    }
+    $curShipping->resetProfile();
+} elseif ($curShipping && isset($vShipping[$curShipping->getId()])) {
+    $curShipping->useProfile($_vendor);
+    $methodCode  = !empty($method[1]) ? $method[1] : $curShipping->getSystemMethods($vShipping[$curShipping->getId()]['carrier_code']);
+    $availableMethods = [];
+    if (!$labelCarrierAllowAll || $_hlp->isUdsprofileActive()) {
+        foreach ($vShipping as $_sId => $__vs) {
+            foreach ($__vs as $_vs) {
+                if ($carrierCode != $_vs['carrier_code'] && !$labelCarrierAllowAll || !($_s = $shipping->getItemById($_sId)) || !($_vs['method_code'])) continue;
+                $_amCode = $_vs['carrier_code'].'_'.$_vs['method_code'];
+                $carrierMethods = $_hlp->getCarrierMethods($_vs['carrier_code']);
+                if (!isset($carrierMethods[$_vs['method_code']])) continue;
+                $_amDesc = $_hlp->getScopeConfig('carriers/'.$_vs['carrier_code'].'/title', $_order->getStoreId())
+                    .' - '.$carrierMethods[$_vs['method_code']];
+                $availableMethods[$_amCode] = $_amDesc;
+            }
+        }
+    } else {
+        foreach ($vShipping as $_sId => $__vs) {
+            if (($_s = $shipping->getItemById($_sId))) {
+                $allSystemMethods = $_s->getAllSystemMethods();
+                foreach ($allSystemMethods as $_smCarrier => $__sm) {
+                    foreach ($__sm as $_smMethod) {
+                        $_amCode = $_smCarrier.'_'.$_smMethod;
+                        $carrierMethods = $_hlp->getCarrierMethods($_smCarrier);
+                        if (!isset($carrierMethods[$_smMethod])) continue;
+                        $_amDesc = $_hlp->getScopeConfig('carriers/'.$_smCarrier.'/title', $_order->getStoreId())
+                            .' - '.$carrierMethods[$_smMethod];
+                        $availableMethods[$_amCode] = $_amDesc;
+                    }
+                }
+            }
+        }
+    }
+    $curShipping->resetProfile();
+}
+
+$labelCarrierAllowAlways = $_hlp->getScopeConfig('udropship/vendor/label_carrier_allow_always', $_order->getStoreId());
+if (!is_array($labelCarrierAllowAlways)) {
+    $labelCarrierAllowAlways = array_filter(explode(',', $labelCarrierAllowAlways));
+}
+foreach ($labelCarrierAllowAlways as $lcaaCode) {
+    $lcaaCarrierMethods = $_hlp->getCarrierMethods($lcaaCode, true);
+    foreach ($lcaaCarrierMethods as $lcaaMethodCode=>$lcaaMethodTitle) {
+        $lcaaFullMethodCode = $lcaaCode.'_'.$lcaaMethodCode;
+        $lcaaDesc = $_hlp->getScopeConfig('carriers/'.$lcaaCode.'/title', $_order->getStoreId())
+            .' - '.$lcaaMethodTitle;
+        $availableMethods[$lcaaFullMethodCode] = $lcaaDesc;
+    }
+}
+
+if (count($method)>1) {
+    $_poCarrierMethods = $_hlp->getCarrierMethods($method[0]);
+    if (isset($_poCarrierMethods[$method[1]])) {
+        $availableMethods[$poShippingMethod] = $_hlp->getScopeConfig('carriers/'.$method[0].'/title', $_order->getStoreId())
+            .' - '.$_poCarrierMethods[$method[1]];
+    }
+}
+
+$_items = $_po->getAllItems();
+
+$_shipments = $_hlp->getObj('Magento\Framework\Stdlib\ArrayUtils')->decorateArray($_po->getShipmentsCollection());
+$_comments = $_po->getVendorCommentsCollection();
+
+$_statuses = $_poHlp->getVendorUdpoStatuses();
+$_shipmentStatuses = $_hlp->src()->setPath('shipment_statuses')->toOptionHash();
+$_statusId = $_po->getUdropshipStatus();
+
+$_giftMsg = [];
+$_giftMsgIds = [];
+if ($_order->getGiftMessageId()) {
+    $_giftMsgIds[] = $_order->getGiftMessageId();
+}
+foreach ($_items as $_item) {
+    if ($_item->getOrderItem()->getGiftMessageId()) {
+        $_giftMsgIds[] = $_item->getOrderItem()->getGiftMessageId();
+    }
+}
+if ($_giftMsgIds) {
+    array_unique($_giftMsgIds);
+    $_giftMsgCollection = $_hlp->getObj('Magento\GiftMessage\Model\MessageFactory')->create()->getCollection()
+        ->addFieldToFilter('gift_message_id', ['in'=>$_giftMsgIds]);
+    foreach ($_giftMsgCollection as $_g) {
+        $_giftMsg[$_g->getId()] = $_g->toArray();
+    }
+}
+$fcBlock = $this->getLayout()->getBlockSingleton('\Unirgy\Dropship\Block\FieldContainer');
+$fcBlock->setTemplate('Unirgy_Dropship::unirgy/dropship/vendor/shipment/mps_config.phtml');
+$fcBlock->setFieldValue([
+    'default_pkg_width' => $_vendor->getDefaultPkgWidth(),
+    'default_pkg_length' => $_vendor->getDefaultPkgLength(),
+    'default_pkg_height' => $_vendor->getDefaultPkgHeight(),
+    'remaining_weight' => $this->getRemainingWeight(),
+    'remaining_value' => $this->getRemainingValue()
+])->setPo($_po)->setMasterId($_id)->setFieldName('mps_config_'.$_id)->setUseDisabled(true);
+?>
+<?php if ($this->getRequest()->isPost()): ?>
+    <span id="status-update-<?php echo $_id ?>" style="display:none"><?php echo $_poHlp->getUdpoStatusName($_po) ?></span>
+<?php endif ?>
+<?php if ($this->getDownloadUrl()): ?>
+    <span id="download-url-<?php echo $_id ?>" style="display:none"><?php echo $this->getDownloadUrl() ?></span>
+<?php endif ?>
+<form id="udpo-form-<?php echo $_id?>" method="post" action="<?php echo $this->getUrl('udropship/vendor/udpoPost', ['id'=>$_id])?>">
+
+    <div class="row shipment-items">
+        <div class="col-sm-6">
+            <div class="block">
+              <div class="row">
+                  <div class="col-sm-6">
+                        <div class="block-title"><?php echo __('Shipping Address')?></div>
+                        <div class="block-content">
+                            <?php echo $_hlp->formatCustomerAddress($_address, 'html', $_vendor) ?>
+                        </div>
+                  </div>
+                  <div class="col-sm-6 <?php if (!empty($_highlight['tracking'])): ?>highlight<?php endif ?>">      
+                  </div>
+              </div>
+            </div>
+            
+            <div class="block">
+              <div class="block-title form-inline">
+                <div class="form-group">
+                  <?php echo __('Partial Availability')?>
+                  <select class="form-control" type="checkbox" name="partial_availability" id="partial_availability-<?php echo $_id?>" onchange="switchPoPartialAvailability(this, <?php echo $_id?>)">
+                      <option value=""><?php echo __('* Select action') ?></option>
+                      <option value="inform"><?php echo __('Inform retailer') ?></option>
+                      <?php if ($_po->canCreateShipment()): ?><option value="ship"><?php echo __('Ship partial') ?></option><?php endif?>
+                  </select>
+                </div>
+                <?php echo __('Order Items')?>
+              </div>
+              <div class="block-content">
+                <script>
+require(["jquery", "prototype"], function(jQuery) {
+    window.poItemsJson['<?php echo $_id?>'] = <?php echo $this->getPoItemsJson($_po) ?>;
+});
+</script>
+                <div class="table-responsive">
+                <table class="data-table" id="order-items-<?php echo $_id ?>">
+                    <col />
+                    <col width="25%" />
+                    <col width="1" />
+                    <col width="1" />
+                    <thead>
+                        <tr>
+                            <th><?php echo __('Product Name') ?></th>
+                            <th><?php echo __('SKU') ?></th>
+                            <th class="a-center"><span class="nobr"><?php echo __('Qty') ?></span></th>
+                            <th class="a-center"><span class="nobr"><?php echo __('Shipped') ?></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($_items as $_item): ?>
+                        <?php if ($_item->getOrderItem()->getParentItem()) continue; ?>
+                        <?php echo $this->getItemHtml($_item) ?>
+                        <?php echo $_item->getGiftMessageId() ?>
+<?php if (($_gId = $_item->getOrderItem()->getGiftMessageId()) && !empty($_giftMsg[$_gId])): ?>
+                        <tr><td colspan="3">
+                            <h4><a href="#" class="item-gift-message-trigger"><?php echo __('Show/Hide Gift Message for the item above') ?></a></h4>
+                            <div class="item-gift-message-content" style="display:none">
+                                <strong><?php echo __('From: %1', $this->escapeHtml($_giftMsg[$_gId]['sender'])) ?></strong><br/>
+                                <strong><?php echo __('To: %1', $this->escapeHtml($_giftMsg[$_gId]['recipient'])) ?></strong><br/>
+                                <p><?php echo nl2br($this->escapeHtml($_giftMsg[$_gId]['message'])) ?></p>
+                            </div>
+                        </td></tr>
+<?php endif ?>
+                    <?php if ($this->isShowTotals()): ?>
+                    <tr class="udropship-item-totals"><td>
+                        <?php foreach ($_item->getUdropshipTotals() as $udTotal): ?>
+                        <div class="form-group">
+                          <nobr>
+                              <span class="label"><?php echo $this->escapeHtml($udTotal['label']) ?></span>
+                              <span class="value"><?php echo $udTotal['value'] ?></span>
+                          </nobr>
+                        </div>
+                        <?php endforeach ?>
+                    </td></tr>
+                    <?php endif ?>
+                    <?php endforeach; ?>
+                    </tbody>
+                    <?php if ($this->isShowTotals()): ?>
+                    <tfoot class="udropship-totals">
+                        <?php foreach ($_po->getUdropshipTotals() as $udTotal): ?>
+                        <tr>
+                        <td align="left" colspan="3"><strong><?php echo $this->escapeHtml($udTotal['label']) ?></strong></td>
+                        <td align="right"><?php echo $udTotal['value'] ?></td>
+                        </tr>
+                        <?php endforeach ?>
+                    </tfoot>
+                    <?php endif?>
+                </table>
+                </div> <!--/.table-responsive-->
+              
+                <?php if (($_gId = $_order->getGiftMessageId()) && !empty($_giftMsg[$_gId])): ?>
+                                <h4><?php echo __('Order Gift Message:') ?></h4>
+                                <strong><?php echo __('From: %1', $this->escapeHtml($_giftMsg[$_gId]['sender'])) ?></strong><br/>
+                                <strong><?php echo __('To: %1', $this->escapeHtml($_giftMsg[$_gId]['recipient'])) ?></strong><br/>
+                                <p><?php echo nl2br($this->escapeHtml($_giftMsg[$_gId]['message'])) ?></p>
+                <?php endif ?>
+              </div> <!--/.block-content-->
+            </div> <!--/.block-->
+
+            <?php if (count($_shipments)): ?>
+            
+            <div class="block">
+              <div class="block-title">
+                <?php echo __('Shipments')?>
+              </div>
+              <div class="block-content">
+                <div class="table-responsive">
+                <table class="data-table" <?php if (!empty($_highlight['tracking'])): ?>class="highlight"<?php endif ?>>
+                    <col width="35%" />
+                    <col width="10%" />
+                    <col width="40%" />
+                    <col width="15%" />
+                    <thead>
+                        <tr>
+                            <th><?php echo __('Shipment ID') ?></th>
+                            <th class="a-center"><span class="nobr"><?php echo __('Qty') ?></span></th>
+                            <th><?php echo __('Tracking IDs') ?></th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($_shipments as $_shipment): ?>
+                        <tr class="<?php echo $_shipment->getIsEven() ? 'even' : 'odd'?>">
+                            <td class="a-center">
+                                <a href="javascript:void(0)" onclick="showShipmentInfo('<?php echo $_id ?>', '<?php echo $_shipment->getId() ?>')"><?php echo $_shipment->getIncrementId() ?></a><br>
+                                <?php echo __(isset($_shipmentStatuses[$_shipment->getUdropshipStatus()]) ? $_shipmentStatuses[$_shipment->getUdropshipStatus()] : 'Unknown') ?>                            </td>
+                            <td><?php echo $_shipment->getTotalQty()*1 ?></td>
+                            <td>
+                                <?php $_tracking = $_hlp->getVendorTracksCollection($_shipment) ?>
+                                <?php if (count($_tracking)): ?>
+                                <ul class="tracking-numbers">
+                                <?php $_prevTmtId = null; foreach ($_tracking as $_t): $_tId = $_t->getId(); $_tmtId = $_t->getMasterTrackingId(); $_pckCnt = $_t->getPackageCount(); $_tbId = $_t->getBatchId() ?>
+                                    <?php if ($_tmtId!=$_prevTmtId && !is_null($_tmtId) && $_pckCnt>1): ?>
+                                    <div class="form-group" id="old_tracking_id-<?php echo $_tId?>" <?php if (!empty($_highlight['tracking_'.$_tId])): ?>class="highlight"<?php endif ?> >
+                                        <!--<a class="toggle" href="#" onclick="return false"><span></span></a>-->
+                                        <nobr>
+                                        <?php echo $this->escapeHtml($_tmtId) ?>
+                                        <?php if ($_t->getLabelFormat()): ?>
+                                        <a class="reprint" href="#" onclick="reprintLabelBatch(<?php echo $_id ?>, <?php echo $_tbId ?>); return false" title="<?php echo __('Print label')?>"><span></span></a>
+                                        <?php endif ?>
+                                        <a class="delete" href="#" onclick="udpoDeleteTrack(<?php echo $_id ?>, <?php echo $_tId ?>); return false" title="<?php echo !$_t->getLabelFormat() ? __('Delete tracking number') : __('Delete tracking number and void/refund label if possible') ?>"><span></span></a>
+                                        </nobr>
+                                    </div>
+                                    <?php $_prevTmtId = $_tmtId; continue; endif ?>
+                                    <div class="form-group" <?php if (!is_null($_tmtId) && $_pckCnt>1): ?>style="padding-left: 10px"<?php endif ?> id="old_tracking_id-<?php echo $_tId?>" <?php if (!empty($_highlight['tracking_'.$_tId])): ?>class="highlight"<?php endif ?> >
+                                        <!--<a class="toggle" href="#" onclick="return false"><span></span></a>-->
+                                        <nobr>
+                                        <?php echo $this->escapeHtml($_t->getNumber()) ?>
+                                        <?php if (is_null($_tmtId) || $_pckCnt==1): ?>
+                                        <?php if ($_t->getLabelFormat()): ?>
+                                        <a class="reprint" href="#" onclick="reprintLabel(<?php echo $_id ?>, <?php echo $_tId ?>); return false" title="<?php echo __('Print label')?>"><span></span></a>
+                                        <?php endif ?>
+                                        <a class="delete" href="#" onclick="udpoDeleteTrack(<?php echo $_id ?>, <?php echo $_tId ?>); return false" title="<?php echo !$_t->getLabelFormat() ? __('Delete tracking number') : __('Delete tracking number and void/refund label if possible') ?>"><span></span></a>
+                                        <?php endif ?>
+                                        </nobr>
+                                    </div>
+                                    <?php $_prevTmtId = $_tmtId ?>
+                                <?php endforeach ?>
+                                </ul>
+                                <?php endif ?>
+                            </td>
+                            <td class="actions">
+                              <a style="white-space:nowrap" href="<?php echo $this->getUrl('udpo/vendor/pdf', ['shipment_id'=>$_shipment->getId()])?>"><span class="icon-download"> <?php echo __('Packing Slip')?></a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div> <!--/.block-content -->
+            </div> <!--/.block -->
+          <?php endif ?>
+        </div> <!--/.col -->
+        <div class="col-sm-6">
+            <div class="block">
+                <div class="block-content">
+                    <?php echo $this->getLayout()->getMessagesBlock()->toHtml(); ?>
+    
+                    <div id="form-list-<?php echo $_id?>">
+    <?php if ($_vendor->getLabelType() && $_po->canCreateShipment()): ?>
+                        <div class="checkbox">
+                            <input id="print_label-<?php echo $_id?>" name="print_label" value="1" title="<?php echo __('Generate Label') ?>" type="checkbox" class="checkbox" onclick="toggleLabelForm(this, <?php echo $_id?>); toggleExtraLabelForm($('show_extra_params-<?php echo $_id?>'), '<?php echo $_id?>')"/>
+                            <label class="control-label" for="print_label-<?php echo $_id?>"><?php echo __('Generate Label') ?></label>
+                        </div>
+    <?php endif ?>
+                        <?php if (!empty($availableMethods)): ?>
+                        <div class="form-group" id="label_info-7-<?php echo $_id?>" style="display:none">
+                            <label class="control-label" for="use_method_code-<?php echo $_id?>"><?php echo __('Shipping Method') ?></label>
+                            <select id="use_method_code-<?php echo $_id?>" class="form-control" name="use_method_code" title="<?php echo __('Shipping Method') ?>" onchange="syncExtraLabelForm('<?php echo $_id?>')">
+                                <?php foreach($availableMethods as $_amCode => $_amDesc): ?>
+                                    <option value="<?php echo $_amCode?>" <?php if ($poShippingMethod==$_amCode): ?> selected<?php endif?>><?php echo $_amDesc?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <?php endif ?>
+                        <?php if (!$_hlp->isUdpoMpsAvailable($carrierCode)): ?>
+                        <div id="label_info-1-<?php echo $_id?>" class="no-mps-specific" style="display:none">
+                            <label class="control-label" for="weight-<?php echo $_id?>"><?php echo __('Shipment Info')?></label>
+                            <div class="form-inline form-group udlabel-dynamic-container-<?php echo $_id?>" style="display: none">
+                              <?php echo __('Weight:') ?>
+                              <input id="weight-<?php echo $_id?>" name="weight" value="<?php echo $this->getRemainingWeight() ?>" title="<?php echo __('Weight') ?>" type="text" disabled="disabled" class="form-control input-text udlabel-dymanic-weight-<?php echo $_id?>" style="width:50px;" /> LB
+                              &nbsp;&nbsp;
+                              <?php echo __('Value:') ?>
+                              <input id="value-<?php echo $_id?>" name="value" value="<?php echo $this->getRemainingValue() ?>" title="<?php echo __('Declared Value') ?>" type="text" disabled="disabled" class="form-control input-text udlabel-dymanic-value-<?php echo $_id?>" style="width:50px;"/> <?php echo $_order->getStoreCurrencyCode() ?>
+                                  <br />
+                            </div>
+                            <div class="form-inline form-group udlabel-static-container-<?php echo $_id?>">
+                                <?php echo __('Weight:') ?>
+                                <span class="udlabel-static-weight-<?php echo $_id?>"><?php echo $this->getRemainingWeight() ?></span> LB
+                    &nbsp;&nbsp;
+                                <?php echo __('Value:') ?>
+                                <span class="udlabel-static-value-<?php echo $_id?>"><?php echo $this->getRemainingValue() ?></span> <?php echo $_po->getOrder()->getStoreCurrencyCode() ?>
+                                <br />
+                            </div>
+                            <div class="checkbox udlabel-usecustom-weight-container-<?php echo $_id?>">
+                                <input id="udlabel-usecustom-weight-checkbox-<?php echo $_id?>" class="udlabel-usecustom-weight-checkbox-<?php echo $_id?>" type="checkbox" onclick="syncUseCustomWeight(this, <?php echo $_id?>)" />
+                                <label for="udlabel-usecustom-weight-checkbox-<?php echo $_id?>"><?php echo __('Use Custom label weight/value') ?></label>
+                            </div>
+                        </div>
+                        <?php endif ?>
+                        <div id="label_info-2-<?php echo $_id?>" class="no-mps-specific" style="display:none">
+                            <label class="control-label" for="length-<?php echo $_id?>"><?php echo __('Pkg. Dimensions')?></label>
+                            <div class="form-inline form-group">
+                              <?php echo __('Length:') ?>
+                              <input id="length-<?php echo $_id?>" name="length" value="<?php echo (float)$_vendor->getDefaultPkgLength()?>" title="<?php echo __('Length') ?>" type="text" class="form-control input-text" style="width:30px;" />
+                              &nbsp;&nbsp;
+                              <?php echo __('Width:') ?>
+                              <input id="width-<?php echo $_id?>" name="width" value="<?php echo (float)$_vendor->getDefaultPkgWidth()?>" title="<?php echo __('Width') ?>" type="text" class="form-control input-text" style="width:30px;" />
+                              &nbsp;&nbsp;
+                              <?php echo __('Height:') ?>
+                              <input id="height-<?php echo $_id?>" name="height" value="<?php echo (float)$_vendor->getDefaultPkgHeight()?>" title="<?php echo __('Height') ?>" type="text" class="form-control input-text" style="width:30px;" />
+                            </div>
+                        </div>
+                        <?php if (!$_hlp->isUdpoMpsAvailable($carrierCode)): ?>
+                        <div id="label_info-6-<?php echo $_id?>" class="mps-specific" style="display:none">
+                            <?php
+                                echo $fcBlock->toHtml();
+                            ?>
+                        </div>
+                        <?php endif ?>
+                        <div class="form-group" id="label_info-3-<?php echo $_id?>" style="display:none">
+                            <label class="control-label" for="reference-<?php echo $_id?>"><?php echo __('Reference') ?></label>
+                            <input id="reference-<?php echo $_id?>" name="reference" value="<?php echo $_po->getIncrementId() ?>" title="<?php echo __('Reference') ?>" type="text" class="form-control input-text" />
+                        </div>
+                        <div class="form-group" id="label_info-8-<?php echo $_id?>" style="display:none">
+                            <div class="checkbox">
+                              <input id="show_extra_params-<?php echo $_id?>" name="show_extra_params" value="1" title="<?php echo __('Use Label Shipping Amount') ?>" type="checkbox" class="input-checkbox" onchange="toggleExtraLabelForm(this, '<?php echo $_id?>')" />
+                              <label class="control-label" for="show_extra_params-<?php echo $_id?>"><?php echo __('Show Extra Params') ?></label>
+                            </div>
+                        </div>
+                    <?php $elIdx = 1; foreach ([
+                        'endicia_stealth' => $_hlp->config()->getField('endicia_stealth'),
+                        'endicia_label_type' => $_hlp->config()->getField('endicia_label_type'),
+                        'endicia_mail_class' => $_hlp->config()->getField('endicia_mail_class'),
+                        'endicia_mailpiece_shape' => $_hlp->config()->getField('endicia_mailpiece_shape'),
+                        'endicia_delivery_confirmation' => $_hlp->config()->getField('endicia_delivery_confirmation'),
+                        'endicia_signature_confirmation' => $_hlp->config()->getField('endicia_signature_confirmation'),
+                        'endicia_return_receipt' => $_hlp->config()->getField('endicia_return_receipt'),
+                        'endicia_electronic_return_receipt' => $_hlp->config()->getField('endicia_electronic_return_receipt'),
+                        'endicia_insured_mail' => $_hlp->config()->getField('endicia_insured_mail'),
+                        'endicia_restricted_delivery' => $_hlp->config()->getField('endicia_restricted_delivery'),
+                        'endicia_cod' => $_hlp->config()->getField('endicia_cod'),
+                    ] as $extLabelOpt => $extLabelNode): ?>
+                        <?php
+                            $lblSource = $_hlp->getObj(
+                                @$extLabelNode['source_model']
+                                ? (string)$extLabelNode['source_model']
+                                : '\Unirgy\Dropship\Model\Source'
+                            );
+                            if (is_callable([$lblSource, 'setPath'])) {
+                                $lblSource->setPath(@$extLabelNode['source'] ? (string)$extLabelNode['source'] : $extLabelOpt);
+                            }
+                            $extLabelLbl = (string)$extLabelNode['label'];
+                        ?>
+                        <div class="form-group" id="label_info-ext-<?php echo $elIdx++?>-<?php echo $_id?>" class="carrier-specific carrier-specific-usps" style="display:none">
+                          <label class="control-label" for="extra_label_info[<?php echo $extLabelOpt.'-'.$_id?>]"><?php echo __($extLabelLbl) ?></label>
+                          <select disabled="disabled" class="form-control" id="extra_label_info[<?php echo $extLabelOpt.'-'.$_id?>]" name="extra_label_info[<?php echo $extLabelOpt?>]" title="<?php echo __($extLabelLbl) ?>">
+                            <?php foreach($lblSource->toOptionHash() as $_optId => $_optVal): ?>
+                                <option value="<?php echo $_optId?>" <?php if ($_optId==$_vendor->getData($extLabelOpt)): ?> selected<?php endif?>><?php echo $_optVal?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <?php endforeach ?>
+                    <?php foreach ([
+                        'ups_insurance' => $_hlp->config()->getField('ups_insurance'),
+                        'ups_delivery_confirmation' => $_hlp->config()->getField('ups_delivery_confirmation'),
+                        'ups_verbal_confirmation' => $_hlp->config()->getField('ups_verbal_confirmation'),
+                        'ups_pickup' => $_hlp->config()->getField('ups_pickup'),
+                        'ups_container' => $_hlp->config()->getField('ups_container'),
+                        'ups_dest_type' => $_hlp->config()->getField('ups_dest_type'),
+                    ] as $extLabelOpt => $extLabelNode): ?>
+                        <?php
+                            $lblSource = $_hlp->getObj(
+                                @$extLabelNode['source_model']
+                                ? (string)$extLabelNode['source_model']
+                                : '\Unirgy\Dropship\Model\Source'
+                            );
+                            if (is_callable([$lblSource, 'setPath'])) {
+                                $lblSource->setPath(@$extLabelNode['source'] ? (string)$extLabelNode['source'] : $extLabelOpt);
+                            }
+                            $extLabelLbl = (string)$extLabelNode['label'];
+                        ?>
+                        <div class="form-group" id="label_info-ext-<?php echo $elIdx++?>-<?php echo $_id?>" class="carrier-specific carrier-specific-ups" style="display:none">
+                          <label class="control-label" for="extra_label_info[<?php echo $extLabelOpt.'-'.$_id?>]"><?php echo __($extLabelLbl) ?></label>
+                          <select disabled="disabled" class="form-control" id="extra_label_info[<?php echo $extLabelOpt.'-'.$_id?>]" name="extra_label_info[<?php echo $extLabelOpt?>]" title="<?php echo __($extLabelLbl) ?>">
+                                <?php foreach($lblSource->toOptionHash() as $_optId => $_optVal): ?>
+                                <option value="<?php echo $_optId?>" <?php if ($_optId==$_vendor->getData($extLabelOpt)): ?> selected<?php endif?>><?php echo $_optVal?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <?php endforeach ?>
+                    <?php foreach ([
+                        'fedex_dropoff_type' => $_hlp->config()->getField('fedex_dropoff_type'),
+                        'fedex_signature_option' => $_hlp->config()->getField('fedex_signature_option'),
+                        'fedex_insurance' => $_hlp->config()->getField('fedex_insurance'),
+                    ] as $extLabelOpt => $extLabelNode): ?>
+                        <?php
+                            $lblSource = $_hlp->getObj(
+                                @$extLabelNode['source_model']
+                                ? (string)$extLabelNode['source_model']
+                                : '\Unirgy\Dropship\Model\Source'
+                            );
+                            if (is_callable([$lblSource, 'setPath'])) {
+                                $lblSource->setPath(@$extLabelNode['source'] ? (string)$extLabelNode['source'] : $extLabelOpt);
+                            }
+                            $extLabelLbl = (string)$extLabelNode['label'];
+                        ?>
+                        <div class="form-group" id="label_info-ext-<?php echo $elIdx++?>-<?php echo $_id?>" class="carrier-specific carrier-specific-fedex carrier-specific-fedexsoap" style="display:none">
+                          <label class="control-label" for="extra_label_info[<?php echo $extLabelOpt.'-'.$_id?>]"><?php echo __($extLabelLbl) ?></label>
+                          <select class="form-control" disabled="disabled" id="extra_label_info[<?php echo $extLabelOpt.'-'.$_id?>]" name="extra_label_info[<?php echo $extLabelOpt?>]" title="<?php echo __($extLabelLbl) ?>">
+                                <?php foreach($lblSource->toOptionHash() as $_optId => $_optVal): ?>
+                                <option value="<?php echo $_optId?>" <?php if ($_optId==$_vendor->getData($extLabelOpt)): ?> selected<?php endif?>><?php echo $_optVal?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <?php endforeach ?>
+                        <div class="checkbox" id="label_info-4-<?php echo $_id?>" style="display:none">
+                            <input id="use_label_shipping_amount-<?php echo $_id?>" name="use_label_shipping_amount" value="1" title="<?php echo __('Use Label Shipping Amount') ?>" type="checkbox" class="input-checkbox" onchange="useLabelShippingAmountChanged(this)" />
+                            <label class="control-label" for="use_label_shipping_amount-<?php echo $_id?>"><?php echo __('Use Label Amount') ?></label>
+                        </div>
+    <?php if ($_po->canCreateShipment()): ?>
+                        <div class="form-group" id="shipping_amount-1-<?php echo $_id?>">
+                            <nobr>
+                            <label class="control-label" for="shipping_amount-<?php echo $_id?>"><?php echo __('Shipping Amount') ?></label>
+                            <input id="shipping_amount-<?php echo $_id?>" name="shipping_amount" value="<?php echo $this->getRemainingShippingAmount()?>" title="<?php echo __('Specify New Shipment Shipping Amount') ?>" type="text" class="form-control input-text" />
+                            </nobr>
+                        </div>
+                        <div class="form-group" id="tracking_id-3-<?php echo $_id?>">
+                            <label class="control-label" for="carrier-<?php echo $_id?>"><?php echo __('Carrier') ?></label>
+                            <select id="carrier-<?php echo $_id?>" name="carrier" class="form-control select" onchange="selectCarrier(this, 'carrier_title-<?php echo $_id?>')">
+                                <?php foreach ($this->getCarriers() as $_code=>$_name): ?>
+                                <option value="<?php echo $_code ?>"><?php echo $_name ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group" id="tracking_id-4-<?php echo $_id?>">
+                            <label class="control-label" for="carrier_title-<?php echo $_id?>"><?php echo __('Carrier Title') ?></label>
+                            <input id="carrier_title-<?php echo $_id?>" name="carrier_title" value="" title="<?php echo __('Carrier Title') ?>" type="text" class="form-control input-text" />
+                        </div>
+                        <div class="form-group" id="tracking_id-1-<?php echo $_id?>">
+                            <label class="control-label" for="tracking_id-<?php echo $_id?>"><?php echo __('Add Tracking ID') ?></label>
+                            <input id="tracking_id-<?php echo $_id?>" name="tracking_id" value="" title="<?php echo __('Add Tracking ID') ?>" type="text" class="form-control input-text" />
+                        </div>
+    <?php endif ?>
+                        <div class="form-group">
+                            <label class="control-label" for="comment-<?php echo $_id?>"><?php echo __('Add Comment<br/>(for retailer)') ?></label>
+                            <textarea id="comment-<?php echo $_id?>" name="comment" class="textarea form-control" title="<?php echo __('Add Comment') ?>" ></textarea>
+                        </div>
+    <?php if ($_hlp->getScopeFlag('udropship/vendor/manual_shipment_status')): ?>
+                        <div class="checkbox" id="label_info-5-<?php echo $_id?>" style="display:none">
+                            <input id="is_shipped-<?php echo $_id?>" name="is_shipped" value="1" title="<?php echo __('Mark as Shipped') ?>" type="checkbox" class="input-checkbox" <?php if ($_hlp->getScopeFlag('udropship/vendor/auto_shipment_complete')): ?>checked="checked"<?php endif ?>/>
+                            <label class="control-label" for="is_shipped-<?php echo $_id?>"><?php echo __('Mark as Shipped') ?></label>
+                        </div>
+    
+                        <div class="form-group" id="tracking_id-2-<?php echo $_id?>">
+                            <label class="control-label" for="change_status-<?php echo $_id?>"><?php echo __('Change Status') ?></label>
+                            <select id="change_status-<?php echo $_id?>" name="status" title="<?php echo __('Change Status') ?>" class="form-control select" onchange="udpoStatusChanged(this)"/>
+                                <option value=""><?php echo __('* Automatic') ?></option>
+                            <?php if (!$_hlp->getScopeFlag('udropship/vendor/allow_forced_po_status_change')): ?>
+                                <?php
+                                    $_allowedPoStatuses = $_poHlp->getAllowedPoStatuses($_po, false);
+                                    $__statuses = [];
+                                    foreach ($_statuses as $_status => $_statusLbl) {
+                                        if (in_array($_status, $_allowedPoStatuses)) {
+                                            $__statuses[$_status] = $_statusLbl;
+                                        }
+                                    }
+                                ?>
+                            <?php else: ?>
+                                <?php $__statuses = $_statuses ?>
+                            <?php endif ?>
+                            <?php foreach ($__statuses as $_k=>$_v): ?>
+                                <option value="<?php echo $_k ?>"><?php echo $_v ?></option>
+                            <?php endforeach ?>
+                            </select>
+ <script type="text/javascript">
+require(["jquery", "prototype"], function(jQuery) {
+if (!window.allowedPoStatuses) {
+    window.allowedPoStatuses = {}
+}
+window.allowedPoStatuses['<?php echo $_id?>'] = $A(<?php echo $_poHlp->getAllowedPoStatusesJson($_po, false)?>);
+});
+</script>
+                            <input type="hidden" id="force_status_change_flag-<?php echo $_id?>" name="force_status_change_flag" value="0" />
+                        </div>
+                        <div class="form-group" id="full-cancel-<?php echo $_id?>" style="display:none">
+                            <small><?php echo __('By default only items that do not have corresponding shipment items will be canceled')?></small><br /><br />
+                            <label class="control-label" for="nonshipped-cancel-cb-<?php echo $_id?>"><?php echo __('Nonshipped Cancel')?></label> <input id="nonshipped-cancel-cb-<?php echo $_id?>" type="checkbox" name="nonshipped_cancel" value="1" /> <br/>
+                            <small><?php echo __('This will cancel non shipped shipments')?></small><br /><br />
+                            <label class="control-label" for="full-cancel-cb-<?php echo $_id?>"><?php echo __('Full Cancel')?></label> <input id="full-cancel-cb-<?php echo $_id?>" type="checkbox" name="full_cancel" value="1" /> <br/>
+                            <small><?php echo __('This will cancel even shipped shipments')?></small>
+                        </div>
+    <?php endif ?>
+                        <div class="form-group">
+                            <?php if ($_po->canCreateShipment()): ?>
+                            <button class="form-button btn btn-primary" type="button" id="submit-<?php echo $_id ?>"><span><?php echo __('Create Shipment') ?></span></button>
+                            <?php endif?>
+                            <button class="form-button btn btn-primary" type="button" id="addcomment-<?php echo $_id ?>"><span><?php echo __('Add PO Comment') ?></span></button>
+                            <span class="shipment-info-loader" style="display:none" id="submit-loader-<?php echo $_id ?>"><?php echo __('Please wait, submitting...')?></span>
+                        </div>
+                    </div> 
+                </div> <!--/.block-content-->
+            </div> <!--/.block-->
+            
+            <?php if (count($_comments)): ?>
+                <div class="block block-comments-history">
+                  <div class="block-title"><?php echo __('Comments history') ?></div>
+                  <div class="block-content">
+                    
+                    <div class="table-responsive">
+                      <table class="data-table" <?php if (!empty($_highlight['comment'])): ?>class="highlight"<?php endif ?>>
+                        <tbody>
+                          <?php foreach ($_comments as $_c): ?>
+                          <tr <?php if (!empty($_highlight['comment_'.$_c->getId()])): ?>class="highlight"<?php endif ?> >
+                              <td>
+                                  <nobr><strong><?php echo $_hlp->formatDate($_c->getCreatedAt(), \IntlDateFormatter::SHORT, true) ?></strong></nobr><br/>
+                                  <nobr><strong><?php echo $_c->getUdropshipStatus()?></strong></nobr><br>
+                              </td>
+                              <td>
+                                  <?php echo nl2br($this->escapeHtml($_c->getComment())) ?>
+                              </td>
+                          </tr>
+                          <?php endforeach ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            <?php endif ?>
+        </div> <!--/.col-->
+    </div> <!--/.shipment-items-->
+</form>

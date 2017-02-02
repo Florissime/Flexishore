@@ -1,0 +1,144 @@
+<?php
+	/** @var \Unirgy\Dropship\Helper\Data $_hlp */
+	$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+    $r = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\App\RequestInterface');
+    $cHlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Catalog');
+    $ccHlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipSellYours\Helper\Data');
+    $_productCollection=$this->getLoadedProductCollection();
+	$curCat = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\Registry')->registry('current_category');
+if (!$curCat && $this->getCategoryId()) {
+	$curCat = $_hlp->createObj('\Magento\Catalog\Model\Category')->load($this->getCategoryId());
+}
+    $_helper = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Catalog\Helper\Output');
+    $sess = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Model\Session');
+    $searchUrlKey = $sess->getData('udsell_search_type') ? 'mysellSearch' : 'sellSearch';
+    $myPids = $sess->getVendor()->getVendorTableProductIds();
+?>
+<?php
+if ($block->getMode() == 'grid') {
+	$viewMode = 'grid';
+	$image = 'category_page_grid';
+	$showDescription = false;
+	$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+} else {
+	$viewMode = 'list';
+	$image = 'category_page_list';
+	$showDescription = true;
+	$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+}
+/**
+ * Position for actions regarding image size changing in vde if needed
+ */
+$pos = $block->getPositioned();
+?>
+<div class="page-title">  
+  <?php if ($sess->getData('udsell_search_type')): ?>
+    <h1><?php echo __('My Sell List')?></h1>
+    <div class="actions">
+      <a class="btn form-button" href="<?php echo $this->getUrl('*/*/sellSearch', ['_current'=>true])?>"><?php echo __('Switch to Sell Yours')?></a>
+    </div>
+  <?php else: ?>
+    <h1><?php echo __('Sell Yours')?></h1>
+    <div class="actions">
+      <a class="btn form-button" href="<?php echo $this->getUrl('*/*/mysellSearch', ['_current'=>true])?>"><?php echo __('Switch to My Sell List')?></a>
+    </div>
+  <?php endif?>
+</div>
+<div class="panel">
+  <div class="batch-actions"> 
+		<form action="<?php echo $this->getUrl('udsell/index/'.$searchUrlKey, ['c'=>$r->getParam('c')]) ?>" method="get" class="input-box-container form-inline">
+			<div class="form-group">
+			  <label><?php echo __('Find a product:')?></label>
+				<input type="text" name='q' value='<?php echo $r->getParam('q') ?>' class="form-control input-text required-entry"/>
+        <button class="btn btn-primary form-button" onclick="udsellSearchForm.submit()"><?php echo __('Search')?></button>		
+			</div>
+			<div class="tertiary">
+			  <?php echo __("Didn't find what you're looking for?")?> <a href="<?php echo $this->getUrl('udprod/vendor/products/') ?>" class="create-new"> <strong><?php echo __("Create your product")?></strong></a>
+      </div>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+  //<![CDATA[
+require(["jquery", "prototype", "varien/form"], function(jQuery) {
+window['udsellSearchForm'] = new VarienForm('udsell-search-form', true);
+});
+  //]]>
+  </script>
+  <div class="panel-body panel-browse-products">
+    <div class="row">
+      <div class="col-sm-3 col-lg-2 sidebar col-left">
+        <?php if ($curCat):
+            $subCats = $cHlp->getCategoryChildren($curCat);
+        ?>
+  		  <div class="block-title"><?php echo __('Categories')?></div>
+  			<dl>
+  				<dt><?php echo htmlspecialchars($curCat->getName())?></dt>
+                      <?php if (count($subCats)):?>
+  				<dd>
+                          <?php foreach ($subCats as $subCat): ?>
+  					<ol>
+								<li><a href="<?php echo $this->getUrl('udsell/index/'.$searchUrlKey, ['_current'=>true, 'c'=>$subCat->getId()])?>"><?php echo htmlspecialchars($subCat->getName())?></a></li>
+  					</ol>
+                          <?php endforeach ?>
+  				</dd>
+                      <?php endif ?>
+  			</dl>
+  			<?php endif ?>
+      </div>
+  		<div class="col-sm-9 col-lg-10 col-main">
+        <h3><?php if ($r->getParam('q') && $curCat): ?>
+        <?php echo __('Search Results for "%1" in category "%2"', htmlspecialchars($r->getParam('q')), htmlspecialchars($curCat->getName()))?>
+        <?php elseif ($curCat): ?>
+        <?php echo __('Browsing category "%1"', htmlspecialchars($curCat->getName()))?>
+        <?php elseif ($r->getParam('q')): ?>
+        <?php echo __('Search Results for "%1"', htmlspecialchars($r->getParam('q')))?>
+        <?php endif?>
+        </h3>
+  
+        <?php if(!$_productCollection->count()): ?>
+          <p class="note-msg"><?php echo __('There are no products matching the selection.') ?></p>
+        <?php else: ?>
+  
+          <?php echo $this->getToolbarHtml() ?>
+  
+          <div class="products-list" id="products-list">
+            <?php $_iterator = 0; ?>
+            <?php $_count = 0; ?>
+            <div class="row">
+            <?php foreach ($_productCollection as $_product): ?>
+              <div class="item col-xs-6 col-md-4 col-lg-3">
+              	<div class="row">
+              	  <div class="col-sm-6 col-md-5">
+        					
+                  <?php
+                  $_imagehelper = $this->helper('Magento\Catalog\Helper\Image');
+                  //$productImage = $_imagehelper->init($_product, $image)->constrainOnly(FALSE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(80)->getUrl();
+                  $productImage = $block->getUrl('pub/media/catalog').'product'.$_product->getImage();
+                  
+                  //$productImage = $block->getImage($_product, 'product_page_image_small');
+                  ?>
+        					<?php // Product Image ?>
+        					<a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="product product-image photo product-item-photo" tabindex="-1">
+                      <img class="img-responsive" src="<?php echo $productImage; ?>" alt="<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>"/>
+        					</a>
+              	  </div>
+              	  <div class="col-sm-6 col-md-7">
+                  	<h3 class="product-name"><a href="<?php echo $ccHlp->getSellUrl($_product)?>" title="<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h3>
+                  	 
+                  	<button type="button" title="<?php echo __('Sell Yours')?>" class="btn<?php echo in_array($_product->getId(), $myPids)?' btn-primary':''?> form-button btn-sellyours" onclick="setLocation('<?php echo $this->getUrl('udsell/index/sell', array('id'=>$_product->getId())) ?>')"><?php echo in_array($_product->getId(), $myPids) ? __('Edit My Offer') : __('Sell Yours')?></button>
+              	  </div>
+              	</div>
+              </div> <!--/.item-->
+              <?php $_count++ ?>
+              <?php if($_count%2==0):?><span class="clearfix visible-xs visible-sm"></span><?php endif;?>
+              <?php if($_count%3==0):?><span class="clearfix visible-md"></span><?php endif;?>
+              <?php if($_count%4==0):?><span class="clearfix visible-lg"></span><?php endif;?>
+            <?php endforeach ?>
+            </div>
+          <?php endif ?>
+        </div> <!--/.col-main-->
+      </div> <!--/.row-->
+    </div>
+	</div>
+</div>
