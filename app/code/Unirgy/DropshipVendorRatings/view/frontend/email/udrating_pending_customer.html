@@ -1,0 +1,23 @@
+<!--@subject Pending Shipment Reviews Reminder from {{var store_name}} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "%name," name=$customer.getCustomerName()}}</p>
+            <p>You have pending shipments waiting for your rate/review.<br />
+            Visit your <a href="{{store url="customer/account/"}}" style="color:#1E7EC8;">account</a> and find <a href="{{store url="udratings/customer/pending/"}}" style="color:#1E7EC8;">My Vendor Pending Reviews</a> in "My Account" menu:</p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{layout handle="udrating_pending_shipments" shipments=$shipments}}
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#EAEAEA" align="center" style="background:#EAEAEA; text-align:center;"><center><p style="font-size:12px; margin:0;">Thank you, <strong>{{var store.getFrontendName()}}</strong></p></center></td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,28 @@
+{
+    "name": "Unirgy\/DropshipMicrosite",
+    "description": "",
+    "require": {
+        "php": "~5.5.0|~5.6.0"
+    },
+    "type": "magento2-module",
+    "version": "2.4.1",
+    "license": [
+        "Proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Unirgy\\DropshipMicrosite\\": ""
+        }
+    },
+    "extra": {
+        "map": [
+            [
+                "*",
+                "Unirgy\/DropshipMicrosite"
+            ]
+        ]
+    }
+}

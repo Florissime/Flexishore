@@ -1,0 +1,76 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+?>
+<?php
+$_vendorCollection=$this->getVendorsCollection();
+$_vLogoWidth = 135;
+$_vLogoHeight = 135;
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+?>
+<?php if (!$_vendorCollection->count()): ?>
+    <div class="message info empty"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+<?php else: ?>
+    <?php echo $block->getToolbarHtml() ?>
+    <?php
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $image = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'list';
+        $image = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+    ?>
+    <div class="umicrosite-vendors products wrapper <?php /* @escapeNotVerified */ echo $viewMode; ?> products-<?php /* @escapeNotVerified */ echo $viewMode; ?>">
+        <?php $iterator = 1; ?>
+        <ol class="products list items product-items">
+            <?php /** @var $_vendor \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_vendorCollection as $_vendor):
+                $_vendor->afterLoad();
+                $vName = $_vendor->getVendorName();
+                $vUrl = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipMicrosite\Helper\Data')->getVendorUrl($_vendor);
+                ?>
+                <?php /* @escapeNotVerified */ echo($iterator++ == 1) ? '<li class="item product product-item">' : '</li><li class="item product product-item">' ?>
+                <div class="product-item-info" data-container="product-grid">
+                    <a href="<?php echo $vUrl ?>" title="<?php echo $vName ?>" class="product-image"><img src="<?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data')->getResizedVendorLogoUrl($_vendor, $_vLogoWidth, $_vLogoHeight) ?>" width="<?php echo $_vLogoWidth?>" height="<?php echo $_vLogoHeight?>" alt="<?php echo $vName ?>" /></a>
+                    <div class="product details product-item-details">
+                        <?php
+                        $_vendorNameStripped = $block->stripTags($_vendor->getName(), null, true);
+                        ?>
+                        <strong class="product name product-item-name">
+                            <a class="product-item-link"
+                               href="<?php /* @escapeNotVerified */ echo $vUrl ?>">
+                                <?php /* @escapeNotVerified */ echo $vName; ?>
+                            </a>
+                        </strong>
+                        <?php if(\Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data')->isModuleActive('Unirgy_DropshipVendorRatings')): ?>
+                            <?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipVendorRatings\Helper\Data')->getReviewsSummaryHtml($_vendor) ?>
+                        <?php endif; ?>
+                        <div class="desc std">
+                            <?php echo htmlentities($_vendor->getShortDescription()) ?>
+                        </div>
+
+                        <?php if ($showDescription):?>
+                            <div class="product description product-item-description">
+                                <?php /* @escapeNotVerified */ echo htmlentities($_vendor->getShortDescription())  ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php echo($iterator == count($_vendorCollection)+1) ? '</li>' : '' ?>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+    <?php echo $block->getToolbarHtml() ?>
+<?php endif; ?>

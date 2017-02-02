@@ -1,0 +1,304 @@
+<?php
+$element = $this->getElement();
+$name = $element->getName();
+$fValue = $element->getValue();
+$countries = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Directory\Model\Config\Source\CountryFactory')->create()->toOptionArray();
+unset($countries[0]);
+$_yesnoOpts = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Model\Source')->setPath('yesno')->toOptionHash();
+$note = $element->getNote() ? '<div class="note" id="' . $element->getId() . '-note">' . $element->getNote() . '</div>' : '';
+$fieldId = ($element->getHtmlContainerId()) ? ' id="' . $element->getHtmlContainerId() . '"' : '';
+$fieldClass = "admin__field field field-{$element->getId()} {$element->getCssClass()}";
+$fieldClass .= ($element->getRequired()) ? ' required _required' : '';
+$fieldClass .= ($note) ? ' with-note' : '';
+$fieldClass .= (!$element->getLabelHtml()) ? ' no-label' : '';
+
+$fieldAttributes = $fieldId . ' class="' . $fieldClass . '" '
+    . $block->getUiId('form-field', $element->getId())
+    . ($element->getFieldExtraAttributes() ? ' ' . $element->getFieldExtraAttributes() : '');
+?>
+
+<div<?php /* @escapeNotVerified */ echo $fieldAttributes ?>>
+    <?php echo $element->getLabelHtml() ?>
+    <div class="admin__field-control control">
+
+    <div class="admin__field grid">
+    <input id="<?php echo $name?>" type="hidden" />
+    <table cellspacing="0" class="data admin__control-table" id="<?php echo $this->suffixId('cfgTable')?>" style="width:700px">
+        <col width="150" />
+        <col width="150" />
+        <col width="300" />
+        <col width="70" />
+        <thead>
+            <tr class="headings">
+                <th><?php echo __('Country') ?></th>
+                <th><?php echo __('Region') ?></th>
+                <th><?php echo __('Postcode') ?></th>
+                <th><?php echo __('Action') ?></th>
+            </tr>
+            <tr id="<?php echo $this->suffixId('rowTpl')?>" style="display:none">
+                <td>
+                    <select id="<?php echo $name?>_$ROW_country_id" name="<?php echo $name?>[$ROW][country_id]">
+                    <option value=""><?php echo __('* Please select')?></option>
+                    <?php if (is_array($countries)): foreach ($countries as $country): ?>
+                        <option value="<?php echo $country['value']?>" alt="country_id"><?php echo $this->escapeHtml($country['label'])?></option>
+                    <?php endforeach; endif; ?>
+                    </select>
+                </td>
+                <td>
+                    <select multiple="multiple" id="<?php echo $name?>_$ROW_region_id" name="<?php echo $name?>[$ROW][region_id][]" defaultValue="$REGION_ID" style="height: 150px">
+                    </select>
+                    <input id="<?php echo $name?>_$ROW_region" type="hidden" />
+                </td>
+                <td>
+                    <textarea class="input-text" name="<?php echo $name?>[$ROW][postcode]" style="width:300px; height: 150px" rows=5>$POSTCODE</textarea>
+                </td>
+                <td>
+                    <button type="button" class="scalable delete"><span><?php echo __('Delete')?></span></button>
+                </td>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th colspan="2" class="a-left">
+                    <div class="left">
+                        <select id="<?php echo $name?>_country_selector" multiple="multiple" style="height: 200px">
+                            <option value=""><?php echo __('* Please select')?></option>
+                            <?php if (is_array($countries)): foreach ($countries as $country): ?>
+                            <option value="<?php echo $country['value']?>"><?php echo $this->escapeHtml($country['label'])?></option>
+                            <?php endforeach; endif; ?>
+                        </select>
+                    </div>
+                </th>
+                <th colspan="2" class="a-right">
+                    <div class="right"><button type="button" class="scalable add" id="<?php echo $this->suffixId('addBtn')?>"><span><?php echo __('Add Country Rows') ?></span></button></div>
+                </th>
+            </tr>
+        </tfoot>
+        <tbody>
+        </tbody>
+    </table>
+
+        <br /><br />
+        <b>Postcode rules:</b><br />
+        Each rule should be separated with new line, comma or semicolon.<br/>
+        Possible rules:<br/>
+        1) Simple glob expression<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SK6????<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SK6+<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SK6 12*<br/>
+        2) Range<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;90000-91000<br/>
+        3) Exact value<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;90210<br/>
+    </div>
+        <small><?php echo $element->getNote()?$element->getNote():'&nbsp;' ?></small>
+    </div>
+</div>
+
+<style type="text/css">
+</style>
+
+<script type="text/javascript">
+require(["jquery", "prototype", 'varien/form', "domReady!"], function(jQuery) {
+
+    var uMultiRegionUpdater = Class.create(RegionUpdater, {
+        update: function()
+        {
+            if (this.regions[this.countryEl.value]) {
+                if (this.lastCountryId!=this.countryEl.value) {
+                    var i, option, region, def;
+
+                    def = this.regionSelectEl.getAttribute('defaultValue');
+                    if (this.regionTextEl) {
+                        if (!def) {
+                            def = this.regionTextEl.value.toLowerCase();
+                        }
+                        this.regionTextEl.value = '';
+                    }
+
+                    this.regionSelectEl.options.length = 1;
+                    for (var regionId in this.regions[this.countryEl.value]) {
+                        region = this.regions[this.countryEl.value][regionId];
+
+                        option = document.createElement('OPTION');
+                        option.value = regionId;
+                        option.text = region.name.stripTags();
+                        option.title = region.name;
+
+                        if (this.regionSelectEl.options.add) {
+                            this.regionSelectEl.options.add(option);
+                        } else {
+                            this.regionSelectEl.appendChild(option);
+                        }
+                    }
+                    var valueList = $A(String.interpret(def).split(','));
+                    var opts = this.regionSelectEl.options;
+                    for (var oIdx=0; oIdx<opts.length; oIdx++) {
+                        if (-1 != valueList.indexOf(opts[oIdx].value)) {
+                            opts[oIdx].selected=true;
+                        }
+                    }
+                }
+
+                if (this.disableAction=='hide') {
+                    if (this.regionTextEl) {
+                        this.regionTextEl.style.display = 'none';
+                        this.regionTextEl.style.disabled = true;
+                    }
+                    this.regionSelectEl.style.display = '';
+                    this.regionSelectEl.disabled = false;
+                } else if (this.disableAction=='disable') {
+                    if (this.regionTextEl) {
+                        this.regionTextEl.disabled = true;
+                    }
+                    this.regionSelectEl.disabled = false;
+                }
+                this.setMarkDisplay(this.regionSelectEl, true);
+
+                this.lastCountryId = this.countryEl.value;
+            } else {
+                if (this.disableAction=='hide') {
+                    if (this.regionTextEl) {
+                        this.regionTextEl.style.display = '';
+                        this.regionTextEl.style.disabled = false;
+                    }
+                    this.regionSelectEl.style.display = 'none';
+                    this.regionSelectEl.disabled = true;
+                } else if (this.disableAction=='disable') {
+                    if (this.regionTextEl) {
+                        this.regionTextEl.disabled = false;
+                    }
+                    this.regionSelectEl.disabled = true;
+                    if (this.clearRegionValueOnDisable) {
+                        this.regionSelectEl.value = '';
+                    }
+                } else if (this.disableAction=='nullify') {
+                    this.regionSelectEl.options.length = 1;
+                    this.regionSelectEl.value = '';
+                    this.regionSelectEl.selectedIndex = 0;
+                    this.lastCountryId = '';
+                }
+                this.setMarkDisplay(this.regionSelectEl, false);
+
+            }
+            this._checkRegionRequired && this._checkRegionRequired();
+        }
+    });
+
+    var lastRowNum = 0;
+    var tbody = $$('#<?php echo $this->suffixId('cfgTable')?> tbody')[0]
+    var suffixIdTpl = new Template('<?php echo $this->suffixId('#{key}') ?>')
+
+    var udpAddRow = function (inData)
+    {
+        var rowHtml = $('<?php echo $this->suffixId('rowTpl')?>').innerHTML
+        var data = {
+            country_id: '',
+            region_id: '',
+            postcode: ''
+        }
+        Object.extend(data, inData);
+        data.row = ++lastRowNum;
+
+        var isIE = (/msie [1-8]\./i).test(navigator.userAgent);
+        var numericVars = [];
+        var forcedNumericVars = [];
+        var keys = $H(data).keys().sortBy(function(s){return (''+s).length}).reverse();
+        for (j=0; j<keys.length; j++) {
+            var i=keys[j];
+            value = data[i] || ''
+            if (-1 != numericVars.indexOf(i) && data[i]
+                || -1 != forcedNumericVars.indexOf(i)
+            ) {
+                value *= 1;
+                data[i] = value;
+            }
+            if (i!=='row' && isIE) value = '"'+value+'"';
+            rowHtml = rowHtml.replace(new RegExp('\\$'+i.toUpperCase(), 'g'), value)
+        }
+        var regExTpl = [
+            new Template('<option (([^>]*(alt="?#{key}"?|value="?#{value}"?(?=[\\s>]))){2})'),
+            new Template('<option $1 selected="selected"'),
+            new Template('<input (([^>]*(alt="?#{key}"?|value="?#{value}"?(?=[\\s>])|type="?checkbox"?)){3})'),
+            new Template('<input $1 checked="checked"')
+        ];
+        var selectFields = $H({country_id: 0});
+        selectFields.each(function(pair){
+            var varsForEval, value=data[pair.key], key=pair.key;
+            for (var rxIdx=0; rxIdx<regExTpl.length; rxIdx+=2) {
+                varsForEval = [];
+                if (value) {
+                    if (!Object.isArray(value)) {
+                        value = String.interpret(value).split(',');
+                    }
+                    value.each(function(val){
+                        varsForEval.push({key: key, value: val});
+                    })
+                } else {
+                    varsForEval.push({key: key, value: value});
+                }
+                for (var vfeIdx=0; vfeIdx<varsForEval.length; vfeIdx++) {
+                    var varForEval = varsForEval[vfeIdx];
+                    var rxFind = regExTpl[rxIdx].evaluate(varForEval);
+                    var rxReplace = regExTpl[rxIdx+1].evaluate(varForEval);
+                    rowHtml = rowHtml.replace(new RegExp(rxFind, 'i'), rxReplace);
+                }
+            }
+        });
+        tbody.insert('<tr>'+rowHtml+'</tr>')
+        var trs = tbody.childElements()
+        var tr = trs[trs.length-1]
+        tr.addClassName(lastRowNum % 2 ? 'odd' : 'even');
+
+        (function(lastRowNum) {
+            var regionsConfig = <?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Directory\Helper\Data')->getRegionJson()?>;
+            if (!regionsConfig.config) {
+                regionsConfig.config = {};
+            }
+            regionsConfig.config.regions_required=[];
+            new uMultiRegionUpdater('<?php echo $name?>_'+lastRowNum+'_country_id', '<?php echo $name?>_'+lastRowNum+'_region', '<?php echo $name?>_'+lastRowNum+'_region_id', regionsConfig, 'hide');
+            $('<?php echo $name?>_'+lastRowNum+'_country_id').addClassName('<?php echo $name?>_row_country');
+        }).defer(lastRowNum);
+
+        var toggleFields = [];
+        toggleFields.each(function(key){
+            var yesKey = suffixIdTpl.evaluate({key: 'yes__'+key+'_'+data.row});
+            var noKey = suffixIdTpl.evaluate({key: 'no__'+key+'_'+data.row});
+            if (!data[key]) {
+                $$('.'+yesKey).invoke('hide');
+                $$('.'+noKey).invoke('show');
+            } else {
+                $$('.'+yesKey).invoke('show');
+                $$('.'+noKey).invoke('hide');
+            }
+        });
+
+        var del = $(tr).select('button.delete')[0];
+        if (del) {
+            $(del).observe('click', function(e) { e.stop(); $(del.parentNode.parentNode).remove() })
+        }
+    }
+
+    $('<?php echo $this->suffixId('addBtn')?>').observe('click', function(e) {
+        e.stop();
+        $$('#<?php echo $name?>_country_selector option').each(function(el) {
+            if (el.selected && el.value && $$('.<?php echo $name?>_row_country').all(function(rcEl) {
+                return rcEl.value!=el.value;
+            })) {
+                udpAddRow({country_id: el.value});
+            }
+            el.selected = false;
+        });
+    });
+    window['<?php echo $this->suffixId('addBtn')?>udpAddRow'] = udpAddRow;
+
+<?php
+if (is_array($fValue)):
+    foreach ($fValue as $fV): unset($fV['region_data']); unset($fV['region_codes']); unset($fV['region_names']); ?>
+    udpAddRow(<?php echo \Zend_Json::encode($fV) ?>);
+<?php endforeach; endif; ?>
+});
+</script>
+
+
+

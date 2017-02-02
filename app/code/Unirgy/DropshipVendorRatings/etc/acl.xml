@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Sales::sales">
+                    <resource id="Unirgy_Dropship::udropship">
+                        <resource id="Unirgy_DropshipVendorRatings::review"
+                                  title="Reviews and Ratings" sortOrder="60">
+                            <resource id="Unirgy_DropshipVendorRatings::review_all"
+                                      title="All Reviews" sortOrder="20"/>
+                            <resource id="Unirgy_DropshipVendorRatings::review_pending"
+                                      title="Pending Reviews" sortOrder="20"/>
+                            <resource id="Unirgy_DropshipVendorRatings::rating"
+                                      title="Manage Ratings" sortOrder="30"/>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

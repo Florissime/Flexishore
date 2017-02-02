@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="web">
+            <group id="default">
+                <field id="umicrosite_default_landingpage" translate="label" sortOrder="1" type="select"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Vendor Landing Page</label>
+                    <source_model>Magento\Cms\Model\Config\Source\Page</source_model>
+                </field>
+            </group>
+        </section>
+        <section id="udsignup" translate="label" sortOrder="333" type="text" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>Vendor Registration</label>
+            <tab>sales</tab>
+            <resource>Unirgy_DropshipMicrositePro::system_config</resource>
+            <group id="form" translate="label" sortOrder="100" type="text" showInDefault="1">
+                <label>Registration Form</label>
+                <field id="fieldsets" translate="label" sortOrder="10" type="select" showInDefault="1">
+                    <label>Fieldsets</label>
+                    <frontend_model>Unirgy\DropshipMicrositePro\Block\Adminhtml\SystemConfigField\FieldsetsConfig</frontend_model>
+                    <backend_model>Unirgy\DropshipMicrositePro\Model\SystemConfig\Backend\FieldsetsConfig</backend_model>
+                </field>
+            </group>
+        </section>
+        <section id="udropship">
+            <group id="microsite">
+                <field id="skip_confirmation" translate="label" sortOrder="24" type="select" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Skip confirmation email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="confirmation_template" translate="label" sortOrder="27" type="select" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>New Vendor Confirmation Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="reject_template" translate="label" sortOrder="28" type="select" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>New Vendor Reject Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

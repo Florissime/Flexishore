@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <Unirgy_DropshipPayout>
+            <usimpleup>
+                <remote>http://download.unirgy.com/simple/client_api/version/</remote>
+                <changelog>http://unirgy.com/support/portal/announcements</changelog>
+            </usimpleup>
+        </Unirgy_DropshipPayout>
+        <udropship>
+            <payout_paypal>
+                <use_ipn>0</use_ipn>
+            </payout_paypal>
+            <payout>
+                <payout_schedules>[{"code":"daily","title":"Daily","schedule":"0 7 * * *","sort_order":"0"},{"code":"biweekly","title":"Bi-Weekly","schedule":"0 7 * * 1,4","sort_order":"10"},{"code":"weekly","title":"Weekly","schedule":"0 7 * * 1","sort_order":"20"},{"code":"monthly","title":"Monthly","schedule":"0 7 1 * *","sort_order":"30"}]</payout_schedules>
+            </payout>
+        </udropship>
+    </default>
+</config>

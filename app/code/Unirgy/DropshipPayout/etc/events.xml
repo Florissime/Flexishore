@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+  <event name="sales_order_shipment_save_after">
+    <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\SalesOrderShipmentSaveAfter"/>
+  </event>
+  <event name="udropship_shipment_status_save_after">
+    <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\UdropshipShipmentStatusSaveAfter"/>
+  </event>
+  <event name="udpo_po_save_after">
+    <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\UdpoPoSaveAfter"/>
+  </event>
+  <event name="udpo_po_status_save_after">
+    <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\UdpoPoStatusSaveAfter"/>
+  </event>
+  <event name="udropship_vendor_statement_save_before">
+    <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\UdropshipVendorStatementSaveBefore"/>
+  </event>
+  <event name="udropship_vendor_statement_pos">
+    <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\UdropshipVendorStatementPos"/>
+  </event>
+  <event name="udropship_vendor_statement_row">
+    <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\UdropshipVendorStatementRow"/>
+  </event>
+  <event name="udropship_vendor_statement_item_row">
+    <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\UdropshipVendorStatementItemRow"/>
+  </event>
+  <event name="udropship_vendor_statement_row_format">
+    <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\UdropshipVendorStatementRowFormat"/>
+  </event>
+  <event name="udropship_vendor_statement_collect_payouts">
+    <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\UdropshipVendorStatementCollectPayouts"/>
+  </event>
+</config>

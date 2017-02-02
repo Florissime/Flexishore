@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="udropship_adminhtml_shipping_edit_prepare_form">
+        <observer name="udshipclass"
+                  instance="Unirgy\DropshipShippingClass\Observer\UdropshipAdminhtmlShippingEditPrepareForm"/>
+    </event>
+    <event name="udropship_adminhtml_vendor_edit_prepare_shipping_grid">
+        <observer name="udshipclass"
+                  instance="Unirgy\DropshipShippingClass\Observer\UdropshipAdminhtmlVendorEditPrepareShippingGrid"/>
+    </event>
+    <event name="udropship_adminhtml_shipping_grid_prepare_columns">
+        <observer name="udshipclass"
+                  instance="Unirgy\DropshipShippingClass\Observer\UdropshipAdminhtmlShippingGridPrepareColumns"/>
+    </event>
+    <event name="udropship_adminhtml_shipping_grid_after_load">
+        <observer name="udshipclass"
+                  instance="Unirgy\DropshipShippingClass\Observer\UdropshipAdminhtmlShippingGridAfterLoad"/>
+    </event>
+</config>

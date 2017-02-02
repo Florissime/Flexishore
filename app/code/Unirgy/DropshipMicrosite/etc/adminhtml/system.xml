@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+  <system>
+    <section id="udropship">
+      <group id="microsite" translate="label" sortOrder="50" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>MicroSite Options</label>
+        <field id="show_products_menu_item" translate="label comment" sortOrder="5" type="select" showInDefault="1">
+          <label>Enable "System View" menu item in vendor portal</label>
+          <comment>If enabled this option gives vendors limited access to admin area to create new products, update existing (filtered by Dropship Vendor attribute). The option may be overridden on vendor level.</comment>
+          <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="allow_mixed_subdomain_level" translate="label" sortOrder="9" type="select" showInDefault="1">
+          <label>Allow per vendor sudomain level selection</label>
+          <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="subdomain_level" translate="label" sortOrder="10" type="select" showInDefault="1" showInWebsite="1">
+          <label>Subdomain level to use for vendor</label>
+          <source_model>Unirgy\DropshipMicrosite\Model\Source</source_model>
+        </field>
+        <field id="url_store_before_vendor" translate="label" sortOrder="11" type="select" showInDefault="1">
+          <label>Use storecode before vendor key in URLs.</label>
+          <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+          <comment>This option have impact when &lt;br&gt; "Subdomain level to use for vendor"="From URL Path" and &lt;br&gt; "Configuration &gt; Web &gt; Url Options &gt; Add Store Code to Urls"="Yes" &lt;br&gt;If Yes selected here urls will look like [base_url]/[store code]/[vendor url key]&gt;If No selected here urls will look like [base_url]/[vendor url key]/[store code]</comment>
+        </field>
+        <field id="landing_page_title" translate="label" sortOrder="15" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>Landing page title</label>
+        </field>
+        <field id="landing_meta_keywords" translate="label" sortOrder="16" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>Landing page Meta Keywords</label>
+        </field>
+        <field id="landing_meta_description" translate="label" sortOrder="17" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>Landing page Meta Description</label>
+        </field>
+        <field id="template_vendor" translate="label" sortOrder="20" type="select" showInDefault="1" showInWebsite="1">
+          <label>Use this vendor as a template for new registrations</label>
+          <source_model>Unirgy\DropshipMicrosite\Model\Source</source_model>
+        </field>
+        <field id="update_store_base_url" translate="label" sortOrder="21" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>Update Store Base URL</label>
+          <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="auto_approve" translate="label" sortOrder="22" type="select" showInDefault="1" showInWebsite="1">
+          <label>Automatically approve vendor applications</label>
+          <source_model>Unirgy\DropshipMicrosite\Model\Source</source_model>
+        </field>
+        <field id="signup_template" translate="label" sortOrder="25" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>Registration Confirmation Email Template</label>
+          <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+        </field>
+        <field id="welcome_template" translate="label" sortOrder="30" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>New Vendor Welcome Email Template</label>
+          <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+        </field>
+        <field id="registration_carriers" translate="label" sortOrder="40" type="multiselect" showInDefault="1" showInWebsite="1">
+          <label>Carriers to allow during vendor registration</label>
+          <source_model>Unirgy\DropshipMicrosite\Model\Source</source_model>
+        </field>
+        <field id="registration_receiver" translate="label comment" sortOrder="100" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>New Registrations Receiver(s)</label>
+          <comment>Comma separated</comment>
+        </field>
+        <field id="registration_subject" translate="label" sortOrder="110" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>New Registrations Email Subject</label>
+        </field>
+        <field id="registration_template" translate="label" sortOrder="120" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>New Registrations Template</label>
+        </field>
+        <field id="staging_website" translate="label" sortOrder="150" type="select" showInDefault="1">
+          <label>Staging Website</label>
+          <source_model>Unirgy\DropshipMicrosite\Model\Source</source_model>
+        </field>
+        <field id="hide_product_attributes" translate="label" sortOrder="170" type="multiselect" showInDefault="1">
+          <label>Product attributes to HIDE from vendors</label>
+          <source_model>Unirgy\DropshipMicrosite\Model\Source</source_model>
+        </field>
+        <field id="front_show_all_products" translate="label" sortOrder="180" type="select" showInDefault="1" showInWebsite="1">
+          <label>Show all vendor products on frontend (including multivendor associations)</label>
+          <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="filter_vendor_categories" translate="label" sortOrder="500" type="select" showInDefault="1" showInWebsite="1">
+          <label>Enable filter vendor categories on frontend</label>
+          <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+      </group>
+      <group id="stock">
+        <field id="stick_microsite" translate="label comment" sortOrder="100" type="select" showInDefault="1" showInWebsite="1">
+          <label>Stick microsite products in cart</label>
+          <comment>Products that added to cart from vendor microsite will be stuck to that vendor regardless of decision method &lt;br&gt; "Yes and display vendor" - will display vendor name as item custom option </comment>
+          <source_model>Unirgy\DropshipMicrosite\Model\Source</source_model>
+        </field>
+      </group>
+    </section>
+  </system>
+</config>

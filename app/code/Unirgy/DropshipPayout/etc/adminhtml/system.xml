@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="udropship">
+            <group id="payout" translate="label" sortOrder="104" type="text" showInDefault="1" showInWebsite="1">
+                <label>Payout Options</label>
+                <field id="payout_schedules" translate="label" sortOrder="10" type="select" showInDefault="1">
+                    <label>Predefined Payout Schedules</label>
+                    <frontend_model>Unirgy\DropshipPayout\Block\Adminhtml\SystemConfigField\PayoutSchedules</frontend_model>
+                    <backend_model>Unirgy\Dropship\Model\SystemConfig\Backend\RowsSortable</backend_model>
+                </field>
+            </group>
+            <group id="payout_paypal" translate="label" sortOrder="105" type="text" showInDefault="1" showInWebsite="1">
+                <label>Payout Paypal Options</label>
+                <field id="test_mode" translate="label" sortOrder="10" type="select" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Test Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_ipn" translate="label" sortOrder="15" type="select" showInDefault="1" showInWebsite="1">
+                    <label>Use IPN to complete payout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="subject" translate="label" sortOrder="20" type="text" showInDefault="1" showInWebsite="1">
+                    <label>Account Email</label>
+                </field>
+                <field id="username" translate="label" sortOrder="30" type="password" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Username</label>
+                </field>
+                <field id="password" translate="label" sortOrder="40" type="password" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Password</label>
+                </field>
+                <field id="signature" translate="label" sortOrder="50" type="password" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Signature</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

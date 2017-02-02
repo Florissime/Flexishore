@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="udropship">
+            <group id="vendor_rating" translate="label" sortOrder="1000" type="text" showInDefault="1">
+                <label>Vendor Rating Options</label>
+                <field id="ready_status" translate="label" sortOrder="10" type="multiselect" showInDefault="1">
+                    <label>Allow customer review on the following statuses</label>
+                    <source_model>Unirgy\Dropship\Model\Source</source_model>
+                </field>
+                <field id="notify_in_days" translate="label comment" sortOrder="20" type="text" showInDefault="1">
+                    <label>Delay in days to send "Email notification / Follow up emails"</label>
+                    <comment>Setup delay in days when to send "Email notification / Follow up emails" to inspire
+                        customer review vendor shipments. Separate multiple days with comma ",". This will allow
+                        arbitrary days to send email notification and further follow up emails.
+                    </comment>
+                </field>
+                <field id="customer_email_template" translate="label" sortOrder="30" type="select" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Customer Notification Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

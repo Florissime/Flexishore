@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <Unirgy_DropshipTierShipping>
+            <usimpleup>
+                <remote>http://download.unirgy.com/simple/client_api/version/</remote>
+                <changelog>http://unirgy.com/support/portal/announcements</changelog>
+            </usimpleup>
+        </Unirgy_DropshipTierShipping>
+        <carriers>
+            <udtiership>
+                <active>0</active>
+                <sallowspecific>0</sallowspecific>
+                <model>\Unirgy\DropshipTierShipping\Model\V2\Carrier</model>
+                <name>Tier Shipping</name>
+                <title>Tier Shipping</title>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this
+                    shipping method, please contact us.
+                </specificerrmsg>
+                <handling_type>F</handling_type>
+                <match_subcategories>1</match_subcategories>
+                <handling_apply_method>none</handling_apply_method>
+                <cost_calculation_type>1</cost_calculation_type>
+                <additional_calculation_type>1</additional_calculation_type>
+                <handling_calculation_type>1</handling_calculation_type>
+                <calculation_method>1</calculation_method>
+                <fallback_lookup>2</fallback_lookup>
+                <use_simple_rates>3</use_simple_rates>
+                <use_customer_group>0</use_customer_group>
+            </udtiership>
+        </carriers>
+    </default>
+</config>

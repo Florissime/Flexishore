@@ -1,0 +1,5 @@
+<?php $isUrlPath = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipMicrosite\Helper\Data')->getSubdomainLevel()==1; ?>
+<?php echo $this->getElement()->getLabelHtml(); ?> <br />
+<?php if ($isUrlPath): ?><strong><?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipMicrosite\Helper\Data')->getDomainName() ?>/</strong><?php endif ?>
+<?php echo $this->getElementHtml() ?>
+<?php if (!$isUrlPath): ?><strong>.<?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipMicrosite\Helper\Data')->getDomainName() ?></strong><?php endif ?>

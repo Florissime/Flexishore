@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<config>
+    <vendor>
+        <fieldsets>
+            <udprod translate="legend">
+                <legend>Vendor Portal Product Edit</legend>
+                <position>200</position>
+            </udprod>
+        </fieldsets>
+        <fields>
+            <is_custom_udprod_unpublish_actions translate="label">
+                <label>Use custom value for global "Unpublish vendor product on following changes"</label>
+                <type>select</type>
+                <frontend_model>\Unirgy\Dropship\Block\Adminhtml\Vendor\Helper\Form\DependSelect</frontend_model>
+                <depend_fields>
+                    <udprod_unpublish_actions>1</udprod_unpublish_actions>
+                </depend_fields>
+                <fieldset>udprod</fieldset>
+                <source>yesno</source>
+                <position>10</position>
+                <default>0</default>
+            </is_custom_udprod_unpublish_actions>
+            <udprod_unpublish_actions translate="label">
+                <label>Unpublish vendor product on following changes</label>
+                <type>multiselect</type>
+                <fieldset>udprod</fieldset>
+                <source_model>\Unirgy\DropshipVendorProduct\Model\Source</source_model>
+                <position>20</position>
+                <default>0</default>
+            </udprod_unpublish_actions>
+            <is_custom_udprod_allowed_types translate="label">
+                <label>Use custom value for global "Allowed types of product"</label>
+                <type>select</type>
+                <frontend_model>\Unirgy\Dropship\Block\Adminhtml\Vendor\Helper\Form\DependSelect</frontend_model>
+                <depend_fields>
+                    <udprod_allowed_types>1</udprod_allowed_types>
+                </depend_fields>
+                <fieldset>udprod</fieldset>
+                <source>yesno</source>
+                <position>30</position>
+                <default>0</default>
+            </is_custom_udprod_allowed_types>
+            <udprod_allowed_types translate="label">
+                <label>Allowed types of product</label>
+                <type>multiselect</type>
+                <fieldset>udprod</fieldset>
+                <source_model>\Unirgy\DropshipVendorProduct\Model\Source</source_model>
+                <position>40</position>
+                <default>0</default>
+            </udprod_allowed_types>
+            <is_udprod_manage_stock translate="label">
+                <label>Use custom value for global "Inventory Manage Stock"</label>
+                <type>select</type>
+                <fieldset>udprod</fieldset>
+                <frontend_model>\Unirgy\Dropship\Block\Adminhtml\Vendor\Helper\Form\DependSelect</frontend_model>
+                <depend_fields>
+                    <udprod_manage_stock>1</udprod_manage_stock>
+                </depend_fields>
+                <source>yesno</source>
+                <position>100</position>
+                <default>0</default>
+            </is_udprod_manage_stock>
+            <udprod_manage_stock translate="label">
+                <label>Inventory Manage Stock</label>
+                <type>select</type>
+                <fieldset>udprod</fieldset>
+                <source>yesno</source>
+                <position>110</position>
+                <default>0</default>
+            </udprod_manage_stock>
+            <is_udprod_backorders translate="label">
+                <label>Use custom value for global "Inventory Backorders"</label>
+                <type>select</type>
+                <fieldset>udprod</fieldset>
+                <frontend_model>\Unirgy\Dropship\Block\Adminhtml\Vendor\Helper\Form\DependSelect</frontend_model>
+                <depend_fields>
+                    <udprod_backorders>1</udprod_backorders>
+                </depend_fields>
+                <source>yesno</source>
+                <position>120</position>
+                <default>0</default>
+            </is_udprod_backorders>
+            <udprod_backorders translate="label">
+                <label>Inventory Backorders</label>
+                <type>select</type>
+                <fieldset>udprod</fieldset>
+                <source_model>\Unirgy\DropshipVendorProduct\Model\Source</source_model>
+                <source>udprod_backorders</source>
+                <position>130</position>
+                <default>0</default>
+            </udprod_backorders>
+            <is_udprod_min_qty translate="label">
+                <label>Use custom value for global "Inventory Qty for Item's Status to Become Out of Stock"</label>
+                <type>select</type>
+                <fieldset>udprod</fieldset>
+                <frontend_model>\Unirgy\Dropship\Block\Adminhtml\Vendor\Helper\Form\DependSelect</frontend_model>
+                <depend_fields>
+                    <udprod_min_qty>1</udprod_min_qty>
+                </depend_fields>
+                <source>yesno</source>
+                <position>140</position>
+                <default>0</default>
+            </is_udprod_min_qty>
+            <udprod_min_qty translate="label">
+                <label>Inventory Qty for Item's Status to Become Out of Stock</label>
+                <fieldset>udprod</fieldset>
+                <position>150</position>
+                <default>0</default>
+            </udprod_min_qty>
+            <is_udprod_min_sale_qty translate="label">
+                <label>Use custom value for global "Inventory Minimum Qty Allowed in Shopping Cart"</label>
+                <type>select</type>
+                <fieldset>udprod</fieldset>
+                <frontend_model>\Unirgy\Dropship\Block\Adminhtml\Vendor\Helper\Form\DependSelect</frontend_model>
+                <depend_fields>
+                    <udprod_min_sale_qty>1</udprod_min_sale_qty>
+                </depend_fields>
+                <source>yesno</source>
+                <position>160</position>
+                <default>0</default>
+            </is_udprod_min_sale_qty>
+            <udprod_min_sale_qty translate="label">
+                <label>Inventory Minimum Qty Allowed in Shopping Cart</label>
+                <fieldset>udprod</fieldset>
+                <position>170</position>
+                <default>0</default>
+            </udprod_min_sale_qty>
+            <is_udprod_max_sale_qty translate="label">
+                <label>Use custom value for global "Inventory Maximum Qty Allowed in Shopping Cart"</label>
+                <type>select</type>
+                <fieldset>udprod</fieldset>
+                <frontend_model>\Unirgy\Dropship\Block\Adminhtml\Vendor\Helper\Form\DependSelect</frontend_model>
+                <depend_fields>
+                    <udprod_max_sale_qty>1</udprod_max_sale_qty>
+                </depend_fields>
+                <source>yesno</source>
+                <position>180</position>
+                <default>0</default>
+            </is_udprod_max_sale_qty>
+            <udprod_max_sale_qty translate="label">
+                <label>Inventory Maximum Qty Allowed in Shopping Cart</label>
+                <fieldset>udprod</fieldset>
+                <position>190</position>
+                <default>0</default>
+            </udprod_max_sale_qty>
+
+            <is_limit_categories translate="label">
+                <label>Limit Categories</label>
+                <type>select</type>
+                <frontend_model>\Unirgy\Dropship\Block\Adminhtml\Vendor\Helper\Form\DependSelect</frontend_model>
+                <depend_fields>
+                    <limit_categories>1,2</limit_categories>
+                </depend_fields>
+                <fieldset>udprod</fieldset>
+                <source_model>\Unirgy\DropshipVendorProduct\Model\Source</source_model>
+                <source>is_limit_categories</source>
+                <position>500</position>
+                <default></default>
+            </is_limit_categories>
+            <limit_categories translate="label">
+                <label>Limit Categories</label>
+                <type>text</type>
+                <frontend_model>\Unirgy\Dropship\Block\Categories</frontend_model>
+                <fieldset>udprod</fieldset>
+                <source>yesno</source>
+                <position>600</position>
+                <default></default>
+            </limit_categories>
+        </fields>
+    </vendor>
+</config>

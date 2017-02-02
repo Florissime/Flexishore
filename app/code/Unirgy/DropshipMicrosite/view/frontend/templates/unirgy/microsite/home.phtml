@@ -1,0 +1,26 @@
+<?php
+/** @var Unirgy\Dropship\Helper\Data $hlp */
+$hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+/** @var \Unirgy\DropshipMicrosite\Helper\Data $msHlp */
+$msHlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipMicrosite\Helper\Data');
+$_vendor = $msHlp->getCurrentVendor();
+$_productListBlock = $this->getChild('product_list');
+
+$storeCode = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Store\Model\StoreManagerInterface')->getStore()->getCode();
+?>
+<h1 class="vendor-name">
+<?php echo $this->escapeHtml($msHlp->getLandingPageTitle($_vendor)) ?>
+</h1>
+<?php if ($hlp->isModuleActive('Unirgy_DropshipVendorRatings')):?>
+    <?php echo $hlp->getObj('Unirgy\DropshipVendorRatings\Helper\Data')->getReviewsSummaryHtml($_vendor);?>
+<?php endif ?>
+<div class="generic-box vendor-description">
+<?php if ($_vendor->getLogo()):?>
+<img src="<?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Framework\UrlInterface')->getBaseUrl('media').'/'.$_vendor->getLogo() ?>" class="vendor-img"/>
+<?php endif ?>
+<?php echo $this->escapeHtml($_vendor->getDescription()) ?>
+</div>
+
+<div id="our-products">
+<?php echo $this->getChildHtml('product_list') ?>
+</div>

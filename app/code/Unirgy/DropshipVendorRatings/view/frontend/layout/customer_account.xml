@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="udratings-customer-pending">
+                <arguments>
+                    <argument xsi:type="string" name="path">udratings/customer/pending</argument>
+                    <argument xsi:type="string" name="label">My Vendor Pending Reviews</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="udratings-customer-index">
+                <arguments>
+                    <argument xsi:type="string" name="path">udratings/customer/index</argument>
+                    <argument xsi:type="string" name="label">My Vendor Reviews</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

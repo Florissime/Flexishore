@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+  <event name="udropship_adminhtml_vendor_tabs_after">
+    <observer name="udtiercom" instance="Unirgy\DropshipTierCommission\Observer\UdropshipAdminhtmlVendorTabsAfter"/>
+  </event>
+</config>

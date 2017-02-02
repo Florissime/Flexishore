@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Unirgy\DropshipMicrosite\Model\Registration"
+                type="Unirgy\DropshipMicrositePro\Model\Registration"/>
+    <type name="Magento\Framework\Url\SecurityInfo">
+        <arguments>
+            <argument name="secureUrlList" xsi:type="array">
+                <item name="udmspro_vendor" xsi:type="string">/udmspro/vendor/</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

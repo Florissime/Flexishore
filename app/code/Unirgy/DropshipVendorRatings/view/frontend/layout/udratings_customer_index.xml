@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      label="Customer My Account Vendor Reviews">
+    <update handle="sales_order_shipment_renderers"/>
+    <head>
+        <title>My Vendor Reviews</title>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Theme\Block\Html\Pager" name="udratings_list.toolbar"/>
+            <block class="Unirgy\DropshipVendorRatings\Block\Customer\ListCustomer"
+                   template="Unirgy_DropshipVendorRatings::unirgy/ratings/customer/list.phtml"
+                   name="udratings_list"  cacheable="false">
+                <block class="Magento\Framework\View\Element\RendererList" name="sales.order.shipment.renderers" as="renderer.list"/>
+            </block>
+
+        </referenceContainer>
+    </body>
+    <update handle="customer_account"/>
+</page>

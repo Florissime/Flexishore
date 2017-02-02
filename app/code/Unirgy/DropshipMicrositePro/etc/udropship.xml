@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<config>
+    <vendor>
+        <fields>
+            <cms_landing_page translate="label">
+                <label>CMS Landing Page</label>
+                <type>select</type>
+                <fieldset>microsite</fieldset>
+                <source_model>\Unirgy\DropshipMicrosite\Model\Source</source_model>
+                <source>cms_landing_page</source>
+                <position>210</position>
+                <default>-1</default>
+            </cms_landing_page>
+
+            <vendor_name translate="label">
+                <label>Vendor Name</label>
+                <fieldset>vendor_info</fieldset>
+                <type>text</type>
+                <reg_class>udvendor_name-unique</reg_class>
+            </vendor_name>
+
+            <telephone translate="label">
+                <label>Phone Number</label>
+                <fieldset>vendor_info</fieldset>
+                <type>text</type>
+                <reg_class>validate-digits</reg_class>
+            </telephone>
+
+            <email translate="label">
+                <label>Email Address</label>
+                <fieldset>vendor_info</fieldset>
+                <type>text</type>
+                <reg_class>validate-email udemail-unique</reg_class>
+            </email>
+
+            <password translate="label">
+                <label>Password</label>
+                <fieldset>vendor_info</fieldset>
+                <type>password</type>
+            </password>
+
+            <password_confirm translate="label">
+                <label>Confirm Password</label>
+                <fieldset>vendor_info</fieldset>
+                <type>password</type>
+                <reg_class>validate-cpassword</reg_class>
+            </password_confirm>
+
+            <carrier_code translate="label">
+                <fieldset>vendor_info</fieldset>
+                <label>Preferred Shipping Carrier</label>
+                <type>select</type>
+                <reg_source_model>\Unirgy\DropshipMicrosite\Model\Source</reg_source_model>
+                <reg_use_selector>1</reg_use_selector>
+            </carrier_code>
+
+            <url_key translate="label">
+                <reg_label>Preferred subdomain name</reg_label>
+                <type>text</type>
+                <reg_frontend_model>\Unirgy\DropshipMicrositePro\Block\Vendor\Register\Form\Urlkey</reg_frontend_model>
+                <reg_class>validate-urlkey udvendor_urlkey-unique</reg_class>
+            </url_key>
+
+            <description translate="label">
+                <label>Shop Description</label>
+                <fieldset>microsite</fieldset>
+                <type>textarea</type>
+            </description>
+
+            <vendor_attn translate="label">
+                <fieldset>shipping_origin</fieldset>
+                <label>Attention To</label>
+                <type>text</type>
+            </vendor_attn>
+
+            <street1 translate="label">
+                <fieldset>shipping_origin</fieldset>
+                <label>Street Address</label>
+                <type>text</type>
+            </street1>
+
+            <street2 translate="label">
+                <fieldset>shipping_origin</fieldset>
+                <label>Street Address Line 2</label>
+                <type>text</type>
+            </street2>
+
+            <city translate="label">
+                <fieldset>shipping_origin</fieldset>
+                <label>City</label>
+                <type>text</type>
+            </city>
+
+            <zip translate="label">
+                <fieldset>shipping_origin</fieldset>
+                <label>Zip/Postal Code</label>
+                <type>text</type>
+            </zip>
+
+            <region_id translate="label">
+                <fieldset>shipping_origin</fieldset>
+                <label>State/Province</label>
+                <type>select</type>
+                <reg_source_model>\Unirgy\DropshipMicrositePro\Model\Source</reg_source_model>
+                <reg_frontend_model>\Unirgy\DropshipMicrositePro\Block\Vendor\Register\Form\Region</reg_frontend_model>
+                <reg_use_selector>1</reg_use_selector>
+            </region_id>
+
+            <country_id translate="label">
+                <fieldset>shipping_origin</fieldset>
+                <label>Country</label>
+                <type>select</type>
+                <reg_source_model>\Unirgy\DropshipMicrositePro\Model\Source</reg_source_model>
+                <reg_frontend_model>\Unirgy\DropshipMicrositePro\Block\Vendor\Register\Form\Country</reg_frontend_model>
+            </country_id>
+
+            <billing_use_shipping translate="label">
+                <fieldset>billing_address</fieldset>
+                <label>Country</label>
+                <type>select</type>
+                <reg_source_model>\Unirgy\Dropship\Model\Source</reg_source_model>
+            </billing_use_shipping>
+
+            <billing_vendor_attn translate="label">
+                <fieldset>billing_address</fieldset>
+                <label>Attention To</label>
+                <type>text</type>
+            </billing_vendor_attn>
+
+            <billing_street1 translate="label">
+                <fieldset>billing_address</fieldset>
+                <label>Street Address</label>
+                <type>text</type>
+            </billing_street1>
+
+            <billing_street2 translate="label">
+                <fieldset>billing_address</fieldset>
+                <label>Street Address Line 2</label>
+                <type>text</type>
+            </billing_street2>
+
+            <billing_city translate="label">
+                <fieldset>billing_address</fieldset>
+                <label>City</label>
+                <type>text</type>
+            </billing_city>
+
+            <billing_zip translate="label">
+                <fieldset>billing_address</fieldset>
+                <label>Zip/Postal Code</label>
+                <type>text</type>
+            </billing_zip>
+
+            <billing_region_id translate="label">
+                <fieldset>billing_address</fieldset>
+                <label>State/Province</label>
+                <type>select</type>
+                <reg_source_model>\Unirgy\DropshipMicrositePro\Model\Source</reg_source_model>
+                <reg_frontend_model>\Unirgy\DropshipMicrositePro\Block\Vendor\Register\Form\Region</reg_frontend_model>
+                <reg_use_selector>1</reg_use_selector>
+            </billing_region_id>
+
+            <billing_country_id translate="label">
+                <fieldset>billing_address</fieldset>
+                <label>Country</label>
+                <type>select</type>
+                <reg_source_model>\Unirgy\DropshipMicrositePro\Model\Source</reg_source_model>
+                <reg_frontend_model>\Unirgy\DropshipMicrositePro\Block\Vendor\Register\Form\Country</reg_frontend_model>
+            </billing_country_id>
+
+            <agree_terms_conditions translate="label">
+                <label><![CDATA[I agree <a href="{{url}}">Terms and Conditions</a>]]></label>
+                <fieldset>vendor_info</fieldset>
+                <reg_source_model>\Unirgy\DropshipMicrositePro\Model\Source</reg_source_model>
+                <source>agree_terms_conditions</source>
+                <type>select</type>
+                <reg_frontend_model>\Unirgy\DropshipMicrositePro\Block\Vendor\Register\Form\Termcond</reg_frontend_model>
+            </agree_terms_conditions>
+        </fields>
+    </vendor>
+</config>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Framework\Url\ScopeInterface" type="Unirgy\DropshipMicrosite\Model\Store"/>
+    <preference for="Magento\Store\Api\Data\StoreInterface" type="Unirgy\DropshipMicrosite\Model\Store"/>
+    <preference for="Magento\Store\Model\Store" type="Unirgy\DropshipMicrosite\Model\Store"/>
+    <preference for="Magento\Framework\App\Request\Http" type="Unirgy\DropshipMicrosite\Model\RequestHttp"/>
+    <type name="Magento\Framework\Url\SecurityInfo">
+        <arguments>
+            <argument name="secureUrlList" xsi:type="array">
+                <item name="umicrosite_vendor" xsi:type="string">/umicrosite/vendor/</item>
+                <item name="checkout_cart" xsi:type="string">/checkout/cart/</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\App\FrontControllerInterface">
+        <plugin name="getCurrentVendor" type="Unirgy\DropshipMicrosite\Plugin\FrontController" />
+    </type>
+    <preference for="Magento\Framework\UrlInterface" type="Unirgy\DropshipMicrosite\Model\Url"/>
+    <type name="Magento\Catalog\Model\Layer\Category">
+        <plugin name="addVendorFilter" type="Unirgy\DropshipMicrosite\Plugin\CatalogLayer" />
+    </type>
+    <type name="Magento\CatalogWidget\Block\Product\ProductsList">
+        <plugin name="addVendorFilter" type="Unirgy\DropshipMicrosite\Plugin\CatalogWidgetProductList" />
+    </type>
+    <type name="Magento\Catalog\Model\Layer\Search">
+        <plugin name="addVendorFilter" type="Unirgy\DropshipMicrosite\Plugin\CatalogSearchLayer" />
+    </type>
+    <type name="Magento\CatalogSearch\Model\Search\IndexBuilder">
+        <plugin name="addVendorFilter" type="Unirgy\DropshipMicrosite\Plugin\CatalogSearchIndexBuilder" />
+    </type>
+    <type name="Magento\Catalog\Model\Product\Url">
+        <plugin name="addVendorToUrl" type="Unirgy\DropshipMicrosite\Plugin\ProductUrl" />
+    </type>
+</config>

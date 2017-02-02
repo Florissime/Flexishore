@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <block class="Unirgy\DropshipMicrositePro\Block\Vendor\ProductList" name="category.products.list" as="product_list" template="Magento_Catalog::product/list.phtml">
+            <container name="category.product.list.additional" as="additional" />
+            <block class="Magento\Framework\View\Element\RendererList" name="category.product.type.details.renderers" as="details.renderers">
+                <block class="Magento\Framework\View\Element\Template" as="default"/>
+            </block>
+            <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+            </block>
+            <action method="addColumnCountLayoutDepend">
+                <argument xsi:type="string" name="pageLayout">empty</argument>
+                <argument xsi:type="string" name="columnCount">6</argument>
+            </action>
+            <action method="addColumnCountLayoutDepend">
+                <argument xsi:type="string" name="pageLayout">one_column</argument>
+                <argument xsi:type="string" name="columnCount">5</argument>
+            </action>
+            <action method="addColumnCountLayoutDepend">
+                <argument xsi:type="string" name="pageLayout">two_columns_left</argument>
+                <argument xsi:type="string" name="columnCount">4</argument>
+            </action>
+            <action method="addColumnCountLayoutDepend">
+                <argument xsi:type="string" name="pageLayout">two_columns_right</argument>
+                <argument xsi:type="string" name="columnCount">4</argument>
+            </action>
+            <action method="addColumnCountLayoutDepend">
+                <argument xsi:type="string" name="pageLayout">three_columns</argument>
+                <argument xsi:type="string" name="columnCount">3</argument>
+            </action>
+            <action method="setToolbarBlockName">
+                <argument name="name" xsi:type="string">product_list_toolbar</argument>
+            </action>
+            <action method="setColumnCount">
+                <argument xsi:type="string" name="columnCount">4</argument>
+            </action>
+        </block>
+    </body>
+</page>

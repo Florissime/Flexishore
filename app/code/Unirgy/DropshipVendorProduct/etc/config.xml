@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <Unirgy_DropshipVendorProduct>
+            <usimpleup>
+                <remote>http://download.unirgy.com/simple/client_api/version/</remote>
+                <changelog>http://unirgy.com/support/portal/announcements</changelog>
+            </usimpleup>
+        </Unirgy_DropshipVendorProduct>
+        <udprod>
+            <general>
+                <allow_remove>1</allow_remove>
+                <use_product_zoom>0</use_product_zoom>
+                <auto_sku>1</auto_sku>
+                <show_hidden_categories>1</show_hidden_categories>
+                <cfg_upload_images_simple>0</cfg_upload_images_simple>
+                <cfg_show_media_gallery>0</cfg_show_media_gallery>
+                <cfg_show_media_attributes>0</cfg_show_media_attributes>
+            </general>
+            <notification>
+                <admin_email_identity>general</admin_email_identity>
+                <vendor_email_identity>general</vendor_email_identity>
+                <send_pending_notifications>0</send_pending_notifications>
+                <send_pending_admin_notifications>0</send_pending_admin_notifications>
+                <send_approved_notifications>0</send_approved_notifications>
+                <send_approved_admin_notifications>0</send_approved_admin_notifications>
+                <send_fix_notifications>0</send_fix_notifications>
+                <send_fix_admin_notifications>0</send_fix_admin_notifications>
+                <pending_vendor_email_template>udprod_notification_pending_vendor_email_template</pending_vendor_email_template>
+                <approved_vendor_email_template>udprod_notification_approved_vendor_email_template</approved_vendor_email_template>
+                <fix_vendor_email_template>udprod_notification_fix_vendor_email_template</fix_vendor_email_template>
+                <pending_admin_email_template>udprod_notification_pending_admin_email_template</pending_admin_email_template>
+                <approved_vendor_email_template>udprod_notification_approved_vendor_email_template</approved_vendor_email_template>
+                <fix_vendor_email_template>udprod_notification_fix_vendor_email_template</fix_vendor_email_template>
+            </notification>
+            <quick_create_layout>
+                <cfg_attributes>one_column</cfg_attributes>
+                <cfg_attributes_title>Configurable Attributes</cfg_attributes_title>
+                <columns>[{"title":"Product Data","columns_def":[{"column_field":"product.name","sort_order":"0"},{"column_field":"product.sku","sort_order":"10"},{"column_field":"product.weight","sort_order":"20"}],"sort_order":"12","fields_extra":{"product.name":[],"product.sku":[],"product.weight":[]},"required_fields":[],"columns":["product.name","product.sku","product.weight"]},{"title":"Stock","columns_def":[{"column_field":"udmulti.stock_qty","is_required":"1","sort_order":"0"}],"sort_order":"20","fields_extra":{"udmulti.stock_qty":[]},"required_fields":["udmulti.stock_qty"],"columns":["udmulti.stock_qty"]},{"title":"State (Condition)","columns_def":[{"column_field":"udmulti.state","is_required":"1","sort_order":"0"},{"column_field":"udmulti.state_descr","sort_order":"10"},{"column_field":"udmulti.vendor_title","sort_order":"20"}],"sort_order":"30","fields_extra":{"udmulti.state":[],"udmulti.state_descr":[],"udmulti.vendor_title":[]},"required_fields":["udmulti.state"],"columns":["udmulti.state","udmulti.state_descr","udmulti.vendor_title"]}]</columns>
+            </quick_create_layout>
+            <form>
+                <fieldsets>[{"title":"Enter Product Information","sort_order":"0","top_columns_def":[{"column_field":"product.name","is_required":"1","sort_order":"5"},{"column_field":"product.description","sort_order":"10"}],"bottom_columns_def":[{"column_field":"udmulti.vendor_sku","sort_order":"0"},{"column_field":"udmulti.vendor_title","use_limit_type":"1","limit_type":["simple"],"sort_order":"0"},{"column_field":"udmulti.state_descr","use_limit_type":"1","limit_type":["simple"],"sort_order":"0"},{"column_field":"udmulti.stock_qty","is_required":"1","use_limit_type":"1","limit_type":["simple"],"sort_order":"5"},{"column_field":"udmulti.state","is_required":"1","use_limit_type":"1","limit_type":["simple"],"sort_order":"10"}],"left_columns_def":[{"column_field":"udmulti.vendor_price","is_required":"1","sort_order":"0"},{"column_field":"udmulti.special_price","sort_order":"10"}],"right_columns_def":[{"column_field":"udmulti.special_from_date","sort_order":"0"},{"column_field":"udmulti.special_to_date","sort_order":"10"}],"fields_extra":{"product.name":{"use_limit_type":null,"limit_type":null},"product.description":{"use_limit_type":null,"limit_type":null},"udmulti.vendor_sku":{"use_limit_type":null,"limit_type":null},"udmulti.vendor_title":{"use_limit_type":"1","limit_type":["simple"]},"udmulti.state_descr":{"use_limit_type":"1","limit_type":["simple"]},"udmulti.stock_qty":{"use_limit_type":"1","limit_type":["simple"]},"udmulti.state":{"use_limit_type":"1","limit_type":["simple"]},"udmulti.vendor_price":{"use_limit_type":null,"limit_type":null},"udmulti.special_price":{"use_limit_type":null,"limit_type":null},"udmulti.special_from_date":{"use_limit_type":null,"limit_type":null},"udmulti.special_to_date":{"use_limit_type":null,"limit_type":null}},"required_fields":["product.name","udmulti.stock_qty","udmulti.state","udmulti.vendor_price"],"top_columns":["product.name","product.description"],"bottom_columns":["udmulti.vendor_sku","udmulti.vendor_title","udmulti.state_descr","udmulti.stock_qty","udmulti.state"],"left_columns":["udmulti.vendor_price","udmulti.special_price"],"right_columns":["udmulti.special_from_date","udmulti.special_to_date"]}]</fieldsets>
+            </form>
+        </udprod>
+    </default>
+</config>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="udropship_microsite_signup_template" label="Dropship Vendor Sign Up Email"
+              file="umicrosite_signup.html" type="html" area="frontend" module="Unirgy_DropshipMicrosite"/>
+    <template id="udropship_microsite_welcome_template" label="Dropship Vendor Welcome Email"
+              file="umicrosite_welcome.html" type="html" area="frontend" module="Unirgy_DropshipMicrosite"/>
+</config>

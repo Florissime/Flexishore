@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Catalog\Model\Product\Attribute\Source\Status" type="Unirgy\DropshipVendorProduct\Model\ProductStatus"/>
+    <!--
+    <preference for="Magento\Catalog\Model\Product\Type\Configurable"
+                type="Unirgy\DropshipVendorProduct\Model\ProductTypeConfigurable"/>
+    <preference for="Magento\Catalog\Model\Product\Attribute\Backend\Media"
+                type="Unirgy\DropshipVendorProduct\Model\ProductAttributeBackendMedia"/>
+    <preference for="Magento\Catalog\Product\Attribute\Backend\Media"
+                type="Unirgy\DropshipVendorProduct\Model\Mysql4\ProductAttributeBackendMedia"/>
+    <preference for="Magento\Catalog\Product\Type\Configurable\Attribute\Collection"
+                type="Unirgy\DropshipVendorProduct\Model\Mysql4\PTCACollection"/>
+    <preference for="Unirgy\Dropship\Helper\Catalog" type="Unirgy\DropshipVendorProduct\Helper\Udcatalog"/>
+    <preference for="Magento\Catalog\Block\Adminhtml\Product\Edit\Tab\Super\Config"
+                type="Unirgy\DropshipVendorProduct\Block\Adminhtml\CatalogProductEditTabSuper\Config"/>
+    <preference for="Magento\Catalog\Block\Adminhtml\Product\Helper\Form\Gallery\Content"
+                type="Unirgy\DropshipVendorProduct\Block\Adminhtml\CatalogProductHelperFormGalleryContent"/>
+                -->
+    <type name="Magento\Framework\Url\SecurityInfo">
+        <arguments>
+            <argument name="secureUrlList" xsi:type="array">
+                <item name="udprod_vendor" xsi:type="string">/udprod/vendor/</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

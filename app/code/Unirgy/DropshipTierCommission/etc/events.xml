@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+  <event name="udropship_vendor_load_after">
+    <observer name="udtiercom" instance="Unirgy\DropshipTierCommission\Observer\UdropshipVendorLoadAfter"/>
+  </event>
+  <event name="udropship_vendor_save_after">
+    <observer name="udtiercom" instance="Unirgy\DropshipTierCommission\Observer\UdropshipVendorSaveAfter"/>
+  </event>
+  <event name="udropship_vendor_save_before">
+    <observer name="udtiercom" instance="Unirgy\DropshipTierCommission\Observer\UdropshipVendorSaveBefore"/>
+  </event>
+  <event name="udpo_order_save_before">
+    <observer name="udtiercom" instance="Unirgy\DropshipTierCommission\Observer\UdpoOrderSaveBefore"/>
+  </event>
+  <event name="udpo_po_shipment_save_before">
+    <observer name="udtiercom" instance="Unirgy\DropshipTierCommission\Observer\UdpoPoShipmentSaveBefore"/>
+  </event>
+  <event name="udropship_order_save_before">
+    <observer name="udtiercom" instance="Unirgy\DropshipTierCommission\Observer\UdpoPoShipmentSaveBefore"/>
+  </event>
+</config>

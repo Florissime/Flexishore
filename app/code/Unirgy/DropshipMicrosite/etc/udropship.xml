@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<config>
+    <vendor>
+        <fieldsets>
+            <microsite translate="legend">
+                <legend>Microsite</legend>
+                <position>100</position>
+            </microsite>
+        </fieldsets>
+
+        <fields>
+            <subdomain_level translate="label">
+                <label>Subdomain Level</label>
+                <type>select</type>
+                <fieldset>microsite</fieldset>
+                <source_model>\Unirgy\DropshipMicrosite\Model\Source</source_model>
+                <source>subdomain_level</source>
+                <position>190</position>
+            </subdomain_level>
+
+            <update_store_base_url translate="label">
+                <label>Update Store Base URL</label>
+                <type>select</type>
+                <fieldset>microsite</fieldset>
+                <source>yesno_useconfig</source>
+                <position>195</position>
+                <default>-1</default>
+            </update_store_base_url>
+
+            <landing_page_title translate="label">
+                <label>Landing page title</label>
+                <type>text</type>
+                <fieldset>microsite</fieldset>
+                <position>200</position>
+            </landing_page_title>
+
+            <landing_meta_keywords translate="label">
+                <label>Landing page Meta Keywords</label>
+                <type>textarea</type>
+                <fieldset>microsite</fieldset>
+                <position>210</position>
+            </landing_meta_keywords>
+
+            <landing_meta_description translate="label">
+                <label>Landing page Meta Description</label>
+                <type>textarea</type>
+                <fieldset>microsite</fieldset>
+                <position>220</position>
+            </landing_meta_description>
+
+            <show_products_menu_item translate="label">
+                <label>Enable "System View" menu item in vendor portal</label>
+                <type>select</type>
+                <fieldset>microsite</fieldset>
+                <source>yesno_useconfig</source>
+                <position>300</position>
+                <default>-1</default>
+            </show_products_menu_item>
+
+            <limit_websites translate="label">
+                <label>Limit Websites</label>
+                <type>multiselect</type>
+                <fieldset>microsite</fieldset>
+                <source_model>\Unirgy\DropshipMicrosite\Model\Source</source_model>
+                <source>limit_websites</source>
+                <position>400</position>
+                <default></default>
+            </limit_websites>
+
+            <is_limit_categories translate="label">
+                <label>Limit Categories</label>
+                <type>select</type>
+                <frontend_model>\Unirgy\Dropship\Block\Adminhtml\Vendor\Helper\Form\DependSelect</frontend_model>
+                <depend_fields>
+                    <limit_categories>1,2</limit_categories>
+                </depend_fields>
+                <fieldset>microsite</fieldset>
+                <source_model>\Unirgy\DropshipMicrosite\Model\Source</source_model>
+                <source>is_limit_categories</source>
+                <position>500</position>
+                <default></default>
+            </is_limit_categories>
+
+            <limit_categories translate="label">
+                <label>Limit Categories</label>
+                <type>text</type>
+                <frontend_model>\Unirgy\Dropship\Block\Categories</frontend_model>
+                <fieldset>microsite</fieldset>
+                <source>yesno</source>
+                <position>600</position>
+                <default></default>
+            </limit_categories>
+
+            <google_analytics_enable translate="label">
+                <label>Enable Google Analytics</label>
+                <type>select</type>
+                <fieldset>microsite</fieldset>
+                <source>yesno</source>
+                <position>700</position>
+            </google_analytics_enable>
+
+            <google_analytics_account_id translate="label">
+                <label>Google Analytics Account Number</label>
+                <type>text</type>
+                <fieldset>microsite</fieldset>
+                <position>710</position>
+            </google_analytics_account_id>
+        </fields>
+    </vendor>
+</config>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="\Unirgy\Dropship\Block\Adminhtml\SystemConfigFormField\DependSelect">
+        <arguments>
+            <argument name="dependsConfig" xsi:type="array">
+                <item name="carriers_udtiership_use_simple_rates"  xsi:type="array">
+                    <item name="carriers_udtiership_tiered_category_parent" xsi:type="string">0,2</item>
+                    <item name="carriers_udtiership_match_subcategories" xsi:type="string">0,2</item>
+                    <item name="carriers_udtiership_cost_calculation_type" xsi:type="string">0,2</item>
+                    <item name="carriers_udtiership_additional_calculation_type" xsi:type="string">0,2</item>
+                    <item name="carriers_udtiership_handling_calculation_type" xsi:type="string">0,2</item>
+                    <item name="carriers_udtiership_handling_apply_method" xsi:type="string">0,2</item>
+                    <item name="carriers_udtiership_calculation_method" xsi:type="string">0,2</item>
+                    <item name="carriers_udtiership_rate_handling_attribute" xsi:type="string">0,2</item>
+                    <item name="carriers_udtiership_fallback_lookup" xsi:type="string">0,2</item>
+                    <item name="carriers_udtiership_fallback_rate_handling" xsi:type="string">0,2</item>
+                    <item name="carriers_udtiership_rates" xsi:type="string">0</item>
+                    <item name="carriers_udtiership_simple_rates" xsi:type="string">1</item>
+                    <item name="carriers_udtiership_delivery_type" xsi:type="string">2,3,4</item>
+                    <item name="carriers_udtiership_delivery_type_selector" xsi:type="string">2,3,4</item>
+                    <item name="carriers_udtiership_v2_rates" xsi:type="string">2</item>
+                    <item name="carriers_udtiership_v2_simple_rates" xsi:type="string">3</item>
+                    <item name="carriers_udtiership_v2_simple_cond_rates" xsi:type="string">4</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="udtiership" xsi:type="array">
+                    <item name="class" xsi:type="string">Unirgy\DropshipTierShipping\Ui\DataProvider\Product\Form\Modifier\TierRates</item>
+                    <item name="sortOrder" xsi:type="number">120</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

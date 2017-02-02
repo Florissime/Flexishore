@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Sales::sales">
+                    <resource id="Unirgy_Dropship::udropship">
+                        <resource id="Unirgy_DropshipShippingClass::shipclass_customer"
+                                  title="Customer Ship Classes" sortOrder="200"/>
+                        <resource id="Unirgy_DropshipShippingClass::shipclass_vendor"
+                                  title="Vendor Ship Classes" sortOrder="205"/>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_product_save_before">
+        <observer name="udprod" instance="Unirgy\DropshipVendorProduct\Observer\CatalogProductSaveBefore"/>
+    </event>
+    <event name="sales_quote_config_get_product_attributes">
+        <observer name="udprod" instance="Unirgy\DropshipVendorProduct\Observer\SalesQuoteConfigGetProductAttributes"/>
+    </event>
+    <event name="sales_quote_load_after">
+        <observer name="udprod" instance="Unirgy\DropshipVendorProduct\Observer\SalesQuoteLoadAfter"/>
+    </event>
+    <event name="controller_front_init_before">
+        <observer name="udprod" instance="Unirgy\DropshipVendorProduct\Observer\ControllerFrontInitBefore"/>
+    </event>
+    <event name="catalog_product_save_commit_after">
+        <observer name="udprod" instance="Unirgy\DropshipVendorProduct\Observer\CatalogProductSaveCommitAfter"/>
+    </event>
+    <event name="catalog_product_attribute_update_before">
+        <observer name="udprod" instance="Unirgy\DropshipVendorProduct\Observer\CatalogProductAttributeUpdateBefore"/>
+    </event>
+    <event name="catalog_product_save_after">
+        <observer name="googleoptimizer_observer" instance="Unirgy\DropshipVendorProduct\Observer\SaveGoogleExperimentScriptObserver" />
+    </event>
+</config>

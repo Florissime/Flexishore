@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Unirgy_DropshipShippingClass::shipclass_customer"
+             resource="Unirgy_DropshipShippingClass::shipclass_customer" module="Unirgy_Dropship"
+             title="Customer Ship Classes" sortOrder="200" action="udshipclass/customer"
+             parent="Unirgy_Dropship::udropship" />
+        <add id="Unirgy_DropshipShippingClass::shipclass_vendor"
+             resource="Unirgy_DropshipShippingClass::shipclass_vendor" module="Unirgy_Dropship"
+             title="Vendor Ship Classes" sortOrder="205" action="udshipclass/vendor"
+             parent="Unirgy_Dropship::udropship" />
+    </menu>
+</config>

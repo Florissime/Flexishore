@@ -1,0 +1,6 @@
+<?php if ($block->hasMaxKey()): ?>
+<input name="<?php echo $block->getName()?>" class="validate-less-then-eq input-text" type="text"
+       value="<?php echo $block->getValue()?>" alt="<?php echo $block->getMaxValue()?>" /> <br /> <strong>[<?php echo $block->getSuffix() ?>]</strong>
+<?php else: ?>
+<?php echo $block->formatedValue() ?>
+<?php endif; ?>

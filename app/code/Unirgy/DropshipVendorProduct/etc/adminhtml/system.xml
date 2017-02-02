@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="udprod" translate="label" sortOrder="331" type="text" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>Vendor Products Edit</label>
+            <tab>sales</tab>
+            <resource>Unirgy_DropshipVendorProduct::system_config</resource>
+            <group id="general" translate="label" sortOrder="210" type="text" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General</label>
+                <!--field id="use_product_zoom" translate="label" sortOrder="1" type="select" showInDefault="1">
+                    <label>Use custom product zoom on frontend</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_configurable_preselect" translate="label" sortOrder="1" type="select" showInDefault="1">
+                    <label>Preselect configurable options</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field-->
+                <field id="allow_remove" translate="label" sortOrder="2" type="select" showInDefault="1">
+                    <label>Allow vendor delete products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <!--field id="cfg_upload_images_simple" translate="label" sortOrder="2" type="select" showInDefault="1">
+                    <label>Upload images into configrable simples</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field-->
+                <field id="cfg_show_media_gallery" translate="label" sortOrder="3" type="select" showInDefault="1">
+                    <label>Explicitly show media gallery in configurable product</label>
+                    <source_model>Unirgy\DropshipVendorProduct\Model\Source</source_model>
+                </field>
+                <field id="gallery_required" translate="label" sortOrder="3" type="select" showInDefault="1">
+                    <label>Gallery upload is required</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <!--field id="allow_custom_options" translate="label" sortOrder="5" type="select" showInDefault="1">
+                    <label>Allow add/edit custom options</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field-->
+                <field id="show_vendor_sku_column" translate="label" sortOrder="9" type="select" showInDefault="1">
+                    <label>Show vendor sku column in vendor portal products edit grid</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="product_info_tabbed" translate="label" sortOrder="9" type="select" showInDefault="1">
+                    <label>Is product view info use tabbed layout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="type_of_product" translate="label comment" sortOrder="10" type="select" showInDefault="1">
+                    <label>Type of product</label>
+                    <comment>Create type of products here and group attribute sets per type of product</comment>
+                    <frontend_model>Unirgy\DropshipVendorProduct\Block\Adminhtml\SystemConfigField\TypeOfProduct</frontend_model>
+                    <backend_model>Unirgy\DropshipVendorProduct\Model\SystemConfig\Backend\TypeOfProduct</backend_model>
+                </field>
+                <field id="prefix_sku_vid" translate="label" sortOrder="5" type="select" showInDefault="1">
+                    <label>Prefix vendor created products' SKUs with vendor id</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="auto_sku" translate="label" sortOrder="6" type="select" showInDefault="1">
+                    <label>Automatically generate SKUs of vendor created products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="unique_vendor_sku" translate="label" sortOrder="7" type="select" showInDefault="1">
+                    <label>Check vendor SKU is unique within vendor products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="unpublish_actions" translate="label" sortOrder="7" type="multiselect" showInDefault="1">
+                    <label>Unpublish vendor product on following changes</label>
+                    <source_model>Unirgy\DropshipVendorProduct\Model\Source</source_model>
+                </field>
+                <field id="show_hidden_categories" translate="label" sortOrder="7" type="select" showInDefault="1">
+                    <label>Show hidden categories to vendor if the field presented on product edit form</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="allowed_types" translate="label" sortOrder="20" type="multiselect" showInDefault="1">
+                    <label>Allowed types of product</label>
+                    <source_model>Unirgy\DropshipVendorProduct\Model\Source</source_model>
+                </field>
+                <field id="disable_name_check" translate="label comment" sortOrder="7" type="select" showInDefault="1">
+                    <label>Disable product name "is empty" check</label>
+                    <comment>For some languages might not work (e.g. Arabic). In that case select "Yes"</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="notification" translate="label" sortOrder="210" type="text" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Notifications</label>
+                <field id="admin_email_identity" translate="label" sortOrder="10" type="select" showInDefault="1">
+                    <label>Admin Notification Email Recipient</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <field id="vendor_email_identity" translate="label" sortOrder="20" type="select" showInDefault="1">
+                    <label>Vendor Notification Email Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <field id="send_pending_notifications" translate="label" sortOrder="25" type="select" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Send vendor pending products notifications</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="pending_vendor_email_template" translate="label" sortOrder="30" type="select"
+                       showInDefault="1">
+                    <label>Pending Products Vendor Notification Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="send_pending_admin_notifications" translate="label" sortOrder="35" type="select"
+                       showInDefault="1" showInWebsite="1">
+                    <label>Send admin pending products notifications</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="pending_admin_email_template" translate="label" sortOrder="40" type="select"
+                       showInDefault="1">
+                    <label>Pending Products Admin Notification Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="send_approved_notifications" translate="label" sortOrder="45" type="select" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Send vendor approved products notifications</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="approved_vendor_email_template" translate="label" sortOrder="50" type="select"
+                       showInDefault="1">
+                    <label>Approved Products Vendor Notification Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="send_approved_admin_notifications" translate="label" sortOrder="55" type="select"
+                       showInDefault="1" showInWebsite="1">
+                    <label>Send admin approved products notifications</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="approved_admin_email_template" translate="label" sortOrder="60" type="select"
+                       showInDefault="1">
+                    <label>Approved Products Admin Notification Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="send_fix_notifications" translate="label" sortOrder="65" type="select" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Send vendor fix products notifications</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="fix_vendor_email_template" translate="label" sortOrder="70" type="select" showInDefault="1">
+                    <label>Fix Products Vendor Notification Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="send_fix_admin_notifications" translate="label" sortOrder="75" type="select"
+                       showInDefault="1" showInWebsite="1">
+                    <label>Send admin fix products notifications</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="fix_admin_email_template" translate="label" sortOrder="80" type="select" showInDefault="1">
+                    <label>Fix Products Admin Notification Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+            <group id="template_sku" translate="label" sortOrder="310" type="text" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Template Sku</label>
+                <field id="type_of_product" translate="label comment" sortOrder="10" type="select" showInDefault="1">
+                    <label>Type of product</label>
+                    <comment>Select Type of Product to load setting in "Product SKUs used as templates"</comment>
+                    <frontend_model>Unirgy\DropshipVendorProduct\Block\Adminhtml\SystemConfigField\TypeOfProductSelector</frontend_model>
+                    <source_model>Unirgy\DropshipVendorProduct\Model\Source</source_model>
+                    <backend_model>Unirgy\DropshipVendorProduct\Model\SystemConfig\Backend\EmptyBackend</backend_model>
+                </field>
+                <field id="value" translate="label" sortOrder="20" type="text" showInDefault="1">
+                    <label>Product SKUs used as templates (per attribute set)</label>
+                    <frontend_model>Unirgy\DropshipVendorProduct\Block\Adminhtml\SystemConfigField\TemplateSku</frontend_model>
+                    <backend_model>Unirgy\DropshipVendorProduct\Model\SystemConfig\Backend\TemplateSku</backend_model>
+                </field>
+            </group>
+            <group id="form" translate="label" sortOrder="410" type="text" showInDefault="1">
+                <label>Vendor Product Edit Form</label>
+                <field id="fieldsets" translate="label" sortOrder="20" type="text" showInDefault="1">
+                    <label>Fieldsets</label>
+                    <frontend_model>Unirgy\DropshipVendorProduct\Block\Adminhtml\SystemConfigField\FieldsetsConfig</frontend_model>
+                    <backend_model>Unirgy\DropshipVendorProduct\Model\SystemConfig\Backend\FieldsetsConfig</backend_model>
+                </field>
+            </group>
+            <group id="quick_create_layout" translate="label" sortOrder="510" type="text" showInDefault="1">
+                <label>Add Product Options Layout</label>
+                <field id="cfg_attributes" translate="label" sortOrder="20" type="select" showInDefault="1">
+                    <label>Configurable Attributes Layout</label>
+                    <source_model>Unirgy\DropshipVendorProduct\Model\Source</source_model>
+                </field>
+                <field id="cfg_attributes_title" translate="label comment" sortOrder="30" type="text" showInDefault="1">
+                    <label>Configurable Attributes Column Title</label>
+                    <comment>Applicable only if "Configurable Attributes" Layout is "One Column"</comment>
+                </field>
+                <field id="columns" translate="label" sortOrder="40" type="text" showInDefault="1">
+                    <label>Columns</label>
+                    <frontend_model>Unirgy\DropshipVendorProduct\Block\Adminhtml\SystemConfigField\QuickCreateConfig</frontend_model>
+                    <backend_model>Unirgy\DropshipVendorProduct\Model\SystemConfig\Backend\QuickCreateConfig</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

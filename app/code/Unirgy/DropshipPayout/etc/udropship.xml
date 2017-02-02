@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<config>
+    <vendor>
+        <fieldsets>
+            <payout translate="legend">
+                <legend>Payout</legend>
+                <position>17</position>
+            </payout>
+        </fieldsets>
+        <fields>
+            <payout_type translate="label">
+                <label>Payout Type</label>
+                <type>select</type>
+                <fieldset>payout</fieldset>
+                <source_model>Unirgy\DropshipPayout\Model\Source</source_model>
+                <position>10</position>
+            </payout_type>
+
+            <payout_method translate="label">
+                <label>Payout Method</label>
+                <type>select</type>
+                <fieldset>payout</fieldset>
+                <source_model>Unirgy\DropshipPayout\Model\Source</source_model>
+                <position>20</position>
+                <default>offline</default>
+            </payout_method>
+
+            <payout_paypal_email translate="label">
+                <label>Paypal Email</label>
+                <type>text</type>
+                <fieldset>payout</fieldset>
+                <position>30</position>
+            </payout_paypal_email>
+
+            <payout_schedule_type translate="label">
+                <label>Payout Schedule</label>
+                <type>select</type>
+                <fieldset>payout</fieldset>
+                <source_model>Unirgy\DropshipPayout\Model\Source</source_model>
+                <frontend_model>Unirgy\Dropship\Block\Adminhtml\Vendor\Helper\Form\DependSelect</frontend_model>
+                <depend_fields>
+                    <payout_schedule>-1</payout_schedule>
+                </depend_fields>
+                <position>40</position>
+                <default>-1</default>
+            </payout_schedule_type>
+
+            <payout_schedule translate="label">
+                <label>Payout Custom Schedule</label>
+                <type>text</type>
+                <fieldset>payout</fieldset>
+                <position>41</position>
+            </payout_schedule>
+
+            <payout_po_status_type translate="label">
+                <label>Payout po statuses source</label>
+                <type>payout_po_status_type</type>
+                <fieldset>payout</fieldset>
+                <source_model>Unirgy\DropshipPayout\Model\Source</source_model>
+                <source>po_status_type</source>
+                <position>50</position>
+                <default>statement</default>
+            </payout_po_status_type>
+
+            <payout_shipment_status translate="label">
+                <name>payout_po_status</name>
+                <label>Payout on following shipment statuses</label>
+                <type>multiselect</type>
+                <fieldset>payout</fieldset>
+                <source_model>Unirgy\Dropship\Model\Source</source_model>
+                <source>shipment_statuses</source>
+                <position>60</position>
+                <default>1</default>
+            </payout_shipment_status>
+
+            <payout_details translate="label">
+                <label>Payout Additional Details</label>
+                <type>textarea</type>
+                <fieldset>payout</fieldset>
+                <position>100</position>
+            </payout_details>
+        </fields>
+    </vendor>
+    <payout>
+        <method>
+            <paypal translate="title">
+                <title>Paypal</title>
+                <model>Unirgy\DropshipPayout\Model\Method\Paypal</model>
+            </paypal>
+            <check translate="title">
+                <title>Check</title>
+                <model>Unirgy\DropshipPayout\Model\Method\Offline</model>
+            </check>
+            <bank_transfer translate="title">
+                <title>Bank Transfer</title>
+                <model>Unirgy\DropshipPayout\Model\Method\Offline</model>
+            </bank_transfer>
+            <offline translate="title">
+                <title>Offline</title>
+                <model>Unirgy\DropshipPayout\Model\Method\Offline</model>
+            </offline>
+        </method>
+    </payout>
+</config>

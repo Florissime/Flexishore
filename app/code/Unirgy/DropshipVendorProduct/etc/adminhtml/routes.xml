@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="adminudprod" frontName="adminudprod">
+            <module name="Unirgy_DropshipVendorProduct_Adminhtml" before="Magento_Backend"/>
+        </route>
+        <route id="udprod" frontName="udprod">
+            <module name="Unirgy_DropshipVendorProduct" after="Magento_Backend"/>
+        </route>
+    </router>
+</config>

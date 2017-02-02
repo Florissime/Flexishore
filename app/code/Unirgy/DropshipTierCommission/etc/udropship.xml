@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <vendor>
+        <fields>
+            <tiercom_fallback_lookup translate="label">
+                <label>Commission fallback lookup method</label>
+                <type>select</type>
+                <source_model>Unirgy\DropshipTierCommission\Model\Source</source_model>
+                <position>59</position>
+                <default>-1</default>
+            </tiercom_fallback_lookup>
+        </fields>
+    </vendor>
+</config>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-right"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Unirgy\DropshipMicrosite\Block\Frontend\VendorList"
+                   template="Unirgy_DropshipMicrosite::umicrosite/vendor/list.phtml" name="umicrosite_list">
+                <block class="Unirgy\DropshipMicrosite\Block\Frontend\VendorListToolbar" as="toolbar"
+                       name="umicrosite_list.toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                    <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+                </block>
+                <action method="setColumnCount">
+                    <argument xsi:type="number" name="columns">4</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="carriers">
+            <group id="udtiership" translate="label" sortOrder="210" type="text" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Tier Shipping</label>
+                <!--field id="active" translate="label" sortOrder="1" type="select" showInDefault="1" showInWebsite="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field-->
+                <field id="title" translate="label" sortOrder="2" type="text" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Title</label>
+                </field>
+                <field id="name" translate="label" sortOrder="3" type="text" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Method name</label>
+                </field>
+                <field id="handling_type" translate="label" sortOrder="7" type="select" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Calculate Handling Fee</label>
+                    <source_model>Magento\Shipping\Model\Source\Handlingtype</source_model>
+                </field>
+                <field id="handling_fee" translate="label" sortOrder="8" type="text" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Handling Fee</label>
+                </field>
+                <field id="use_simple_rates" translate="label" sortOrder="9" type="select" showInDefault="1">
+                    <label>Use Rates Setup</label>
+                    <frontend_model>Unirgy\Dropship\Block\Adminhtml\SystemConfigFormField\DependSelect</frontend_model>
+                    <source_model>Unirgy\DropshipTierShipping\Model\Source</source_model>
+                </field>
+                <field id="use_customer_group" translate="label" sortOrder="11" type="select" showInDefault="1">
+                    <label>Use Customer Group Condition</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="tiered_category_parent" translate="label" sortOrder="15" type="select" showInDefault="1">
+                    <label>Parent category for tiered categories</label>
+                    <frontend_model>Unirgy\Dropship\Block\Adminhtml\SystemConfigFormField\CategoriesMultiSelect</frontend_model>
+                </field>
+                <field id="match_subcategories" translate="label" sortOrder="16" type="select" showInDefault="1">
+                    <label>Match Subcategories</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="allow_vendor_modify" translate="label" sortOrder="17" type="select" showInDefault="1">
+                    <label>Allow Vendors modify rates from vendor portal</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cost_calculation_type" translate="label" sortOrder="20" type="select" showInDefault="1">
+                    <label>"Cost for the first item" Calculation Type</label>
+                    <source_model>Unirgy\DropshipTierShipping\Model\Source</source_model>
+                </field>
+                <field id="additional_calculation_type" translate="label" sortOrder="22" type="select"
+                       showInDefault="1">
+                    <label>"Additional item cost" Calculation Type</label>
+                    <source_model>Unirgy\DropshipTierShipping\Model\Source</source_model>
+                </field>
+                <field id="handling_calculation_type" translate="label" sortOrder="24" type="select" showInDefault="1">
+                    <label>"Tier handling fee" Calculation Type</label>
+                    <source_model>Unirgy\DropshipTierShipping\Model\Source</source_model>
+                </field>
+                <field id="handling_apply_method" translate="label" sortOrder="25" type="select" showInDefault="1">
+                    <label>"Tier handling fee" Apply Method</label>
+                    <source_model>Unirgy\DropshipTierShipping\Model\Source</source_model>
+                </field>
+                <field id="calculation_method" translate="label" sortOrder="28" type="select" showInDefault="1">
+                    <label>Rates Calculation Method</label>
+                    <source_model>Unirgy\DropshipTierShipping\Model\Source</source_model>
+                </field>
+                <field id="rate_cost_attribute" translate="label comment" sortOrder="30" type="text" showInDefault="1">
+                    <label>Product attribute code for "Cost for the first item"</label>
+                    <comment>Used to set per product rates</comment>
+                </field>
+                <field id="rate_additional_attribute" translate="label comment" sortOrder="32" type="text"
+                       showInDefault="1">
+                    <label>Product attribute code for "Additional item cost"</label>
+                    <comment>Used to set per product rates</comment>
+                </field>
+                <field id="rate_handling_attribute" translate="label comment" sortOrder="34" type="text"
+                       showInDefault="1">
+                    <label>Product attribute code for "Tier handling fee"</label>
+                    <comment>Used to set per product rates</comment>
+                </field>
+                <field id="fallback_lookup" translate="label" sortOrder="41" type="select" showInDefault="1">
+                    <label>Fallback lookup method</label>
+                    <source_model>Unirgy\DropshipTierShipping\Model\Source</source_model>
+                </field>
+                <field id="fallback_rate_cost" translate="label comment" sortOrder="45" type="text" showInDefault="1">
+                    <label>Fallback Cost for the first item</label>
+                    <comment>Used when there is no matched category found</comment>
+                </field>
+                <field id="fallback_rate_additional" translate="label comment" sortOrder="47" type="text"
+                       showInDefault="1">
+                    <label>Fallback Additional item cost</label>
+                    <comment>Used when there is no matched category found</comment>
+                </field>
+                <field id="fallback_rate_handling" translate="label comment" sortOrder="49" type="text"
+                       showInDefault="1">
+                    <label>Fallback Tier handling fee</label>
+                    <comment>Used when there is no matched category found</comment>
+                </field>
+                <field id="rates" translate="label" sortOrder="50" type="select" showInDefault="1">
+                    <label>Rates</label>
+                    <frontend_model>Unirgy\DropshipTierShipping\Block\Adminhtml\SystemConfigField\Rates</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized</backend_model>
+                </field>
+                <field id="simple_rates" translate="label" sortOrder="60" type="select" showInDefault="1">
+                    <label>Simple Rates</label>
+                    <frontend_model>Unirgy\DropshipTierShipping\Block\Adminhtml\SystemConfigField\SimpleRates</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized</backend_model>
+                </field>
+                <field id="delivery_type" translate="label" sortOrder="69" type="select" showInDefault="1">
+                    <label>Delivery Types</label>
+                    <frontend_model>Unirgy\DropshipTierShipping\Block\Adminhtml\SystemConfigField\V2\DeliveryType</frontend_model>
+                    <backend_model>Unirgy\DropshipTierShipping\Model\SystemConfig\Backend\DeliveryType</backend_model>
+                </field>
+                <field id="delivery_type_selector" translate="label comment" sortOrder="70" type="select"
+                       showInDefault="1">
+                    <label>Configure Delivery Type Rates</label>
+                    <comment>Select Delivery Type to load settings in V2 Rates</comment>
+                    <frontend_model>Unirgy\DropshipTierShipping\Block\Adminhtml\SystemConfigField\V2\DeliveryTypeSelector</frontend_model>
+                    <source_model>Unirgy\DropshipTierShipping\Model\Source</source_model>
+                    <backend_model>Unirgy\DropshipTierShipping\Model\SystemConfig\Backend\EmptyBackend</backend_model>
+                </field>
+                <field id="v2_rates" translate="label" sortOrder="71" type="select" showInDefault="1">
+                    <label>V2 Rates</label>
+                    <frontend_model>Unirgy\DropshipTierShipping\Block\Adminhtml\SystemConfigField\V2\Rates</frontend_model>
+                    <backend_model>Unirgy\DropshipTierShipping\Model\SystemConfig\Backend\Rates</backend_model>
+                </field>
+                <field id="v2_simple_rates" translate="label" sortOrder="72" type="select" showInDefault="1">
+                    <label>V2 Simple First/Additional Rates</label>
+                    <frontend_model>Unirgy\DropshipTierShipping\Block\Adminhtml\SystemConfigField\V2\SimpleRates</frontend_model>
+                    <backend_model>Unirgy\DropshipTierShipping\Model\SystemConfig\Backend\SimpleRates</backend_model>
+                </field>
+                <field id="v2_simple_cond_rates" translate="label" sortOrder="73" type="select" showInDefault="1">
+                    <label>V2 Simple Conditional Rates</label>
+                    <frontend_model>Unirgy\DropshipTierShipping\Block\Adminhtml\SystemConfigField\V2\SimpleCondRates</frontend_model>
+                    <backend_model>Unirgy\DropshipTierShipping\Model\SystemConfig\Backend\SimpleCondRates</backend_model>
+                </field>
+                <field id="free_method" translate="label" sortOrder="90" type="multiselect" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Free methods</label>
+                    <source_model>Unirgy\DropshipTierShipping\Model\Source</source_model>
+                </field>
+                <field id="sort_order" translate="label" sortOrder="100" type="text" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Sort order</label>
+                </field>
+                <field id="sallowspecific" translate="label" sortOrder="90" type="select" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Ship to applicable countries</label>
+                    <frontend_class>shipping-applicable-country</frontend_class>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label" sortOrder="91" type="multiselect" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Ship to Specific countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                </field>
+                <field id="showmethod" translate="label" sortOrder="92" type="select" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Show method if not applicable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="specificerrmsg" translate="label" sortOrder="80" type="textarea" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Displayed Error Message</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="udropship_adminhtml_vendor_tabs_after">
+        <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\UdropshipAdminhtmlVendorTabsAfter"/>
+    </event>
+    <event name="controller_action_layout_render_before_udropshipadmin_adminhtml_vendor_index">
+        <observer name="udpayout" instance="Unirgy\DropshipPayout\Observer\AdminhtmlVersion"/>
+    </event>
+</config>

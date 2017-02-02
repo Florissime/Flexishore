@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="udropship">
+            <group id="tiercom" translate="label" sortOrder="210" type="text" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Tier Commission</label>
+                <field id="tiered_category_parent" translate="label" sortOrder="10" type="select" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Parent category for tiered categories</label>
+                    <frontend_model>Unirgy\Dropship\Block\Adminhtml\SystemConfigFormField\CategoriesSelect</frontend_model>
+                </field>
+                <field id="match_subcategories" translate="label" sortOrder="20" type="select" showInDefault="1"
+                       showInWebsite="1">
+                    <label>Match Subcategories</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="fallback_lookup" translate="label" sortOrder="25" type="select" showInDefault="1">
+                    <label>Commission fallback lookup method</label>
+                    <source_model>Unirgy\DropshipTierCommission\Model\Source</source_model>
+                </field>
+                <field id="comm_attribute" translate="label comment" sortOrder="30" type="text" showInDefault="1">
+                    <label>Product attribute code for "Commission percent"</label>
+                    <comment>Used to set per product commission percent (instead of tier commission percent)</comment>
+                </field>
+                <field id="fixed_rate_attribute" translate="label comment" sortOrder="32" type="text" showInDefault="1">
+                    <label>Product attribute code for "Tier Fixed Rate (per item)"</label>
+                    <comment>Used to set per product fixed rate (instead of tier fixed rate)</comment>
+                </field>
+                <field id="commission_percent" translate="label" sortOrder="34" type="text" showInDefault="1">
+                    <label>Default Commission Percent</label>
+                </field>
+                <field id="rates" translate="label" sortOrder="40" type="select" showInDefault="1">
+                    <label>Tiered Rates</label>
+                    <frontend_model>Unirgy\DropshipTierCommission\Block\Adminhtml\SystemConfigField\Rates</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized</backend_model>
+                </field>
+                <field id="fixed_calculation_type" translate="label" sortOrder="50" type="select" showInDefault="1">
+                    <label>Fixed Rates Calculation Type</label>
+                    <source_model>Unirgy\DropshipTierCommission\Model\Source</source_model>
+                </field>
+                <field id="transaction_fee" translate="label" sortOrder="60" type="text" showInDefault="1">
+                    <label>Fixed Flat Rate (per po) [old transaction fee]</label>
+                </field>
+                <field id="fixed_rule" translate="label" sortOrder="70" type="select" showInDefault="1">
+                    <label>Rule for Fixed Rates</label>
+                    <source_model>Unirgy\DropshipTierCommission\Model\Source</source_model>
+                </field>
+                <field id="fixed_rates" translate="label comment" sortOrder="80" type="select" showInDefault="1">
+                    <label>Rule Based Fixed Rates</label>
+                    <comment>Used for transaction fee calculation</comment>
+                    <frontend_model>Unirgy\DropshipTierCommission\Block\Adminhtml\SystemConfigField\FixedRates</frontend_model>
+                    <backend_model>Unirgy\DropshipTierCommission\Model\SystemConfig\Backend\FixedRates</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

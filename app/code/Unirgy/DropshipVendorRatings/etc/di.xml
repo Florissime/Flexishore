@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Review\Model\Review"
+                type="Unirgy\DropshipVendorRatings\Model\Review"/>
+    <preference for="Magento\Review\Model\ResourceModel\Review"
+                type="Unirgy\DropshipVendorRatings\Model\ResourceModel\Review"/>
+    <preference for="Magento\Review\Model\ResourceModel\Review\Summary"
+                type="Unirgy\DropshipVendorRatings\Model\ResourceModel\Review\Summary"/>
+    <preference for="Magento\Review\Model\ResourceModel\Review\Product\Collection"
+                type="Unirgy\DropshipVendorRatings\Model\ResourceModel\Review\Product\Collection"/>
+    <preference for="Magento\Review\Model\ResourceModel\Review\Collection"
+                type="Unirgy\DropshipVendorRatings\Model\ResourceModel\Review\Collection"/>
+    <preference for="Magento\Review\Model\ResourceModel\Rating\Option\Vote\Collection"
+                type="Unirgy\DropshipVendorRatings\Model\ResourceModel\RatingOptionVoteCollection"/>
+    <preference for="Magento\Review\Model\ResourceModel\Rating"
+                type="Unirgy\DropshipVendorRatings\Model\ResourceModel\Rating"/>
+    <virtualType name="Unirgy\DropshipVendorRatings\Model\Session\Storage" type="Magento\Framework\Session\Storage">
+        <arguments>
+            <argument name="namespace" xsi:type="string">udrating</argument>
+        </arguments>
+    </virtualType>
+    <type name="Unirgy\DropshipVendorRatings\Model\Session">
+        <arguments>
+            <argument name="storage" xsi:type="object">Unirgy\DropshipVendorRatings\Model\Session\Storage</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Url\SecurityInfo">
+        <arguments>
+            <argument name="secureUrlList" xsi:type="array">
+                <item name="udratings_customer" xsi:type="string">/udratings/customer/</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

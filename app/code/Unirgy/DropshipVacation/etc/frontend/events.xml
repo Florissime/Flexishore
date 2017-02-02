@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="udropship_prepare_quote_items_after">
+        <observer name="udvacation" instance="Unirgy\DropshipVacation\Observer\UdropshipPrepareQuoteItemsAfter"/>
+    </event>
+    <event name="udropship_vendor_front_preferences">
+        <observer name="udvacation" instance="Unirgy\DropshipVacation\Observer\UdropshipVendorFrontPreferences"/>
+    </event>
+    <event name="udropship_vendor_preferences_save_before">
+        <observer name="udvacation" instance="Unirgy\DropshipVacation\Observer\UdropshipVendorPreferencesSaveBefore"/>
+    </event>
+</config>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="udprod_notify_pending" instance="Unirgy\DropshipVendorProduct\Cron\NotifyPending" method="execute">
+            <schedule>*/30 * * * *</schedule>
+        </job>
+        <job name="udprod_notify_approved" instance="Unirgy\DropshipVendorProduct\Cron\NotifyApproved" method="execute">
+            <schedule>*/30 * * * *</schedule>
+        </job>
+        <job name="udprod_notify_fix" instance="Unirgy\DropshipVendorProduct\Cron\NotifyFix" method="execute">
+            <schedule>*/30 * * * *</schedule>
+        </job>
+    </group>
+</config>

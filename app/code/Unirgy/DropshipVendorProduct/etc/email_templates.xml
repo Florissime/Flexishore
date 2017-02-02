@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="udprod_notification_pending_vendor_email_template" label="Pending Products Vendor Notification"
+              file="udprod_pending.html" type="html" area="frontend" module="Unirgy_DropshipVendorProduct"/>
+    <template id="udprod_notification_pending_admin_email_template" label="Pending Products Admin Notification"
+              file="udprod_pending_admin.html" type="html" area="frontend" module="Unirgy_DropshipVendorProduct"/>
+    <template id="udprod_notification_approved_vendor_email_template" label="Approved Products Vendor Notification"
+              file="udprod_approved.html" type="html" area="frontend" module="Unirgy_DropshipVendorProduct"/>
+    <template id="udprod_notification_approved_admin_email_template" label="Approved Products Admin Notification"
+              file="udprod_approved_admin.html" type="html" area="frontend" module="Unirgy_DropshipVendorProduct"/>
+    <template id="udprod_notification_fix_vendor_email_template" label="Fix Products Vendor Notification"
+              file="udprod_fix.html" type="html" area="frontend" module="Unirgy_DropshipVendorProduct"/>
+    <template id="udprod_notification_fix_admin_email_template" label="Fix Products Admin Notification"
+              file="udprod_fix_admin.html" type="html" area="frontend" module="Unirgy_DropshipVendorProduct"/>
+</config>

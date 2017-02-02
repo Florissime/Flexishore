@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="udropship_shipping_load_after">
+        <observer name="udshipclass" instance="Unirgy\DropshipShippingClass\Observer\UdropshipShippingLoadAfter"/>
+    </event>
+    <event name="udropship_shipping_save_after">
+        <observer name="udshipclass" instance="Unirgy\DropshipShippingClass\Observer\UdropshipShippingSaveAfter"/>
+    </event>
+    <event name="udropship_shipping_save_before">
+        <observer name="udshipclass" instance="Unirgy\DropshipShippingClass\Observer\UdropshipShippingSaveBefore"/>
+    </event>
+    <event name="udropship_vendor_shipping_check_skipped">
+        <observer name="udshipclass"
+                  instance="Unirgy\DropshipShippingClass\Observer\UdropshipVendorShippingCheckSkipped"/>
+    </event>
+</config>

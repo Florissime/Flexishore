@@ -1,0 +1,2 @@
+<?php echo $this->getElement()->getLabelHtml() . ( $this->getElement()->getRequired() ? ' <span class="required">*</span>' : '' ) ?> <br />
+<?php echo $block->getLayout()->getBlock('udmspro_register')->getCountryHtmlSelect($this->getElement()->getValue(), $this->getElement()->getName(), $this->getElement()->getHtmlId()) ?>

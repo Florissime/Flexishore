@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Unirgy_DropshipVendorRatings::review" resource="Unirgy_DropshipVendorRatings::review"
+             module="Unirgy_Dropship" title="Reviews and Ratings" sortOrder="11000"
+             parent="Unirgy_Dropship::udropship" />
+        <add id="Unirgy_DropshipVendorRatings::review_pending" resource="Unirgy_DropshipVendorRatings::review_pending"
+             module="Unirgy_Dropship" title="Pending Reviews" sortOrder="10" action="udratings/review/pending"
+             parent="Unirgy_DropshipVendorRatings::review"/>
+        <add id="Unirgy_DropshipVendorRatings::review_all" resource="Unirgy_DropshipVendorRatings::review_all"
+             module="Unirgy_Dropship" title="All Reviews" sortOrder="20" action="udratings/review/index"
+             parent="Unirgy_DropshipVendorRatings::review"/>
+        <add id="Unirgy_DropshipVendorRatings::rating" resource="Unirgy_DropshipVendorRatings::rating"
+             module="Unirgy_Dropship" title="Manage Ratings" sortOrder="30" action="udratings/rating/index"
+             parent="Unirgy_DropshipVendorRatings::review"/>
+    </menu>
+</config>

@@ -1,0 +1,37 @@
+<?php
+$prod = $this->getProduct();
+$tpl = $prod->getData('__tpl_product');
+$name = $this->getElement()->getName();
+$id = $this->getElement()->getId();
+$type = $this->getElement()->getType();
+?>
+<?php echo $this->getElement()->getLabelHtml() . ( $this->getElement()->getRequired() ? ' <span class="required">*</span>' : '' ) ?> <br />
+<?php echo $this->getElementHtml() ?>
+<?php if (in_array($type, ['text','textarea']) && $prod && $tpl && ($tplData = $tpl->getData($id))==$prod->getData($id) && is_scalar($tplData)): ?>
+<script type="text/javascript">
+//<![CDATA[
+
+require(["jquery", "prototype","domReady!"], function(jQuery) {
+    var tpl = '<?php echo preg_replace("/\r\n|\n\r|\r|\n/", '\\n', $this->escapeJsQuote($tplData))?>';
+    var el = $('<?php echo $id?>');
+    if (el) {
+        el.emptyText = tpl;
+        el.observe('blur', function() {
+            if(el.value==''){
+                el.value=tpl;
+            }
+        });
+        el.observe('focus', function() {
+            if(el.value==tpl){
+                el.value='';
+            }
+        });
+        if (jQuery(el).is(':focus') && el.value==tpl) {
+            el.value='';
+        }
+    }
+});
+
+//]]>
+</script>
+<?php endif ?>

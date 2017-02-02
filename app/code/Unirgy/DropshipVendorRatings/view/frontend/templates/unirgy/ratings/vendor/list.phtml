@@ -1,0 +1,79 @@
+<div class="page-title title-buttons">
+    <h1>
+        <?php echo __('Reviews for vendor %1', $this->getVendor()->getVendorName()) ?>
+        <div><?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\DropshipVendorRatings\Helper\Data')->getReviewsSummaryHtml($this->getVendor()); ?></div>
+    </h1>
+</div>
+
+<?php
+$_items = $this->getReviewsCollection()->getItems();
+$format = $block->getDateFormat() ?: \IntlDateFormatter::SHORT;
+?>
+    <?php if (!count($_items)):?>
+        <h2><?php echo __('No Reviews') ?></h2>
+    <?php else:?>
+        <?php echo $this->getChildHtml('toolbar') ?>
+        <ol class="items review-items">
+            <?php foreach ($_items as $_review):?>
+                <li class="item review-item" itemscope itemprop="review" itemtype="http://schema.org/Review">
+                    <div class="review-title" itemprop="name"><?php echo $block->escapeHtml($_review->getTitle()) ?></div>
+                    <?php
+                    $_naVotes = $_votes = [];
+                    foreach ($_review->getRatingVotes() as $_vote) {
+                        if ($_vote->getIsAggregate()) {
+                            $_votes[] = $_vote;
+                        } else {
+                            $_naVotes[] = $_vote;
+                        }
+                    }
+                    ?>
+                    <div class="review-ratings">
+                        <?php if (count($_votes)): ?>
+                            <?php foreach ($_votes as $_vote): ?>
+                                <div class="rating-summary item" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                            <span class="label rating-label">
+                                <span><?php echo $block->escapeHtml($_vote->getRatingCode()) ?></span>
+                            </span>
+                                    <div class="rating-result" title="<?php /* @escapeNotVerified */ echo $_vote->getPercent() ?>%">
+                                        <meta itemprop="worstRating" content = "1"/>
+                                        <meta itemprop="bestRating" content = "100"/>
+                        <span style="width:<?php /* @escapeNotVerified */ echo $_vote->getPercent() ?>%">
+                            <span itemprop="ratingValue"><?php /* @escapeNotVerified */ echo $_vote->getPercent() ?>%</span>
+                        </span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        <?php if (count($_naVotes)): ?>
+                            <?php foreach ($_naVotes as $_vote): ?>
+                                <div class="rating-summary item" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                        <span class="label rating-label">
+                            <span><?php echo $block->escapeHtml($_vote->getRatingCode()) ?></span>
+                        </span>
+                                    <div>
+                            <span>
+                                <span itemprop="ratingValue"><?php echo $_vote->getValue() ? __('Yes') : __('No')?></span>
+                            </span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="review-content" itemprop="description" style="margin-left: 400px">
+                        <?php echo nl2br($block->escapeHtml($_review->getDetail())) ?>
+                    </div>
+                    <div class="review-details" style="margin-left: 400px">
+                        <p class="review-author">
+                            <span class="review-details-label"><?php /* @escapeNotVerified */ echo __('Review by')?></span>
+                            <strong class="review-details-value" itemprop="author"><?php echo $block->escapeHtml($_review->getNickname()) ?></strong>
+                        </p>
+                        <p class="review-date">
+                            <span class="review-details-label"><?php /* @escapeNotVerified */ echo __('Posted on') ?></span>
+                            <time class="review-details-value" itemprop="datePublished" datetime="<?php /* @escapeNotVerified */ echo $block->formatDate($_review->getCreatedAt(), $format) ?>"><?php /* @escapeNotVerified */ echo $block->formatDate($_review->getCreatedAt(), $format) ?></time>
+                        </p>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+        <?php echo $this->getChildHtml('toolbar') ?>
+    <?php endif;?>

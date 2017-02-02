@@ -1,0 +1,54 @@
+<?php
+/** @var \Unirgy\Dropship\Helper\Data $_hlp */
+$_hlp = \Magento\Framework\App\ObjectManager::getInstance()->get('Unirgy\Dropship\Helper\Data');
+$_msHlp = $_hlp->getObj('Unirgy\DropshipMicrosite\Helper\Data');
+$_rateHlp = $_hlp->getObj('Unirgy\DropshipVendorRatings\Helper\Data');
+?>
+
+<?php echo $this->getLayout()->getMessagesBlock()->getGroupedHtml() ?>
+
+<div>
+<?php $_shipments = $this->getReviewsCollection()->getItems();?>
+    <?php if (!count($_shipments)):?>
+        <h3><?php echo __('No Pending Reviews') ?></h3>
+    <?php else:?>
+        <?php echo $this->getChildHtml('toolbar') ?>
+        <?php foreach ($_shipments as $_shipment):?>
+        <br /><br />
+        <h3><?php echo __('Shipment #') ?><?php echo $_shipment->getIncrementId(); ?></h3>
+        <h3><a href="<?php echo $_msHlp->getVendorUrl($_shipment->getUdropshipVendor())?>"><?php echo $_hlp->getVendor($_shipment->getUdropshipVendor())->getVendorName()?></a></h3>
+        <?php echo $_rateHlp->getReviewsSummaryHtml($_shipment->getUdropshipVendor()); ?>
+    <div class="table-wrapper order-items">
+        <table class="data table table-order-items" id="my-shipment-table-<?php echo $_shipment->getId(); ?>">
+            <thead>
+                <tr>
+                    <th class="col name"><?php echo __('Product Name') ?></th>
+                    <th class="col sku"><?php echo __('SKU') ?></th>
+                    <th class="col qty"><span class="nobr"><?php echo __('Qty Shipped') ?></span></th>
+                </tr>
+            </thead>
+            <?php $_items = $_shipment->getAllItems(); ?>
+            <?php $_count = count($_items) ?>
+            <?php foreach ($_items as $_item): ?>
+            <?php if ($_item->getOrderItem()->getParentItem()) continue; ?>
+            <tbody>
+                <?php echo $this->getItemHtml($_item) ?>
+            </tbody>
+            <?php endforeach; ?>
+        </table>
+    </div>
+    <script type="text/javascript">
+require(["jquery", "prototype"], function(jQuery) {
+decorateTable('my-shipment-table-<?php echo $_shipment->getId(); ?>', {'tbody' : ['odd', 'even'], 'tbody tr' : ['first', 'last']})
+});
+</script>
+        <?php echo $this->getChildBlock('review_form')
+                  ->setEntityPkValue($_shipment->getUdropshipVendor())
+                  ->setRelEntityPkValue($_shipment->getId())
+                  ->toHtml();
+        ?>
+        <?php endforeach; ?>
+        <?php echo $this->getChildHtml('toolbar') ?>
+    <?php endif;?>
+</div>
+

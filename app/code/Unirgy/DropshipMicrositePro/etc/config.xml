@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <Unirgy_DropshipMicrositePro>
+            <usimpleup>
+                <remote>http://download.unirgy.com/simple/client_api/version/</remote>
+                <changelog>http://unirgy.com/support/portal/announcements</changelog>
+            </usimpleup>
+        </Unirgy_DropshipMicrositePro>
+        <udropship>
+            <microsite>
+                <confirmation_template>udropship_microsite_confirmation_template</confirmation_template>
+                <reject_template>udropship_microsite_reject_template</reject_template>
+            </microsite>
+        </udropship>
+        <udsignup>
+            <form>
+                <fieldsets>[{"title":"Vendor Registration","sort_order":"0","top_columns_def":[],"bottom_columns_def":[],"left_columns_def":[{"column_field":"vendor_name","is_required":"1","use_custom_label":"1","custom_label":"Shop Name","sort_order":"0"},{"column_field":"telephone","is_required":"1","custom_label":"","sort_order":"10"},{"column_field":"email","is_required":"1","custom_label":"","sort_order":"20"},{"column_field":"carrier_code","is_required":"1","custom_label":"","sort_order":"30"},{"column_field":"url_key","is_required":"1","custom_label":"","sort_order":"40"},{"column_field":"comments","custom_label":"","sort_order":"50"}],"right_columns_def":[{"column_field":"vendor_attn","is_required":"1","custom_label":"","sort_order":"0"},{"column_field":"street1","is_required":"1","custom_label":"","sort_order":"10"},{"column_field":"street2","custom_label":"","sort_order":"20"},{"column_field":"city","is_required":"1","custom_label":"","sort_order":"30"},{"column_field":"zip","is_required":"1","custom_label":"","sort_order":"40"},{"column_field":"region_id","custom_label":"","sort_order":"50"},{"column_field":"country_id","is_required":"1","custom_label":"","sort_order":"60"},{"column_field":"logo","is_required":"1","custom_label":"","sort_order":"70"}],"fields_extra":{"vendor_name":{"use_custom_label":"1","custom_label":"Shop Name"},"telephone":{"use_custom_label":null,"custom_label":""},"email":{"use_custom_label":null,"custom_label":""},"carrier_code":{"use_custom_label":null,"custom_label":""},"url_key":{"use_custom_label":null,"custom_label":""},"comments":{"use_custom_label":null,"custom_label":""},"vendor_attn":{"use_custom_label":null,"custom_label":""},"street1":{"use_custom_label":null,"custom_label":""},"street2":{"use_custom_label":null,"custom_label":""},"city":{"use_custom_label":null,"custom_label":""},"zip":{"use_custom_label":null,"custom_label":""},"region_id":{"use_custom_label":null,"custom_label":""},"country_id":{"use_custom_label":null,"custom_label":""},"logo":{"use_custom_label":null,"custom_label":""}},"required_fields":["vendor_name","telephone","email","carrier_code","url_key","vendor_attn","street1","city","zip","country_id","logo"],"left_columns":["vendor_name","telephone","email","carrier_code","url_key","comments"],"right_columns":["vendor_attn","street1","street2","city","zip","region_id","country_id","logo"]}]</fieldsets>
+            </form>
+        </udsignup>
+        <web>
+            <default>
+                <umicrosite_default_landingpage>default-microsite-vendor-landing-page</umicrosite_default_landingpage>
+            </default>
+        </web>
+    </default>
+</config>

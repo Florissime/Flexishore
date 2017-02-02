@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <Unirgy_DropshipTierCommission>
+            <usimpleup>
+                <remote>http://download.unirgy.com/simple/client_api/version/</remote>
+                <changelog>http://unirgy.com/support/portal/announcements</changelog>
+            </usimpleup>
+        </Unirgy_DropshipTierCommission>
+        <udropship>
+            <tiercom>
+                <match_subcategories>1</match_subcategories>
+                <fixed_calculation_type>flat_tier_rule</fixed_calculation_type>
+                <fallback_lookup>tier</fallback_lookup>
+            </tiercom>
+        </udropship>
+    </default>
+</config>

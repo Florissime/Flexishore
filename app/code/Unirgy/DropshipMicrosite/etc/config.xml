@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <Unirgy_DropshipMicrosite>
+            <usimpleup>
+                <remote>http://download.unirgy.com/simple/client_api/version/</remote>
+                <changelog>http://unirgy.com/support/portal/announcements</changelog>
+            </usimpleup>
+        </Unirgy_DropshipMicrosite>
+        <udropship>
+            <microsite>
+                <allow_mixed_subdomain_level>0</allow_mixed_subdomain_level>
+                <show_products_menu_item>0</show_products_menu_item>
+                <signup_template>udropship_microsite_signup_template</signup_template>
+                <welcome_template>udropship_microsite_welcome_template</welcome_template>
+                <update_store_base_url>1</update_store_base_url>
+                <registration_carriers>ups,usps,fedex</registration_carriers>
+                <registration_receiver/>
+                <registration_subject>New vendor registration from {{vendor_name}} on {{store_name}}
+                </registration_subject>
+                <registration_template>Dear Administrator,
+
+                    A dropship vendor has just submitted a registration.
+
+                    Vendor Name: {{vendor_name}}
+                    Vendor Email: {{email}}
+
+                    Registration URL: {{registration_url}}
+                    All registrations URL: {{all_registrations_url}}
+
+                    Comments: {{comments}}
+                </registration_template>
+            </microsite>
+        </udropship>
+        <captcha>
+            <frontend>
+                <areas>
+                    <umicrosite_registration_form>
+                        <label>Microsite Registration Form</label>
+                    </umicrosite_registration_form>
+                </areas>
+            </frontend>
+        </captcha>
+    </default>
+</config>

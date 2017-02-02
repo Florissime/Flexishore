@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!--preference for="Magento\Catalog\Model\Layer" type="Unirgy\DropshipMicrosite\Model\Catalog\Layer"/>
+    <preference for="Magento\Store\Model\Store" type="Unirgy\DropshipMicrosite\Model\Store"/>
+    <preference for="Magento\Framework\Model\Url" type="Unirgy\DropshipMicrosite\Model\Url"/>
+    <preference for="Magento\Catalog\Block\Adminhtml\Product\Edit\Tab\Websites" type="Unirgy\DropshipMicrosite\Block\Adminhtml\Product\Websites"/>
+    <preference for="Magento\Catalog\Block\Adminhtml\Product\Edit\Tab\Categories" type="Unirgy\DropshipMicrosite\Block\Adminhtml\Product\Categories"/>
+    <preference for="Magento\GoogleAnalytics\Block\Ga" type="Unirgy\DropshipMicrosite\Block\Ga"/-->
+    <preference for="Magento\Framework\Url\ScopeInterface" type="Unirgy\DropshipMicrosite\Model\Store"/>
+    <preference for="Magento\Store\Api\Data\StoreInterface" type="Unirgy\DropshipMicrosite\Model\Store"/>
+    <preference for="Magento\Store\Model\Store" type="Unirgy\DropshipMicrosite\Model\Store"/>
+    <preference for="Magento\Framework\App\Request\Http" type="Unirgy\DropshipMicrosite\Model\RequestHttp"/>
+    <type name="Magento\Framework\Url\SecurityInfo">
+        <arguments>
+            <argument name="secureUrlList" xsi:type="array">
+                <item name="umicrosite_vendor" xsi:type="string">/umicrosite/vendor/</item>
+                <item name="checkout_cart" xsi:type="string">/checkout/cart/</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

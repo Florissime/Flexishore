@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Unirgy_DropshipMicrosite" setup_version="3.1.8">
+        <sequence>
+            <module name="Mage_Cms"/>
+            <module name="Unirgy_Dropship"/>
+        </sequence>
+    </module>
+</config>
