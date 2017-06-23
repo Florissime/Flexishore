@@ -24,7 +24,6 @@ atlassian*
 /lib/internal/flex/varien/.settings
 /node_modules
 /.grunt
-
 /pub/media/*.*
 !/pub/media/.htaccess
 /pub/media/catalog/*
