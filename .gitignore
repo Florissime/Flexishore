@@ -1,12 +1,6 @@
-/dev
-/pub
-/update
-/lib
-/phpserver
-/setup
-/composer.lock
 /.buildpath
 /.cache
+/dev
 /.metadata
 /.project
 /.settings
@@ -15,7 +9,6 @@ atlassian*
 /sitemap
 /sitemap.xml
 /.idea
-/.composer.lock
 /.gitattributes
 /app/config_sandbox
 /app/etc/config.php
@@ -57,6 +50,3 @@ atlassian*
 !/var/.htaccess
 /vendor/*
 !/vendor/.htaccess
-
-!/composer.json
-!/README.md
