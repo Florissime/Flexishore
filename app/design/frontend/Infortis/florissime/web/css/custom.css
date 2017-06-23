@@ -1,3 +1,4 @@
+@import "fonts.css";
 .product-info-main{
     border: 1px solid #ddd;
     box-sizing: border-box;
@@ -50,4 +51,14 @@
 .product-info-main .delivery-block.active{
     background:#f3a2b4;
     color:white;
+}
+p.description{
+    font-size: 14px;
+}
+.cms-home .widget.block.block-static-block h3.pink-block{
+    font-family: "Cookie Regular";
+    font-size: 50px;
+    margin: 5px 20px;
+    margin-bottom: 20px;
+    font-weight: normal;
 }
