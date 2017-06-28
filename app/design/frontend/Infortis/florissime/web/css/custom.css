@@ -1,4 +1,84 @@
 @import "fonts.css";
+
+.white_block {
+    background: #ffffff;
+    padding: 25px 0;
+}
+
+.white_block p {
+    padding: 0 20px;
+}
+
+
+.block-comment
+{
+    background-color: #f3a2b4;
+    float:left;
+}
+
+.title-comment
+{
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.step
+{
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.3em;
+}
+
+
+.center{
+    text-align:center;
+}
+
+h3.pink-block {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2.3em;
+    color:#ffffff;
+    margin-bottom:17px;
+}
+
+
+h3.white-bg {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2.3em;
+}
+
+.pink_line {
+    background-color: #f3a2b4;
+    height: 2px;
+    margin-top: 30px;
+}
+
+.white_line {
+    background-color: #ffffff;
+    height: 2px;
+    margin-top: 30px;
+}
+
+ul.line{
+    list-style: none;
+    color: #96c11f;
+}
+
+ul.line li:before {
+    content: "▅";
+    padding-right: 10px;
+}
+
+.green{
+    color:#96c11f;
+}
+
+.footer ul li {
+    margin-bottom: 1.3em;
+}
+
 .product-info-main{
     border: 1px solid #ddd;
     box-sizing: border-box;
