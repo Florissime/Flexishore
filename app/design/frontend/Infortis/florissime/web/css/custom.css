@@ -62,3 +62,61 @@ p.description{
     margin-bottom: 20px;
     font-weight: normal;
 }
+
+.widget.block.block-static-block.block.newsletter{
+    width: 100%;
+    padding: 20px 0;
+    background: #3c3c3b;
+}
+.widget.block.block-static-block.block.newsletter form{
+    width: 50%;
+    margin: auto;
+    position: relative;
+}
+.widget.block.block-static-block.block.newsletter form input{
+    background: transparent;
+    color: white;
+    border-radius: 3px 0 0 3px;
+    width: 300px;
+}
+.widget.block.block-static-block.block.newsletter form .control{
+    display: inline-block;
+    width: inherit;
+}
+.widget.block.block-static-block.block.newsletter form label{
+    color:white;
+    font-family: "Cookie Regular";
+    font-size: 25px;
+    margin-right: 20px;
+}
+.widget.block.block-static-block.block.newsletter form .actions{
+    position: absolute;
+    top: 0;
+    right: 40px;
+}
+.widget.block.block-static-block.block.newsletter form .actions button{
+    border-radius: 0 3px 3px 0;
+}
+
+@media (max-width: 1200px) {
+    .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input, .widget.block.block-static-block.block.newsletter form .actions{
+        position: static;
+        width: 100%;
+        margin-top: 10px;
+        display: block;
+        text-align: center;
+    }
+    .widget.block.block-static-block.block.newsletter form input{
+        padding: 5px;
+        border-radius: 3px;
+    }
+    .widget.block.block-static-block.block.newsletter .field .control:before{
+        display: none;
+    }
+    .widget.block.block-static-block.block.newsletter form .control{
+        width: 100%;
+    }
+    .widget.block.block-static-block.block.newsletter form .actions button{
+        border-radius: 3px;
+    }
+}
