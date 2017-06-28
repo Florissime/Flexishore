@@ -19,11 +19,15 @@
   font-weight: normal;
   font-style: normal;
 }
+
 @font-face {
   font-family: "Thirsty scrit regular";
-  src:url("../fonts/ThirstyScriptExtraBoldDemo.otf");
-  font-weight: normal;
-  font-style: normal;
+  src: url("../fonts/9df1555ff637ca2f290ce6f363468408.eot"); /* IE9*/
+  src: url("../fonts/9df1555ff637ca2f290ce6f363468408.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("../fonts/9df1555ff637ca2f290ce6f363468408.woff2") format("woff2"), /* chrome、firefox */
+  url("../fonts/9df1555ff637ca2f290ce6f363468408.woff") format("woff"), /* chrome、firefox */
+  url("../fonts/9df1555ff637ca2f290ce6f363468408.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url("../fonts/9df1555ff637ca2f290ce6f363468408.svg#Thirsty scrit regular") format("svg"); /* iOS 4.1- */
 }
 
 [data-icon]:before {
