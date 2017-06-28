@@ -20,9 +20,8 @@
   font-style: normal;
 }
 @font-face {
-  font-family: "Cookie Regular";
-  src:url("../fonts/Cookie-Regular.otf");
-  src: url("../fonts/Cookie-Regular.ttf") format("truetype");
+  font-family: "Thirsty scrit regular";
+  src:url("../fonts/ThirstyScriptExtraBoldDemo.otf");
   font-weight: normal;
   font-style: normal;
 }

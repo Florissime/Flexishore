@@ -135,6 +135,9 @@ ul.line li:before {
 p.description{
     font-size: 14px;
 }
+.widget.block.block-static-block h3.white-bg{
+    font-family: "Thirsty scrit regular";
+}
 .cms-home .widget.block.block-static-block h3.pink-block{
     font-family: "Cookie Regular";
     font-size: 50px;
