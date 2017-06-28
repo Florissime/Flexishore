@@ -181,6 +181,65 @@ p.description{
     border-radius: 0 3px 3px 0;
 }
 
+#search-by-zip {
+    background: #8274a9;
+    display: inline-block;
+    width: 100%;
+}
+#search-by-zip img.extend-img{
+    float: right;
+    max-height: 400px;
+    width: auto;
+}
+#search-by-zip .cms-block{
+    color:white;
+    font-size: 14px;
+}
+.wrapper-search{
+    position: relative;
+}
+#search-by-zip .left{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    display: block;
+    height: 90px;
+    left: 100px;
+    max-width: 500px;
+}
+#search-by-zip-form .form-control{
+    width: 250px;
+    position: relative;
+}
+#search-by-zip-form input{
+    border-radius: 5px;
+    border:1px solid #8274a9;
+    width: 100%;
+    outline: none;
+}
+#search-by-zip-form input:focus{
+    box-shadow: none;
+}
+#search-by-zip-form .icon{
+    color:#96c11f;
+    position: absolute;
+    font-size: 18px;
+    right: 5px;
+    top: 5px;
+}
+#search-by-zip .arrow{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: #8274a9;
+    transform: rotate(45deg);
+    z-index: 2;
+}
 @media (max-width: 1200px) {
     .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input, .widget.block.block-static-block.block.newsletter form .actions{
         position: static;

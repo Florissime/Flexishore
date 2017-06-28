@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+    <system>
+        <section id="search_by_zip" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Search By Zip</label>
+            <!-- Assign section to tab -->
+            <tab>flexishore</tab>
+            <resource>Flexishore_Search::configuration</resource>
+            <!-- create group for fields in section -->
+            <group id="base" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Base</label>
+                <!-- create image upload type field -->
+                <field id="image_for_search" translate="label" type="image" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Image for search in home page</label>
+                    <comment>Need upload image with transperent background. Allowed file types: jpg, jpeg, gif, png</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <base_url type="media" scope_info="1">flexishore/search</base_url>
+                    <upload_dir config="system/filesystem/media" scope_info="1">flexishore/search</upload_dir>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
