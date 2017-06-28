@@ -1,0 +1,19 @@
+<div class="wrapper-search">
+    <div id="search-by-zip">
+        <div class="left">
+            <div class="cms-block">
+                <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('homepage_postalcode_search_text')->toHtml();?>
+            </div>
+            <div class="wrapper-form">
+                <form action="/" method="post" id="search-by-zip-form">
+                    <div class="form-control">
+                        <input type="text" name="zip">
+                        <span data-icon="n" class="icon"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <?php echo $this->getImage(); ?>
+        <div class="arrow"></div>
+    </div>
+</div>
