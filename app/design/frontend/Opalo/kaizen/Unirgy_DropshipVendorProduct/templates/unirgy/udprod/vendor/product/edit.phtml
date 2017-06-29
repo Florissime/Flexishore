@@ -10,7 +10,7 @@ $_product = $this->getProduct();
 
 <?php echo $this->getLayout()->getMessagesBlock()->toHtml(); ?>
 
-<form action="<?php echo $this->getUrl('udprod/vendor/productPost', array('_current'=>true))?>" method="post" id="product-edit-form">
+<form action="<?php echo $this->getUrl('udprod/vendor/productPost', array('__vp'=>true,'_current'=>true))?>" method="post" id="product-edit-form">
   <div class="page-title product-name">
     <h1><?php if ($_product->getId()): ?>
   <?php echo $_product->getName() ?>
