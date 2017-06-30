@@ -257,8 +257,8 @@ p.description{
     font-size: 10px;
     text-align: center;
 }
-.grid12-4 .title-comment{
-    font-family: "Monserat Bold";
+.block-static-block .grid12-4.white_block p{
+    font-family: "Monserrat";
 }
 .footer-primary.footer .main-links{
     font-size: 16px;
