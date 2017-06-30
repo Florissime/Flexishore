@@ -194,10 +194,17 @@ p.description{
 }
 #search-by-zip .cms-block{
     color:white;
-    font-size: 14px;
+    font-size: 16px;
+}
+#search-by-zip .cms-block h2{
+    font-size: 35px;
+    font-weight: bold;
+    text-transform: uppercase;
+
 }
 .wrapper-search{
     position: relative;
+    margin-bottom: 30px;
 }
 #search-by-zip .left{
     position: absolute;
@@ -205,13 +212,14 @@ p.description{
     bottom: 0;
     margin: auto;
     display: block;
-    height: 90px;
+    height: 335px;
     left: 100px;
     max-width: 500px;
 }
 #search-by-zip-form .form-control{
     width: 250px;
     position: relative;
+    margin-top: 30px;
 }
 #search-by-zip-form input{
     border-radius: 5px;
@@ -230,16 +238,16 @@ p.description{
     top: 5px;
 }
 #search-by-zip .arrow{
-    width: 30px;
-    height: 30px;
     position: absolute;
-    bottom: -5px;
+    bottom: -13px;
     left: 0;
     right: 0;
     margin: auto;
-    background: #8274a9;
-    transform: rotate(45deg);
-    z-index: 2;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 17px solid #8274a9;
 }
 .widget.block.block-static-block.block.newsletter form .control .mage-error:not(input){
     position: absolute;
@@ -278,6 +286,24 @@ p.description{
     }
     .widget.block.block-static-block.block.newsletter form .actions button{
         border-radius: 3px;
+    }
+}
+
+@media (max-width: 1000px) {
+    #search-by-zip .left{
+        left: 0;
+        font-size: 15px !important;
+        right: 0;
+        text-align: center;
+        margin: 0 auto;
+        display: block;
+    }
+    #search-by-zip .left h2{
+        font-size: 16px;
+        margin: 5px;
+    }
+    #search-by-zip-form .form-control{
+        margin: auto;
     }
 }
 
