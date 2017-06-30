@@ -260,8 +260,12 @@ p.description{
 .cms-home .widget.block.block-static-block .grid12-4 p{
     font-family: "Montserrat";
 }
-.footer-primary.footer .main-links{
+.footer-primary.footer .main-links ul li {
+    margin-bottom: 0.5em;
+}
+.footer-primary.footer .main-links ul li a{
     font-size: 16px;
+    font-family: "Montserrat";
 }
 .footer-primary.footer .main-links span.icon{
     margin-right: 10px;
