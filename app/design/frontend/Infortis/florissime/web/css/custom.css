@@ -249,6 +249,9 @@ p.description{
     font-size: 10px;
     text-align: center;
 }
+.grid12-4 .title-comment{
+    font-family: "Monserat Bold";
+}
 @media (max-width: 1200px) {
     .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
         position: static;
