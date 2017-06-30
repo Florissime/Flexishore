@@ -257,7 +257,7 @@ p.description{
     font-size: 10px;
     text-align: center;
 }
-.block-static-block .grid12-4.white_block p{
+.cms-home .widget.block.block-static-block .grid12-4 p{
     font-family: "Montserrat";
 }
 .footer-primary.footer .main-links{
