@@ -10,5 +10,5 @@
     <vendor>florissime</vendor>
     <package>fr_fr</package>
     <sort_order>99</sort_order>
-    <use vendor="imaginaerum" package="fr_fr"/>
+    <use vendor="florissime" package="fr_fr"/>
 </language>

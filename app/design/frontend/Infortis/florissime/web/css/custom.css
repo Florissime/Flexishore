@@ -260,6 +260,14 @@ p.description{
 .grid12-4 .title-comment{
     font-family: "Monserat Bold";
 }
+.footer-primary.footer .main-links{
+    font-size: 16px;
+}
+.footer-primary.footer .main-links span.icon{
+    margin-right: 10px;
+    vertical-align: middle;
+    font-size: 22px;
+}
 @media (max-width: 1200px) {
     .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
         position: static;
