@@ -1,6 +1,88 @@
 <?php
 $currentVendor = $this->registry->registry('currentVendor');
 ?>
-<div class="wrapper-top">
+<div class="wrapper-seller">
+    <div class="seller-block-top row">
+        <div class="wrapper-top">
+            <div class="col-lg-3">
+                <img class="vendor-img" src="<?php echo $this->vendorHelper->correctImage($this->vendorHelper->getImageVendor($currentVendor),$this->getViewFileUrl('images/vendor-default-image.jpg'));?>">
+            </div>
 
+            <div class="col-lg-5">
+                <h1 class="title">
+                    <?php echo $currentVendor->getVendorName(); ?>
+                </h1>
+                <p>
+                    <span><?php echo $currentVendor->getData('street'); ?> - </span>
+                    <span><?php echo $currentVendor->getData('zip'); ?> </span>
+                    <span><?php echo $currentVendor->getData('city'); ?> </span>
+                </p>
+            </div>
+
+            <div class="col-lg-4 seller-social-icons">
+                <a href="#" class="icon icon-facebook"></a>
+                <a href="#" class="icon icon-twitter"></a>
+                <a href="#" class="icon icon-instagram"></a>
+                <a href="#" class="icon icon-pinterest"></a>
+                <a href="#" class="icon icon-google-plus"></a>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper-tabs row">
+        <ul class="tabs-seller">
+            <li data-target="our-products" class="current">
+                <a href="javascript:void(0); ">
+                    <?php echo __('Shop designs'); ?>
+                </a>
+            </li>
+            <li data-target="about-us">
+                <a href="javascript:void(0); ">
+                    <?php echo __('About us'); ?>
+                </a>
+            </li>
+            <li data-target="reviews">
+                <a href="javascript:void(0); ">
+                    <?php echo __('Reviews'); ?>
+                </a>
+            </li>
+            <li data-target="delivery">
+                <a href="javascript:void(0); ">
+                    <?php echo __('Delivery information'); ?>
+                </a>
+            </li>
+            <li data-target="substitutions">
+                <a href="javascript:void(0); ">
+                    <?php echo __('Substitutions information'); ?>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
+
+<div class="seller-tab" id="about-us">
+    <?php echo $this->getData('description'); ?>
+</div>
+<div class="seller-tab" id="reviews">
+    reviews
+</div>
+<div class="seller-tab" id="delivery">
+    delivery
+</div>
+<div class="seller-tab" id="substitutions">
+    substitutions
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    requirejs(['jquery'], function(jQuery) {
+        jQuery(function($) {
+            $('.tabs-seller li a').click(function(){
+                $('.tabs-seller li').removeClass('current');
+                $('.seller-tab').hide();
+                $(this).parent().addClass('current');
+                $('.seller-tab#'+$(this).parent().attr('data-target')).show();
+            })
+        });
+    });
+    //]]>
+</script>
