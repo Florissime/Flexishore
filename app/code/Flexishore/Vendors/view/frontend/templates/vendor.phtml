@@ -60,7 +60,7 @@ $currentVendor = $this->registry->registry('currentVendor');
 </div>
 
 <div class="seller-tab" id="about-us">
-    <?php echo $this->getData('description'); ?>
+    <?php echo $currentVendor->getDescription(); ?>
 </div>
 <div class="seller-tab" id="reviews">
     reviews

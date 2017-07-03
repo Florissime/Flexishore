@@ -322,6 +322,7 @@ p.description{
 
 .seller-tab{
     display: none;
+    padding: 30px 0;
 }
 .wrapper-seller .seller-block-top{
     background: #f3a2b4;
