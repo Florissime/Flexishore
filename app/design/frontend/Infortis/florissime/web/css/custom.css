@@ -301,24 +301,6 @@ p.description{
     }
 }
 
-@media (max-width: 1000px) {
-    #search-by-zip .left{
-        left: 0;
-        font-size: 15px !important;
-        right: 0;
-        text-align: center;
-        margin: 0 auto;
-        display: block;
-    }
-    #search-by-zip .left h2{
-        font-size: 16px;
-        margin: 5px;
-    }
-    #search-by-zip-form .form-control{
-        margin: auto;
-    }
-}
-
 
 .seller-tab{
     display: none;
@@ -358,10 +340,43 @@ p.description{
     color:white;
     margin: 5px;
 }
+.block-review{
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+.block-review p.title-review{
+    font-weight:bold;
+    margin: 15px 0 0 0;
+}
+.block-review .rating{
+    color:#f3a2b4;
+}
+
+@media (max-width: 1000px) {
+    #search-by-zip .left{
+        left: 0;
+        font-size: 15px !important;
+        right: 0;
+        text-align: center;
+        margin: 0 auto;
+        display: block;
+    }
+    #search-by-zip .left h2{
+        font-size: 16px;
+        margin: 5px;
+    }
+    #search-by-zip-form .form-control{
+        margin: auto;
+    }
+}
 
 @media (max-width: 992px) {
     .wrapper-seller .seller-block-top{
         text-align: center;
+    }
+    .tabs-seller li{
+        width: 100%;
+        padding: 10px;
     }
 }
 @media (max-width: 600px) {

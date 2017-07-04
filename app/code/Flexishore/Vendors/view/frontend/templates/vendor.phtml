@@ -63,7 +63,62 @@ $currentVendor = $this->registry->registry('currentVendor');
     <?php echo $currentVendor->getDescription(); ?>
 </div>
 <div class="seller-tab" id="reviews">
-    reviews
+    <?php
+        $reviews = [
+            [
+                'name' => 'Jacob',
+                'date' => '09.01.2015',
+                'rating' => 5,
+                'title' => 'Title review',
+                'content' => 'Content reviews',
+            ],
+            [
+                'name' => 'Jon',
+                'date' => '19.11.2015',
+                'rating' => 2,
+                'title' => 'Title review 1',
+                'content' => 'Content reviews 1',
+            ],
+            [
+                'name' => 'Name',
+                'date' => '19.11.2015',
+                'rating' => 3.4,
+                'title' => 'Title review 2',
+                'content' => 'Content reviews 2',
+            ],
+        ]
+    ?>
+    <?php foreach ($reviews as $review): ?>
+        <div class="block-review">
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                    <span class="seller-name"><?php echo $review['name']; ?></span>
+                    <span class="review-date"><?php echo $review['date']; ?></span>
+                </div>
+                <div class="col-md-2 col-xs-6 rating">
+                    <?php $j= 5-$review['rating']; $nStar = false;?>
+                    <?php for ($i = 1; $i<=5; $i++): ?>
+                        <?php if($i<=$review['rating']): ?>
+                            <span class="icon icon-star"></span>
+                        <?php elseif($review['rating']-floor($review['rating']) && (!$nStar)): ?>
+                            <span class="icon icon-star-half-o"></span>
+                            <?php $nStar=true; ?>
+                        <?php else: ?>
+                            <span class="icon icon-star-o"></span>
+                        <?php endif; ?>
+
+                    <?php endfor; ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7 col-xs-12">
+                    <p class="title-review"><?php echo $review['title']; ?></p>
+                    <p class="content-review"><?php echo $review['content']; ?> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur eum facere veniam? Et modi nobis numquam quibusdam, repellendus repudiandae tenetur voluptate? Accusamus commodi exercitationem optio quis vel. Libero, quas quo?</p>
+                </div>
+            </div>
+        </div>
+
+    <?php endforeach; ?>
 </div>
 <div class="seller-tab" id="delivery">
     delivery
