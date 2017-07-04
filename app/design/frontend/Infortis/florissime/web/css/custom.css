@@ -359,6 +359,11 @@ p.description{
     margin: 5px;
 }
 
+@media (max-width: 992px) {
+    .wrapper-seller .seller-block-top{
+        text-align: center;
+    }
+}
 @media (max-width: 600px) {
     .widget.block.block-static-block.block.newsletter form {
         width: 80%;

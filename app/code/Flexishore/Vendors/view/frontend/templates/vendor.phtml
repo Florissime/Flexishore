@@ -4,11 +4,11 @@ $currentVendor = $this->registry->registry('currentVendor');
 <div class="wrapper-seller">
     <div class="seller-block-top row">
         <div class="wrapper-top">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 <img class="vendor-img" src="<?php echo $this->vendorHelper->correctImage($this->vendorHelper->getImageVendor($currentVendor),$this->getViewFileUrl('images/vendor-default-image.jpg'));?>">
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-md-5">
                 <h1 class="title">
                     <?php echo $currentVendor->getVendorName(); ?>
                 </h1>
@@ -19,7 +19,7 @@ $currentVendor = $this->registry->registry('currentVendor');
                 </p>
             </div>
 
-            <div class="col-lg-4 seller-social-icons">
+            <div class="col-md-4 seller-social-icons">
                 <a href="#" class="icon icon-facebook"></a>
                 <a href="#" class="icon icon-twitter"></a>
                 <a href="#" class="icon icon-instagram"></a>
