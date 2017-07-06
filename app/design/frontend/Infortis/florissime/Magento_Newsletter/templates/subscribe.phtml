@@ -7,27 +7,29 @@
 // @codingStandardsIgnoreFile
 ?>
 <div class="widget block block-static-block block newsletter">
-    <div class="title"><strong>Newsletter</strong></div>
-    <div class="content">
-        <form class="form subscribe"
-            novalidate
-            action="<?php /* @escapeNotVerified */ echo $block->getFormActionUrl() ?>"
-            method="post"
-            data-mage-init='{"validation": {"errorClass": "mage-error"}}'
-            id="newsletter-validate-detail">
-            <div class="field newsletter">
-                <label for="newsletter"><span><?php /* @escapeNotVerified */ echo __('Inscrivez-vous à notre newsletter') ?></span></label>
-                <div class="control">
-                    <input name="email" type="email" id="newsletter"
-                                placeholder="<?php /* @escapeNotVerified */ echo __('Enter your email address') ?>"
-                                data-validate="{required:true, 'validate-email':true}"/>
+    <div class="container-c">
+        <div class="title"><strong>Newsletter</strong></div>
+        <div class="content">
+            <form class="form subscribe"
+                novalidate
+                action="<?php /* @escapeNotVerified */ echo $block->getFormActionUrl() ?>"
+                method="post"
+                data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+                id="newsletter-validate-detail">
+                <div class="field newsletter">
+                    <label for="newsletter"><span><?php /* @escapeNotVerified */ echo __('Inscrivez-vous à notre newsletter') ?></span></label>
+                    <div class="control">
+                        <input name="email" type="email" id="newsletter"
+                                    placeholder="<?php /* @escapeNotVerified */ echo __('Enter your email address') ?>"
+                                    data-validate="{required:true, 'validate-email':true}"/>
+                    </div>
                 </div>
-            </div>
-            <div class="actions">
-                <button class="action subscribe primary" title="<?php /* @escapeNotVerified */ echo __('Subscribe') ?>" type="submit">
-                    <span><?php /* @escapeNotVerified */ echo __('Go') ?></span>
-                </button>
-            </div>
-        </form>
+                <div class="actions">
+                    <button class="action subscribe primary" title="<?php /* @escapeNotVerified */ echo __('Subscribe') ?>" type="submit">
+                        <span><?php /* @escapeNotVerified */ echo __('Go') ?></span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

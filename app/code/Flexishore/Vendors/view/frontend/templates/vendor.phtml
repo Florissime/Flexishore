@@ -3,128 +3,133 @@ $currentVendor = $this->registry->registry('currentVendor');
 ?>
 <div class="wrapper-seller">
     <div class="seller-block-top row">
-        <div class="wrapper-top">
-            <div class="col-md-3">
-                <img class="vendor-img" src="<?php echo $this->vendorHelper->correctImage($this->vendorHelper->getImageVendor($currentVendor),$this->getViewFileUrl('images/vendor-default-image.jpg'));?>">
-            </div>
-
-            <div class="col-md-5">
-                <h1 class="title">
-                    <?php echo $currentVendor->getVendorName(); ?>
-                </h1>
-                <p>
-                    <span><?php echo $currentVendor->getData('street'); ?> - </span>
-                    <span><?php echo $currentVendor->getData('zip'); ?> </span>
-                    <span><?php echo $currentVendor->getData('city'); ?> </span>
-                </p>
-            </div>
-
-            <div class="col-md-4 seller-social-icons">
-                <a href="#" class="icon icon-facebook"></a>
-                <a href="#" class="icon icon-twitter"></a>
-                <a href="#" class="icon icon-instagram"></a>
-                <a href="#" class="icon icon-pinterest"></a>
-                <a href="#" class="icon icon-google-plus"></a>
-            </div>
-        </div>
-    </div>
-    <div class="wrapper-tabs row">
-        <ul class="tabs-seller">
-            <li data-target="our-products" class="current">
-                <a href="javascript:void(0); ">
-                    <?php echo __('Shop designs'); ?>
-                </a>
-            </li>
-            <li data-target="about-us">
-                <a href="javascript:void(0); ">
-                    <?php echo __('About us'); ?>
-                </a>
-            </li>
-            <li data-target="reviews">
-                <a href="javascript:void(0); ">
-                    <?php echo __('Reviews'); ?>
-                </a>
-            </li>
-            <li data-target="delivery">
-                <a href="javascript:void(0); ">
-                    <?php echo __('Delivery information'); ?>
-                </a>
-            </li>
-            <li data-target="substitutions">
-                <a href="javascript:void(0); ">
-                    <?php echo __('Substitutions information'); ?>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div class="seller-tab" id="about-us">
-    <?php echo $currentVendor->getDescription(); ?>
-</div>
-<div class="seller-tab" id="reviews">
-    <?php
-        $reviews = [
-            [
-                'name' => 'Jacob',
-                'date' => '09.01.2015',
-                'rating' => 5,
-                'title' => 'Title review',
-                'content' => 'Content reviews',
-            ],
-            [
-                'name' => 'Jon',
-                'date' => '19.11.2015',
-                'rating' => 2,
-                'title' => 'Title review 1',
-                'content' => 'Content reviews 1',
-            ],
-            [
-                'name' => 'Name',
-                'date' => '19.11.2015',
-                'rating' => 3.4,
-                'title' => 'Title review 2',
-                'content' => 'Content reviews 2',
-            ],
-        ]
-    ?>
-    <?php foreach ($reviews as $review): ?>
-        <div class="block-review">
-            <div class="row">
-                <div class="col-md-6 col-xs-6">
-                    <span class="seller-name"><?php echo $review['name']; ?></span>
-                    <span class="review-date"><?php echo $review['date']; ?></span>
+        <div class="container-c">
+            <div class="wrapper-top">
+                <div class="col-md-3">
+                    <img class="vendor-img" src="<?php echo $this->vendorHelper->correctImage($this->vendorHelper->getImageVendor($currentVendor),$this->getViewFileUrl('images/vendor-default-image.jpg'));?>">
                 </div>
-                <div class="col-md-2 col-xs-6 rating">
-                    <?php $j= 5-$review['rating']; $nStar = false;?>
-                    <?php for ($i = 1; $i<=5; $i++): ?>
-                        <?php if($i<=$review['rating']): ?>
-                            <span class="icon icon-star"></span>
-                        <?php elseif($review['rating']-floor($review['rating']) && (!$nStar)): ?>
-                            <span class="icon icon-star-half-o"></span>
-                            <?php $nStar=true; ?>
-                        <?php else: ?>
-                            <span class="icon icon-star-o"></span>
-                        <?php endif; ?>
 
-                    <?php endfor; ?>
+                <div class="col-md-5">
+                    <h1 class="title">
+                        <?php echo $currentVendor->getVendorName(); ?>
+                    </h1>
+                    <p>
+                        <span><?php echo $currentVendor->getData('street'); ?> - </span>
+                        <span><?php echo $currentVendor->getData('zip'); ?> </span>
+                        <span><?php echo $currentVendor->getData('city'); ?> </span>
+                    </p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-7 col-xs-12">
-                    <p class="title-review"><?php echo $review['title']; ?></p>
-                    <p class="content-review"><?php echo $review['content']; ?> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur eum facere veniam? Et modi nobis numquam quibusdam, repellendus repudiandae tenetur voluptate? Accusamus commodi exercitationem optio quis vel. Libero, quas quo?</p>
+
+                <div class="col-md-4 seller-social-icons">
+                    <a href="#" class="icon icon-facebook"></a>
+                    <a href="#" class="icon icon-twitter"></a>
+                    <a href="#" class="icon icon-instagram"></a>
+                    <a href="#" class="icon icon-pinterest"></a>
+                    <a href="#" class="icon icon-google-plus"></a>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="container-c">
+        <div class="wrapper-tabs row">
+            <ul class="tabs-seller">
+                <li data-target="our-products" class="current">
+                    <a href="javascript:void(0); ">
+                        <?php echo __('Shop designs'); ?>
+                    </a>
+                </li>
+                <li data-target="about-us">
+                    <a href="javascript:void(0); ">
+                        <?php echo __('About us'); ?>
+                    </a>
+                </li>
+                <li data-target="reviews">
+                    <a href="javascript:void(0); ">
+                        <?php echo __('Reviews'); ?>
+                    </a>
+                </li>
+                <li data-target="delivery">
+                    <a href="javascript:void(0); ">
+                        <?php echo __('Delivery information'); ?>
+                    </a>
+                </li>
+                <li data-target="substitutions">
+                    <a href="javascript:void(0); ">
+                        <?php echo __('Substitutions information'); ?>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container-c">
+    <div class="seller-tab" id="about-us">
+        <?php echo $currentVendor->getDescription(); ?>
+    </div>
+    <div class="seller-tab" id="reviews">
+        <?php
+            $reviews = [
+                [
+                    'name' => 'Jacob',
+                    'date' => '09.01.2015',
+                    'rating' => 5,
+                    'title' => 'Title review',
+                    'content' => 'Content reviews',
+                ],
+                [
+                    'name' => 'Jon',
+                    'date' => '19.11.2015',
+                    'rating' => 2,
+                    'title' => 'Title review 1',
+                    'content' => 'Content reviews 1',
+                ],
+                [
+                    'name' => 'Name',
+                    'date' => '19.11.2015',
+                    'rating' => 3.4,
+                    'title' => 'Title review 2',
+                    'content' => 'Content reviews 2',
+                ],
+            ]
+        ?>
+        <?php foreach ($reviews as $review): ?>
+            <div class="block-review">
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <span class="seller-name"><?php echo $review['name']; ?></span>
+                        <span class="review-date"><?php echo $review['date']; ?></span>
+                    </div>
+                    <div class="col-md-2 col-xs-6 rating">
+                        <?php $j= 5-$review['rating']; $nStar = false;?>
+                        <?php for ($i = 1; $i<=5; $i++): ?>
+                            <?php if($i<=$review['rating']): ?>
+                                <span class="icon icon-star"></span>
+                            <?php elseif($review['rating']-floor($review['rating']) && (!$nStar)): ?>
+                                <span class="icon icon-star-half-o"></span>
+                                <?php $nStar=true; ?>
+                            <?php else: ?>
+                                <span class="icon icon-star-o"></span>
+                            <?php endif; ?>
 
-    <?php endforeach; ?>
-</div>
-<div class="seller-tab" id="delivery">
-    delivery
-</div>
-<div class="seller-tab" id="substitutions">
-    substitutions
+                        <?php endfor; ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 col-xs-12">
+                        <p class="title-review"><?php echo $review['title']; ?></p>
+                        <p class="content-review"><?php echo $review['content']; ?> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur eum facere veniam? Et modi nobis numquam quibusdam, repellendus repudiandae tenetur voluptate? Accusamus commodi exercitationem optio quis vel. Libero, quas quo?</p>
+                    </div>
+                </div>
+            </div>
+
+        <?php endforeach; ?>
+    </div>
+    <div class="seller-tab" id="delivery">
+        delivery
+    </div>
+    <div class="seller-tab" id="substitutions">
+        substitutions
+    </div>
 </div>
 
 <script type="text/javascript">

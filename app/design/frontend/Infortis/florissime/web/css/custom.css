@@ -272,6 +272,64 @@ p.description{
     vertical-align: middle;
     font-size: 22px;
 }
+
+.cms-home .itemslider .product-item-details .left .product-name{
+    font-family: "Montserrat";
+    font-weight: bold;
+    font-size: 16px;
+}
+.cms-home .itemslider .product-item-details .left{
+    padding-top: 10px;
+}
+.cms-home .itemslider .product-item-details .left .seller-name{
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: italic;
+}
+.cms-home .itemslider .product-item-details .left, .product-item-details .right{
+    width: 50%;
+    display: inline-block;
+    float: left;
+}
+.cms-home .itemslider a.product-image{
+    width: 170px;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+.product-item-details .right .price-box{
+    background: #f3a2b4;
+    border-radius: 50%;
+    text-align: center;
+    float: right;
+    margin: 0;
+    padding: 20px 10px;
+}
+.cms-home .itemslider .product-item-details .right .price-box .price{
+    color:white;
+    font-size: 12px;
+}
+.cms-home .itemslider span.city{
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 14px;
+    color:white;
+}
+
+.inner-container{
+    padding: 0 !important;
+}
+
+.container-c{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
 @media (max-width: 1200px) {
     .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
         position: static;
