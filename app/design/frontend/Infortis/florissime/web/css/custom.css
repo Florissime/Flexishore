@@ -278,6 +278,9 @@ p.description{
     font-weight: bold;
     font-size: 16px;
 }
+.cms-home .itemslider .product-item-details .left{
+    padding-top: 10px;
+}
 .cms-home .itemslider .product-item-details .left .seller-name{
     font-family: "Montserrat";
     font-size: 14px;
@@ -299,10 +302,12 @@ p.description{
     border-radius: 50%;
     text-align: center;
     float: right;
-    padding: 23px 10px;
+    margin: 0;
+    padding: 20px 10px;
 }
 .cms-home .itemslider .product-item-details .right .price-box .price{
     color:white;
+    font-size: 12px;
 }
 .cms-home .itemslider span.city{
     font-family: "Montserrat";
