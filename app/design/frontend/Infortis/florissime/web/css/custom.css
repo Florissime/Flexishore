@@ -205,6 +205,7 @@ p.description{
 .wrapper-search{
     position: relative;
     margin-bottom: 30px;
+    background: #8274a9;
 }
 #search-by-zip .left{
     position: absolute;

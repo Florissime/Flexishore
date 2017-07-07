@@ -1,7 +1,7 @@
-<div class="wrapper-search">
-    <div id="search-by-zip">
-        <div class="left">
-            <div class="container-c">
+<div class="container-c">
+    <div class="wrapper-search">
+        <div id="search-by-zip">
+            <div class="left">
                 <div class="cms-block">
                     <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('homepage_postalcode_search_text')->toHtml();?>
                 </div>
@@ -14,9 +14,9 @@
                     </form>
                 </div>
             </div>
+            <?php echo $this->getImage(); ?>
+            <div class="arrow"></div>
         </div>
-        <?php echo $this->getImage(); ?>
-        <div class="arrow"></div>
-    </div>
 
+    </div>
 </div>
