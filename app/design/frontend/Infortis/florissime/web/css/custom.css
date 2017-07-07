@@ -186,8 +186,9 @@ p.description{
     background: #8274a9;
     display: inline-block;
     width: 100%;
+    position: relative;
 }
-#search-by-zip img.extend-img{
+.wrapper-search img.extend-img{
     float: right;
     max-height: 400px;
     width: auto;
