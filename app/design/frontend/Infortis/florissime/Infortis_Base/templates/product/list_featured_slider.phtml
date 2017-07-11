@@ -196,7 +196,7 @@
                                     <?php echo $theme->getAltImgHtml($_product, $imageTypeId, $imgWidth, $imgHeight); ?>
                                 <?php endif; ?>
                                 <span class="city">
-                                    sity test
+                                    <?php echo $_product->getData('vendor_city'); ?>
                                 </span>
 
                             </a>
@@ -211,7 +211,7 @@
                                     <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
                                 </a>
                                 <p class="seller-name">
-                                    Seller name
+                                    <?php echo $_product->getData('vendor_name'); ?>
                                 </p>
                             </div>
                             <div class="right">
