@@ -205,18 +205,15 @@ p.description{
 }
 .wrapper-search{
     position: relative;
+    background-position: right;
+    background-repeat: no-repeat;
     margin-bottom: 30px;
     background: #8274a9;
 }
 #search-by-zip .left{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    display: block;
     height: 335px;
-    left: 100px;
-    max-width: 500px;
+    margin-top: 100px;
+    margin-left: 20px;
 }
 #search-by-zip-form .form-control{
     width: 250px;

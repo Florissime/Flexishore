@@ -28,7 +28,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
         if ($fileName){
-            return '<img src="'.$this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA ).'flexishore/search/'.$fileName.'" class="extend-img">';
+            return $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA ).'flexishore/search/'.$fileName;
         }
         return false;
     }
