@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="catalog_block_product_list_collection">
-        <observer name="flexi" instance="Flexishore\Base\Observer\CatalogBlockProductListCollection" sortOrder="10" />
+        <observer name="flexi" instance="Flexishore\Base\Observer\CatalogBlockProductListCollection"  />
     </event>
 </config>
