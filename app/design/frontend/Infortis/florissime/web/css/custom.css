@@ -13,7 +13,8 @@
 .block-comment
 {
     background-color: #f3a2b4;
-    float:left;
+    margin: 0;
+    width: 100%;
 }
 
 .title-comment
