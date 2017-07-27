@@ -236,7 +236,7 @@ p.description{
     right: 5px;
     top: 5px;
 }
-#search-by-zip .arrow{
+.wrapper-search .arrow{
     position: absolute;
     bottom: -11px;
     left: 0;
