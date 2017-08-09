@@ -226,6 +226,18 @@ p.description{
     width: 100%;
     outline: none;
 }
+#search-by-zip-form input::-webkit-input-placeholder {
+    color: #82749a;
+}
+#search-by-zip-form input::-moz-placeholder {
+    color: #82749a;
+}
+#search-by-zip-form input:-ms-input-placeholder {
+    color: #82749a;
+}
+#search-by-zip-form input:-moz-placeholder {
+    color: #82749a;
+}
 #search-by-zip-form input:focus{
     box-shadow: none;
 }
