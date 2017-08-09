@@ -177,7 +177,7 @@ p.description{
 .widget.block.block-static-block.block.newsletter form .actions{
     position: absolute;
     top: 0;
-    right: 40px;
+    right: 0;
 }
 .widget.block.block-static-block.block.newsletter form .actions button{
     border-radius: 0 3px 3px 0;
@@ -361,7 +361,7 @@ p.description{
         top: 50px;
     }
     .widget.block.block-static-block.block.newsletter form .actions{
-        top: 55px;
+        top:10px;
     }
     .widget.block.block-static-block.block.newsletter form input{
         padding: 5px;
@@ -372,9 +372,6 @@ p.description{
     }
     .widget.block.block-static-block.block.newsletter form .control{
         width: 100%;
-    }
-    .widget.block.block-static-block.block.newsletter form .actions button{
-        border-radius: 3px;
     }
 }
 
