@@ -177,7 +177,7 @@ p.description{
 .widget.block.block-static-block.block.newsletter form .actions{
     position: absolute;
     top: 0;
-    right: 0;
+    right: 40px;
 }
 .widget.block.block-static-block.block.newsletter form .actions button{
     border-radius: 0 3px 3px 0;
