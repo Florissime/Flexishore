@@ -349,6 +349,7 @@ p.description{
 }
 .cms-home.cms-index-index .main-container>.main.container{
     width: 100%;
+    max-width: inherit !important;
 }
 @media (max-width: 1200px) {
     .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
