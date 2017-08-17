@@ -162,7 +162,7 @@
     $menuContainerHtml = '
     <div class="nav-container skip-content sticky-container' . ($classes['nav-container'] ? $classes['nav-container'] : '') . '">
         <div class="nav container clearer">
-            <div class="container-c">' . $menuHtml . '</div>
+            <div class="container">' . $menuHtml . '</div>
         </div>
     </div>';
     if ($menuDisplayedInFullWidthContainer === false)
@@ -228,7 +228,7 @@
 
         <div class="header-m-top-container">
             <div class="header-m-top header container clearer">
-                <div class="container-c">
+                <div class="container">
 
                     <?php echo $this->getChildHtml('container_mobile_header_top'); ?>
 
@@ -241,13 +241,13 @@
                         <?php endif; ?>
                     <?php endif; ?>
 
-                </div> <!-- end: container-c -->
+                </div> <!-- end: container -->
             </div> <!-- end: header-m-top -->
         </div> <!-- end: header-m-top-container -->
 
         <div class="header-m-primary-container">
             <div class="header-m-primary header container">
-                <div class="container-c">
+                <div class="container">
 
                     <?php if ($moveSwitchers && ($mobileCurrencySwitcherHtml || $mobileLanguageSwitcherHtml)): ?>
                         <div id="header-collateral" class="header-collateral">
@@ -333,7 +333,7 @@
 
                     </div> <!-- end: skip-links-wrapper -->
 
-                </div> <!-- end: container-c -->
+                </div> <!-- end: container -->
             </div> <!-- end: header-m-primary -->
         </div> <!-- end: header-m-primary-container -->
 
@@ -343,7 +343,7 @@
     <!-- Part of the header displayed only in regular mode -->
     <div class="header-top-container">
         <div class="header-top header container clearer">
-            <div class="container-c">
+            <div class="container">
 
                 <?php echo $this->getChildHtml('skip_to_content'); ?>
 
@@ -418,13 +418,13 @@
 
                 </div> <!-- end: right column -->
 
-            </div> <!-- end: container-c -->
+            </div> <!-- end: container -->
         </div> <!-- end: header-top -->
     </div> <!-- end: header-top-container -->
 
     <div class="header-primary-container">
         <div class="header-primary header container">
-            <div class="container-c">
+            <div class="container">
 
                 <?php echo $this->getChildHtml('topContainer'); ?>
 
@@ -472,7 +472,7 @@
                     
                 </div> <!-- end: hp-blocks-holder -->
 
-            </div> <!-- end: container-c -->
+            </div> <!-- end: container -->
         </div> <!-- end: header-primary -->
     </div> <!-- end: header-primary-container -->
 

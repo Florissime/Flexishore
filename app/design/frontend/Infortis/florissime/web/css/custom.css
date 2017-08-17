@@ -344,10 +344,6 @@ p.description{
     padding: 0 !important;
 }
 
-.container-c{
-    max-width: 1400px;
-    margin: 0 auto;
-}
 
 @media (max-width: 1200px) {
     .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
