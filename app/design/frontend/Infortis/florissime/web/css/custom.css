@@ -347,7 +347,9 @@ p.description{
 .container{
     max-width: 1400px;
 }
-
+.cms-home.cms-index-index .main-container>.main.container{
+    width: 100%;
+}
 @media (max-width: 1200px) {
     .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
         position: static;
