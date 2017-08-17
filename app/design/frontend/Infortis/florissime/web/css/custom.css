@@ -344,9 +344,6 @@ p.description{
     padding: 0 !important;
 }
 
-.container{
-    max-width: 1400px;
-}
 .cms-home.cms-index-index .main-container>.main.container{
     width: 100%;
     max-width: inherit !important;
