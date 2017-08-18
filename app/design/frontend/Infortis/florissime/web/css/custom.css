@@ -360,6 +360,7 @@ p.description{
 }
 #search_mini_form #search{
     border-radius: 5px;
+    font-family: Montserrat;
 }
 #search_mini_form #search:focus{
     border-color:#f3a2b4 !important;
