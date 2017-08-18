@@ -379,6 +379,9 @@ p.description{
     font-family: Montserrat;
     display: none;
 }
+.header-m-primary #header-account .header.links>li>a{
+    display: none;
+}
 #header-account ul.sub-menu span{
     margin-right: 5px;
     font-size: 10px;

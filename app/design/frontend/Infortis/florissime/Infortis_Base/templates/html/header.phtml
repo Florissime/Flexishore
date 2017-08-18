@@ -219,6 +219,8 @@
     }
 ?>
 
+<?php $skipLinksCount++; //This is for "Help" link; ?>
+
 <div id="header-container" class="header-container header-mobile page-header<?php if ($classes['root']) echo $classes['root']; ?>" <?php /* style="display:none;" */?> >
 <div id="top" class="header-container2">
 <div class="header-container3">
@@ -288,7 +290,7 @@
                         <?php if (!empty($accountLinksHtml)): ?>
                             <a href="#header-account" class="skip-link skip-account">
                                 <span class="icon ic ic-user"></span>
-                                <span class="label"><?php echo __('My Account'); ?></span>
+                                <span class="label"><?php echo __('Registration / Login'); ?></span>
                             </a>
                         <?php endif; ?>
 
@@ -298,9 +300,13 @@
                                 <?php if (($compareCount = Mage::registry('miniCompareProductCount')) > 0): ?>
                                     <span class="count"><?php echo $compareCount; ?></span>
                                 <?php endif; ?>
-                                <span class="label"><?php echo __('Compare'); ?></span>
+
                             </a>
                         <?php endif; ?>
+                        <a class="skip-link igonre-skip" href="/aide">
+                            <span class="icon">?</span>
+                            <span class="label"><?php echo __('Help'); ?></span>
+                        </a>
 
                         <?php //Skip content - ontainers for blocks displayed on mobile devices ?>
 
@@ -509,7 +515,7 @@ requirejs(['jquery', 'smartheader', 'stickyheader'], function(jQuery, smartheade
 
             //Skip Links
             var skipContents = $('.skip-content');
-            var skipLinks = $('.skip-link');
+            var skipLinks = $('.skip-link:not(.igonre-skip)');
             skipLinks.on('click', function (e) {
                 e.preventDefault();
 
