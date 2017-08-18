@@ -382,6 +382,11 @@ p.description{
 .header-m-primary #header-account .header.links>li>a{
     display: none;
 }
+.header-m-primary #header-account .header.links>li ul.sub-menu{
+    display: block;
+    position: static;
+    background: inherit
+}
 #header-account ul.sub-menu span{
     margin-right: 5px;
     font-size: 10px;
