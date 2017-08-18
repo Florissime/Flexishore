@@ -376,6 +376,7 @@ p.description{
     width: 100%;
     padding: 0 20px;
     box-sizing: border-box;
+    font-family: Montserrat;
     display: none;
 }
 #header-account ul.sub-menu span{
