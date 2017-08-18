@@ -370,15 +370,17 @@ p.description{
     position: absolute;
     left: 0;
     top: 45px;
-    text-align: center;
+    text-align: left;
     background: rgba(255,255,255,.85);
     z-index: 99999;
     width: 100%;
-    padding: 0;
+    padding: 0 20px;
+    box-sizing: border-box;
     display: none;
 }
 #header-account ul.sub-menu span{
-    margin-right:2px;
+    margin-right: 5px;
+    font-size: 10px;
 }
 .header-primary .links > li > *{
     padding: 0 2em;
