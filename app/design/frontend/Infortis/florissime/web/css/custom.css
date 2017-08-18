@@ -514,4 +514,7 @@ p.description{
         margin: auto;
         position: relative;
     }
+    .wrapper-search .arrow{
+        display: none;
+    }
 }
