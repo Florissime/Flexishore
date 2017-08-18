@@ -377,6 +377,9 @@ p.description{
     padding: 0;
     display: none;
 }
+#header-account .header.links li:first-child{
+    position: relative;
+}
 #header-account .header.links li:first-child:hover ul.sub-menu{
  display: block;
 }
