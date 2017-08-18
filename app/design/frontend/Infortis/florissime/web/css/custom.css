@@ -366,6 +366,20 @@ p.description{
     border-color:#f3a2b4 !important;
     box-shadow: none !important;
 }
+#header-account ul.sub-menu{
+    position: absolute;
+    left: 0;
+    top: 45px;
+    text-align: center;
+    background: rgba(255,255,255,.85);
+    z-index: 99999;
+    width: 100%;
+    padding: 0;
+    display: none;
+}
+#header-account .header.links li:first-child:hover ul.sub-menu{
+ display: block;
+}
 .cms-home.cms-index-index .main-container>.main.container{
     width: 100%;
     max-width: inherit !important;
