@@ -353,16 +353,18 @@ p.description{
     box-sizing: border-box;
 }
 .product.name.product-item-name.product-name{
-    width: 49%;
+    width: 65%;
     display: inline-block;
-    float: left;
     margin: 0;
+    font-size: 12px;
 }
 .price-box.price-final_price{
-    width: 49%;
+    width: 35%;
     display: inline-block;
-    float: right;
     margin: 0;
+}
+.price-box.price-final_price .price-container{
+    float: right;
 }
 .inner-container{
     padding: 0 !important;
