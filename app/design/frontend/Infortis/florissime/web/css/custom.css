@@ -345,7 +345,15 @@ p.description{
     border: 0 !important;
     box-sizing: border-box;
     padding: 5px;
-    margin-top: 30px;
+    margin-top: 15px;
+}
+.product.details.product-item-details{
+    padding: 5px;
+}
+
+.seller-info .avatar{
+    width: 50px;
+    border-radius: 50%;
 }
 .products-grid-partitioned .item>.product-item-info{
     border: 2px solid #f5f5f5 !important;
