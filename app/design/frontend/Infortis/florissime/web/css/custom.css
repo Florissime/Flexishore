@@ -378,6 +378,9 @@ p.description{
     border-bottom: 1px solid #f5f5f5;
     padding-bottom: 15px;
 }
+.catalog-category-view #page-title-heading .town{
+    color:#f3a2b4;
+}
 p.toolbar{
     font-size: 16px;
 }
