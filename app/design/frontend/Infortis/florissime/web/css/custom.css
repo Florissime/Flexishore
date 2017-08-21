@@ -362,6 +362,7 @@ p.description{
     width: 35%;
     display: inline-block;
     margin: 0;
+    float: right;
 }
 .price-box.price-final_price .price-container{
     float: right;
