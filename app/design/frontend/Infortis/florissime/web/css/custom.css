@@ -372,6 +372,7 @@ p.description{
     width: 65%;
     display: inline-block;
     margin: 0;
+    margin-bottom: 5px;
     font-size: 12px;
 }
 .price-box.price-final_price{
@@ -379,6 +380,9 @@ p.description{
     display: inline-block;
     margin: 0;
     float: right;
+}
+.product.details.product-item-details .price-box .price{
+    color:#f3a2b4;
 }
 .price-box.price-final_price .price-container{
     float: right;
