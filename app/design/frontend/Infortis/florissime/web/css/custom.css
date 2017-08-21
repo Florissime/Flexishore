@@ -403,7 +403,7 @@ p.toolbar{
 .price-box.price-final_price .price-container{
     float: right;
 }
-.inner-container{
+.cms-home .inner-container{
     padding: 0 !important;
 }
 .header-primary.header.container, .header-primary-container .logo img {
