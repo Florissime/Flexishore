@@ -9,3 +9,5 @@
 "Registration / Login","Inscription / Connexion"
 "I am a customer","Je suis un particulier"
 "I am a flower seller","Je suis un fleuriste"
+"Flower delivery in <span class="town">%s</span>","Livraison de fleurs à <span class="town">%s</span>"
+"%1$s flowers and floral fesigns found in %2$s","%1$s fleurs et bouquets trouvés à %2$s"
