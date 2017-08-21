@@ -176,7 +176,9 @@ use Magento\Framework\App\Action\Action;
      */
     $pos = $block->getPositioned();
     ?>
-    <?php echo sprintf(__("%1\$s flowers and floral fesigns found in %2\$s"),count($_productCollection),'town'); ?>
+    <p class="toolbar">
+        <?php echo sprintf(__("%1\$s flowers and floral fesigns found in %2\$s"),count($_productCollection),'town'); ?>
+    </p>
     <div class="products wrapper <?php if ($containerClasses) echo $containerClasses; ?> <?php echo 'pos-'.$pos; ?>">
         <?php $iterator = 1; ?>
         <ol class="products list items product-items <?php if ($itemgridClasses) echo $itemgridClasses; ?>">
