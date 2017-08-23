@@ -45,8 +45,8 @@
                     <?php if ($filter->getRequestVar() != 'cat' || $showCategoryFilter): ?>
                         <div data-role="collapsible" class="filter-options-item">
                             <div data-role="title" class="filter-options-title"><?php /* @escapeNotVerified */ echo __($filter->getName()) ?></div>
-                            <div data-role="content" class="filter-options-content"><?php /* @escapeNotVerified */ echo $block->getChildBlock('renderer')->render($filter); ?>
-                                <a href="#"><?php echo __('Show more'); ?></a></div>
+                            <div data-role="content" class="filter-options-content"><?php /* @escapeNotVerified */ echo $block->getChildBlock('renderer')->render($filter); ?></div>
+                            <a href="#"><?php echo __('Show more'); ?></a>
                         </div>
                     <?php endif; ?>
                 <?php endif; ?>

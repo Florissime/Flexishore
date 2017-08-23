@@ -377,9 +377,13 @@ p.description{
     text-transform: uppercase;
     border-bottom: 2px solid #f5f5f5;
     padding-bottom: 15px;
+    margin-bottom: 30px;
 }
 .catalog-category-view #page-title-heading .town{
     color:#f3a2b4;
+}
+.catalog-category-view .filter-options-content a{
+    color:#8dc0d3;
 }
 p.toolbar{
     font-size: 16px;
