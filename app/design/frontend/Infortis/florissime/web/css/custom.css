@@ -547,7 +547,7 @@ p.toolbar{
 }
 .rating-box:before {
     content: "★ ★ ★ ★ ★";
-    width: 64px;
+    width: 80px;
     height: 11px;
     color: #c3c5c9;
     display: block;
@@ -564,7 +564,7 @@ p.toolbar{
 }
 .rating-box .rating:before {
     content: "★ ★ ★ ★ ★";
-    width: 64px;
+    width: 80px;
     height: 11px;
     color: #f3a2b4;
     display: block;
