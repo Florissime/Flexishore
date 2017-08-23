@@ -533,7 +533,7 @@ p.toolbar{
     float: left;
 }
 .rating-box {
-    width: 64px;
+    width:70px;
     height: 11px;
     font-size: 0;
     line-height: 0;
@@ -547,7 +547,7 @@ p.toolbar{
 }
 .rating-box:before {
     content: "★ ★ ★ ★ ★";
-    width: 80px;
+    width: 70px;
     height: 11px;
     color: #c3c5c9;
     display: block;
@@ -564,7 +564,7 @@ p.toolbar{
 }
 .rating-box .rating:before {
     content: "★ ★ ★ ★ ★";
-    width: 80px;
+    width: 70px;
     height: 11px;
     color: #f3a2b4;
     display: block;
