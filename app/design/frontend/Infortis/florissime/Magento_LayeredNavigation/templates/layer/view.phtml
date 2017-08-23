@@ -59,20 +59,26 @@
                         'jquery'
                     ], function ($) {
                         $('#layered-filter-block').addClass('filter-no-options');
-                        $('.filter-options-content').each(function(){
-                            if($(this).height()<220)
-                                $(this).next().hide();
-                        });
-                        $('.open-filter').click(function(){
-                            var switchLbl = $(this).text();
-                            $(this).text($(this).attr('data-label'));
-                            $(this).attr('data-label',switchLbl);
-                            $(this).prev().toggleClass('open')
-                        });
-
                     });
                 </script>
             <?php endif; ?>
         </div>
     </div>
 <?php endif; ?>
+<script>
+    require([
+        'jquery'
+    ], function ($) {
+        $('.filter-options-content').each(function(){
+            if($(this).height()<220)
+                $(this).next().hide();
+        });
+        $('.open-filter').click(function(){
+            var switchLbl = $(this).text();
+            $(this).text($(this).attr('data-label'));
+            $(this).attr('data-label',switchLbl);
+            $(this).prev().toggleClass('open')
+        });
+
+    });
+</script>
