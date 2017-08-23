@@ -474,124 +474,131 @@ p.toolbar{
 }
 .filter-options-content{
     padding: 10px 0 !important;
+    display: block !important;
+    max-height: 220px;
+    overflow: hidden;
+    transition: .3s;
+}
+.filter-options-content.open{
+    max-height: 800px;
 }
 .filter-options-content *{
-    color: #8dc0d3;
+color: #8dc0d3;
 }
 .block-subtitle.filter-subtitle {
-    display: none;
+display: none;
 }
 @media (max-width: 1200px) {
-    .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
-        position: static;
-        width: 100%;
-        margin-top: 10px;
-        display: block;
-        text-align: center;
-    }
-    .widget.block.block-static-block.block.newsletter form .control .mage-error:not(input){
-        top: 50px;
-    }
-    .widget.block.block-static-block.block.newsletter form .actions{
-        top:10px;
-    }
-    .widget.block.block-static-block.block.newsletter form input{
-        padding: 5px;
-        border-radius: 3px;
-    }
-    .widget.block.block-static-block.block.newsletter .field .control:before{
-        display: none;
-    }
-    .widget.block.block-static-block.block.newsletter form .control{
-        width: 100%;
-    }
+.widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
+    position: static;
+    width: 100%;
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+}
+.widget.block.block-static-block.block.newsletter form .control .mage-error:not(input){
+    top: 50px;
+}
+.widget.block.block-static-block.block.newsletter form .actions{
+    top:10px;
+}
+.widget.block.block-static-block.block.newsletter form input{
+    padding: 5px;
+    border-radius: 3px;
+}
+.widget.block.block-static-block.block.newsletter .field .control:before{
+    display: none;
+}
+.widget.block.block-static-block.block.newsletter form .control{
+    width: 100%;
+}
 }
 
 
 .seller-tab{
-    display: none;
-    padding: 30px 0;
+display: none;
+padding: 30px 0;
 }
 .wrapper-seller .seller-block-top{
-    background: #f3a2b4;
-    color:white;
-    padding: 50px 0;
+background: #f3a2b4;
+color:white;
+padding: 50px 0;
 }
 .wrapper-tabs{
-    background: #e3e3e3;
-    color:white;
+background: #e3e3e3;
+color:white;
 }
 .wrapper-seller .seller-block-top p{
-    font-size: 16px;
+font-size: 16px;
 }
 .wrapper-seller h1.title{
-    margin: 0;
-    text-transform: uppercase;
+margin: 0;
+text-transform: uppercase;
 }
 .tabs-seller li{
-    display: inline-block;
-    float: left;
-    padding: 20px;
-    font-size: 14px;
-    margin: 0;
+display: inline-block;
+float: left;
+padding: 20px;
+font-size: 14px;
+margin: 0;
 }
 .tabs-seller li.current{
-    background:white;
+background:white;
 }
 .seller-social-icons{
-    font-size: 30px;
-    text-align: center;
+font-size: 30px;
+text-align: center;
 }
 .seller-social-icons a,.seller-social-icons a:hover,.seller-social-icons a:link, .seller-social-icons a:focus{
-    color:white;
-    margin: 5px;
+color:white;
+margin: 5px;
 }
 .block-review{
-    font-size: 16px;
-    margin-bottom: 20px;
+font-size: 16px;
+margin-bottom: 20px;
 }
 .block-review p.title-review{
-    font-weight:bold;
-    margin: 15px 0 0 0;
+font-weight:bold;
+margin: 15px 0 0 0;
 }
 .block-review .rating{
-    color:#f3a2b4;
+color:#f3a2b4;
 }
 
 @media (max-width: 1000px) {
-    #search-by-zip .left{
-        left: 0;
-        font-size: 15px !important;
-        right: 0;
-        text-align: center;
-        margin: 0 auto;
-        display: block;
-    }
-    #search-by-zip .left h2{
-        font-size: 16px;
-        margin: 5px;
-    }
-    #search-by-zip-form .form-control{
-        margin: auto;
-    }
+#search-by-zip .left{
+    left: 0;
+    font-size: 15px !important;
+    right: 0;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}
+#search-by-zip .left h2{
+    font-size: 16px;
+    margin: 5px;
+}
+#search-by-zip-form .form-control{
+    margin: auto;
+}
 }
 
 @media (max-width: 992px) {
-    .wrapper-seller .seller-block-top{
-        text-align: center;
-    }
-    .tabs-seller li{
-        width: 100%;
-        padding: 10px;
-    }
+.wrapper-seller .seller-block-top{
+    text-align: center;
+}
+.tabs-seller li{
+    width: 100%;
+    padding: 10px;
+}
 }
 @media (max-width: 600px) {
-    .widget.block.block-static-block.block.newsletter form {
-        width: 80%;
-        margin: auto;
-        position: relative;
-    }
-    .wrapper-search .arrow{
-        display: none;
-    }
+.widget.block.block-static-block.block.newsletter form {
+    width: 80%;
+    margin: auto;
+    position: relative;
+}
+.wrapper-search .arrow{
+    display: none;
+}
 }

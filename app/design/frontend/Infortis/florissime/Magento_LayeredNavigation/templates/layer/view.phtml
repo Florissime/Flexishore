@@ -46,7 +46,7 @@
                         <div data-role="collapsible" class="filter-options-item">
                             <div data-role="title" class="filter-options-title"><?php /* @escapeNotVerified */ echo __($filter->getName()) ?></div>
                             <div data-role="content" class="filter-options-content"><?php /* @escapeNotVerified */ echo $block->getChildBlock('renderer')->render($filter); ?></div>
-                            <a href="#"><?php echo __('Show more'); ?></a>
+                            <a class="open-filter" href="#" data-label="<?php echo __('Hide'); ?>" ><?php echo __('Show more'); ?></a>
                         </div>
                     <?php endif; ?>
                 <?php endif; ?>
@@ -59,6 +59,17 @@
                         'jquery'
                     ], function ($) {
                         $('#layered-filter-block').addClass('filter-no-options');
+                        $('.filter-options-content').each(function(){
+                            if($(this).height()<220)
+                                $(this).next().hide();
+                        });
+                        $('.open-filter').click(function(){
+                            var switchLbl = $(this).text();
+                            $(this).text($(this).attr('data-label'));
+                            $(this).attr('data-label',switchLbl);
+                            $(this).prev().toggleClass('open')
+                        });
+
                     });
                 </script>
             <?php endif; ?>
