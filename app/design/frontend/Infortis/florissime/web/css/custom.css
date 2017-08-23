@@ -505,7 +505,32 @@ p.toolbar{
     margin: 0 !important;
 }
 .seller-wrapper{
-    color:#f5f5f5;
+    background: #f5f5f5;
+    padding: 15px;
+    box-sizing: border-box;
+}
+.seller-wrapper .wrapper-seller-avatar{
+    float: left;
+    display: inline-block;
+    margin-right: 10px;
+}
+.wrapper-seller-avatar img{
+    border-radius: 50%;
+    width: 150px;
+}
+.seller-wrapper .seller-name{
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1em;
+    margin-top: 25px;
+}
+.city-name{
+    line-height: 1em;
+    font-style: italic;
+}
+.seller-info{
+    float: left;
 }
 @media (max-width: 1200px) {
 .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
