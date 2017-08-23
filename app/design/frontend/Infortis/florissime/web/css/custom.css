@@ -375,7 +375,7 @@ p.description{
     width: 100%;
     font-size: 22px;
     text-transform: uppercase;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 2px solid #f5f5f5;
     padding-bottom: 15px;
 }
 .catalog-category-view #page-title-heading .town{
@@ -467,6 +467,15 @@ p.toolbar{
 .cms-home.cms-index-index .main-container>.main.container{
     width: 100%;
     max-width: inherit !important;
+}
+.filter-options-content{
+    padding: 10px 0 !important;
+}
+.filter-options-content *{
+    color: #8dc0d3;
+}
+.block-subtitle.filter-subtitle {
+    display: none;
 }
 @media (max-width: 1200px) {
     .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
