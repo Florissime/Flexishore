@@ -532,6 +532,41 @@ p.toolbar{
 .seller-info{
     float: left;
 }
+.rating-box {
+    width: 64px;
+    height: 11px;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -999em;
+    overflow: hidden;
+    position: relative;
+}
+.ratings .rating-box {
+    display: inline-block;
+    vertical-align: middle;
+}
+.rating-box:before {
+    content: "\e852\20\e852\20\e852\20\e852\20\e852";
+    width: 64px;
+    height: 11px;
+    color: #c3c5c9;
+    display: block;
+    font-size: 11px;
+    line-height: 11px;
+}
+.rating-box .rating {
+    float: left;
+    height: 11px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+
+.rating {
+    color: #f3a2b4;
+}
+
 @media (max-width: 1200px) {
 .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
     position: static;
