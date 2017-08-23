@@ -489,7 +489,11 @@ p.toolbar{
     color:#b9b9b9;
 }
 .filter-options-content *{
-color: #8dc0d3;
+    color: #8dc0d3;
+}
+.filter-current .filter-label,.filter-current .filter-value {
+    font-weight: normal;
+    color:#8dc0d3
 }
 .block-subtitle.filter-subtitle, .block-subtitle.filter-current-subtitle {
     display: none;
