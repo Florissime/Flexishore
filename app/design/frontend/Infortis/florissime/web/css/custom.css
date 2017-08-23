@@ -482,11 +482,23 @@ p.toolbar{
 .filter-options-content.open{
     max-height: 800px;
 }
+.filter-options-title:after{
+    display: none;
+}
+.open-filter{
+    color:#b9b9b9;
+}
 .filter-options-content *{
 color: #8dc0d3;
 }
-.block-subtitle.filter-subtitle {
-display: none;
+.block-subtitle.filter-subtitle, .block-subtitle.filter-current-subtitle {
+    display: none;
+}
+.action.clear.filter-clear{
+    display: none;
+}
+.block.filter.filter-no-options{
+    margin: 0 !important;
 }
 @media (max-width: 1200px) {
 .widget.block.block-static-block.block.newsletter form label, .widget.block.block-static-block.block.newsletter form input{
