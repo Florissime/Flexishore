@@ -224,7 +224,35 @@
                 $('.delivery-block').removeClass('active');
                 $(this).addClass('active');
             });
-            $('#custom-date').datepicker();
+            var checkExistSelection = function(selectedDate, day, callback){
+                var existSelection = false;
+                var currentDate = new Date();
+                for (day;day>=0;day--){
+                    var exactDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + day);
+                    if (exactDate.getFullYear() == selectedDate.getFullYear() && exactDate.getMonth() == selectedDate.getMonth() && exactDate.getDate() == selectedDate.getDate()) {
+                        existSelection = day;
+                        break;
+                    }
+                }
+                callback(existSelection);
+            };
+            $('#custom-date').datepicker({
+                minDate: new Date(),
+                onSelect: function(selectedDate){
+                    //Here need check what the user choose, maybe tomorrow, or current day+1 day or current day+2 day
+                    checkExistSelection(new Date(selectedDate),2,function(existSelection){
+                        if (existSelection){
+                            //Selected date exists, and we automatically choose it
+                            $('.delivery-select>div:eq('+existSelection+')').click()
+                        }
+                        else{
+
+
+                        }
+                    });
+
+                }
+            });
             $('#select-custom-date').click(function(){
                 $('#custom-date').datepicker("show");
             })
