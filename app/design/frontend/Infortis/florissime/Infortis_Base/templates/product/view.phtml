@@ -241,7 +241,7 @@
                 onSelect: function(selectedDate){
                     //Here need check what the user choose, maybe tomorrow, or current day+1 day or current day+2 day
                     checkExistSelection(new Date(selectedDate),2,function(existSelection){
-                        if (existSelection){
+                        if (existSelection !== false){
                             //Selected date exists, and we automatically choose it
                             $('.delivery-select>div:eq('+existSelection+')').click()
                         }
