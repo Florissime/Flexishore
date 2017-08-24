@@ -153,7 +153,7 @@ ul.line li:before {
 .ui-datepicker .ui-datepicker-prev span{
     border-color: transparent #f3a2b4 transparent transparent !important;
 }
-.ui-datepicker .ui-datepicker-calendar .ui-state-active, .ui-datepicker .ui-datepicker-calendar td:hover{
+.ui-datepicker .ui-datepicker-calendar .ui-state-active, .ui-datepicker .ui-datepicker-calendar td:not(.ui-state-disabled):hover{
     background: #f3a2b4 !important;
 }
 .ui-datepicker .ui-datepicker-calendar td .ui-state-hover, .ui-datepicker .ui-datepicker-calendar .ui-datepicker-today{

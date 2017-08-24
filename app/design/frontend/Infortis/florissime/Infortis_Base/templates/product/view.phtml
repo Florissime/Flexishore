@@ -116,10 +116,10 @@
 
                 <div class="delivery-block" id="select-custom-date">
                     <p>
-                        <?php echo __('Full calendar'); ?>
+                        <?php echo __('Full'); ?>
                     </p>
                     <p>
-                        &nbsp;
+                        <?php echo __('calendar'); ?>
                     </p>
                     <input type="text" name="custom_date" id="custom-date">
                 </div>
@@ -238,19 +238,21 @@
                         onSelect: self.selectDate
                     })
                 },
-                selectDate: function(selectedDate, event){
+                selectDate: function(_selectedDate, event){
+                    var selectedDate = new Date (_selectedDate);
                     deliveryCalendar.checkExistSelection(new Date(selectedDate),2,function(existSelection){ //Here i was use main deliveryCalendar object, because i don't know how use link for this object here (just object)
                         if (existSelection !== false){
                             //Selected date exists, and we automatically choose it
-                            $('.delivery-select>div:eq('+existSelection+')').click()
+                            $('.delivery-select>div:eq('+existSelection+')').click();
+
                         }
                         else{
-
+                            $('#select-custom-date>p:first-child').text(selectedDate.toLocaleString('en', {weekday: 'short'}));
+                            $('#select-custom-date>p:eq(1)').text(selectedDate.getDate()+' '+selectedDate.toLocaleString('en', {month: 'short'}));
                         }
                     });
                 },
                 bindEvent: function(){
-                    var self = this;
                     $('#select-custom-date').click(function(){
                         $('#custom-date').datepicker("show");
                     })
