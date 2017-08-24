@@ -1,5 +1,9 @@
 @import "fonts.css";
 
+
+body{
+    font-family: Montserrat;
+}
 .white_block {
     background: #ffffff;
     padding: 25px 0;
@@ -118,7 +122,7 @@ ul.line li:before {
 }
 .product-info-main .delivery-block {
     display: inline-block;
-    width: 24.5%;
+    width: 24%;
     border: 1px solid #ddd;
     box-sizing: border-box;
     padding: 10px;
@@ -603,20 +607,23 @@ display: none;
 padding: 30px 0;
 }
 .wrapper-seller .seller-block-top{
-background: #f3a2b4;
-color:white;
-padding: 50px 0;
+    background: #f3a2b4;
+    color:white;
+    padding: 50px 0;
 }
 .wrapper-tabs{
-background: #e3e3e3;
-color:white;
+    background: #e3e3e3;
+    color:white;
 }
 .wrapper-seller .seller-block-top p{
-font-size: 16px;
+    font-size: 16px;
 }
 .wrapper-seller h1.title{
-margin: 0;
-text-transform: uppercase;
+    margin: 0;
+    text-transform: uppercase;
+}
+#order-now{
+    margin-top: 80px;
 }
 .tabs-seller li{
 display: inline-block;
