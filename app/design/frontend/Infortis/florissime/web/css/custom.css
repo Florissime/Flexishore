@@ -144,6 +144,14 @@ ul.line li:before {
 .ui-datepicker .ui-datepicker-calendar th, .ui-datepicker .ui-datepicker-calendar td{
     border: 0 !important;
     padding: 5px;
+    background: white;
+    text-align: center;
+}
+.ui-datepicker .ui-datepicker-calendar .ui-datepicker-today{
+    background: #f3a2b4 !important;
+}
+.ui-datepicker .ui-datepicker-calendar td .ui-state-hover{
+    background: inherit !important;
 }
 #ui-datepicker-div .ui-datepicker-calendar, #ui-datepicker-div .ui-datepicker .ui-datepicker-calendar td{
     border: 0 !important;
