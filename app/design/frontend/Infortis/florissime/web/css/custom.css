@@ -147,7 +147,7 @@ ul.line li:before {
     background: white;
     text-align: center;
 }
-.ui-datepicker .ui-datepicker-next span{
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span{
     border-color: transparent transparent transparent #f3a2b4 !important;
 }
 .ui-datepicker .ui-datepicker-calendar .ui-state-active, .ui-datepicker .ui-datepicker-calendar td:hover{
