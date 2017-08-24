@@ -115,13 +115,14 @@
                         3 May
                     </p>
                 </div>
-                <div class="delivery-block">
+                <div class="delivery-block" id="select-custom-date">
                     <p>
                         <?php echo __('Full calendar'); ?>
                     </p>
                     <p>
                         3 May
                     </p>
+                    <input type="hidden" name="custom_date" id="custom-date">
                 </div>
             </div>
 
@@ -222,8 +223,13 @@
             $('.delivery-block').click(function(){
                 $('.delivery-block').removeClass('active');
                 $(this).addClass('active');
+            });
+            $('#custom-date').datepicker();
+            $('#select-custom-date').click(function(){
+                $('#search').datepicker("show");
             })
         });
+
     });
     //]]>
 </script>
