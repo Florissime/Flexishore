@@ -129,6 +129,7 @@ ul.line li:before {
     border-radius: 5px;
     transition: .4s;
     cursor: pointer;
+    text-transform: uppercase;
 }
 .product-info-main .delivery-block:hover{
     border-color: #f3a2b4
