@@ -93,36 +93,33 @@
         <div class="extend-info">
             <p><?php echo __('Choose a delivery date'); ?></p>
             <div class="delivery-select">
-                <div class="delivery-block">
-                    <p>
-                        <?php echo __('Today'); ?>
-                    </p>
-                    <p>
-                        3 May
-                    </p>
-                </div>
-                <div class="delivery-block">
-                    <p>
-                        <?php echo __('Today'); ?>
-                    </p>
-                    <p>
-                        3 May
-                    </p>
-                </div>
-                <div class="delivery-block">
-                    <p>
-                        <?php echo __('Today'); ?>
-                    </p>
-                    <p>
-                        3 May
-                    </p>
-                </div>
+                <?php for ($i = 0; $i < 3; $i++): ?>
+                    <?php
+                        $date = new DateTime();
+                        $date->modify('+'.$i.' day');
+                    ?>
+                    <div class="delivery-block">
+                        <p>
+                            <?php if ($i == 0): ?>
+                                <?php echo __('Today'); ?>
+                            <?php else: ?>
+                                <?php echo $date->format('D'); ?>
+                            <?php endif; ?>
+                        </p>
+                        <p>
+                            <?php echo $date->format('j'); ?>
+                            <?php echo $date->format('M'); ?>
+                        </p>
+                    </div>
+                <?php endfor; ?>
+
+
                 <div class="delivery-block" id="select-custom-date">
                     <p>
                         <?php echo __('Full calendar'); ?>
                     </p>
                     <p>
-                        3 May
+
                     </p>
                     <input type="text" name="custom_date" id="custom-date">
                 </div>
@@ -242,7 +239,7 @@
                     })
                 },
                 selectDate: function(selectedDate, event){
-                    deliveryCalendar.checkExistSelection(new Date(selectedDate),2,function(existSelection){
+                    deliveryCalendar.checkExistSelection(new Date(selectedDate),2,function(existSelection){ //Here i was use main deliveryCalendar object, because i don't know how use link for this object here (just object)
                         if (existSelection !== false){
                             //Selected date exists, and we automatically choose it
                             $('.delivery-select>div:eq('+existSelection+')').click()
