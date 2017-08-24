@@ -138,6 +138,20 @@ ul.line li:before {
     background:#f3a2b4;
     color:white;
 }
+#ui-datepicker-div .ui-datepicker-calendar, #ui-datepicker-div .ui-datepicker .ui-datepicker-calendar td{
+    border: 0 !important;
+}
+#ui-datepicker-div .ui-datepicker .ui-datepicker-calendar td{
+    padding: 5px;
+}
+#ui-datepicker-div .ui-datepicker .ui-datepicker-calendar th{
+    background: white;
+    border: 0;
+    padding: 5px;
+}
+#ui-datepicker-div .ui-datepicker td span, #ui-datepicker-div .ui-datepicker td a{
+    text-align: center;
+}
 p.description{
     font-size: 14px;
 }
