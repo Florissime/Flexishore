@@ -428,14 +428,14 @@ p.description{
 p.toolbar{
     font-size: 16px;
 }
-.product-items .product.name.product-item-name.product-name{
+.catalog-category-view .product-items .product.name.product-item-name.product-name{
     width: 65%;
     display: inline-block;
     margin: 0;
     margin-bottom: 5px;
     font-size: 12px;
 }
-.product-items .price-box.price-final_price{
+.catalog-category-view .product-items .price-box.price-final_price{
     width: 35%;
     display: inline-block;
     margin: 0;
@@ -444,7 +444,7 @@ p.toolbar{
 .product.details.product-item-details .price-box .price{
     color:#f3a2b4;
 }
-.product-items .price-box.price-final_price .price-container{
+.catalog-category-view .product-items .price-box.price-final_price .price-container{
     float: right;
 }
 .cms-home .inner-container{
