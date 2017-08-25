@@ -175,6 +175,7 @@ ul.line li:before {
 }
 p.description{
     font-size: 14px;
+    margin-top: 20px;
 }
 .widget.block.block-static-block h3.white-bg{
     font-family: "Thirsty scrit regular";
